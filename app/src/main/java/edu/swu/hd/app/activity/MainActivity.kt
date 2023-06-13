@@ -1,10 +1,12 @@
-package edu.swu.hd.app
+package edu.swu.hd.app.activity
 
 import android.app.Activity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
+import edu.swu.hd.app.R
+import edu.swu.hd.app.helper.AppData
 
 class MainActivity : Activity(), ViewModelStoreOwner {
     companion object {
