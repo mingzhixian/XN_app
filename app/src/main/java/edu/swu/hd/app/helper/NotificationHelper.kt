@@ -29,15 +29,20 @@ class NotificationHelper(
     /**
      * 请求通知权限
      */
-    private fun requireNotificationPermission() {
+    fun requireNotificationPermission() {
         if (!isPermitted) {
             val notificationPermissionGranted =
                 NotificationManagerCompat.from(context).areNotificationsEnabled()
 
             if (!notificationPermissionGranted) {
                 // 请求通知权限
-                val intent: Intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
-                    .putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+                val intent: Intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                        .putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+                } else {
+                    TODO("VERSION.SDK_INT < O")
+                    return
+                }
                 context.startActivity(intent)
             }
             if (NotificationManagerCompat.from(context).areNotificationsEnabled())
@@ -52,7 +57,7 @@ class NotificationHelper(
      * @param channelName    channel的名称
      * @param channelImportance     channel的重要性，NotificationManager.IMPORTANCE_X
      */
-    private fun registerChannel(
+    fun registerChannel(
         channelID: String = defaultNotificationID,
         channelName: String = defaultNotificationName,
         channelImportance: Int = NotificationManager.IMPORTANCE_DEFAULT
@@ -75,8 +80,6 @@ class NotificationHelper(
         deleteIntent: PendingIntent? = null,
         autoCancel: Boolean = false,
     ) {
-        requireNotificationPermission()
-        registerChannel()
         val notification = NotificationCompat.Builder(context, defaultNotificationID)
             .setContentTitle(contentTitle)
             .setContentText(contentText)
