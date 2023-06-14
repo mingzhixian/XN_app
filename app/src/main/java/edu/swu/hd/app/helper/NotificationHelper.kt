@@ -21,7 +21,6 @@ class NotificationHelper(
     private val notificationManager: NotificationManager =
         context.getSystemService(Context.NOTIFICATION_SERVICE)
                 as NotificationManager
-    private var isPermitted = false
     private val defaultNotificationID = "normal"
     private val defaultNotificationName = "普通通知"
     private var notificationID = 1
@@ -30,7 +29,6 @@ class NotificationHelper(
      * 请求通知权限
      */
     fun requireNotificationPermission() {
-        if (!isPermitted) {
             val notificationPermissionGranted =
                 NotificationManagerCompat.from(context).areNotificationsEnabled()
 
@@ -45,9 +43,6 @@ class NotificationHelper(
                 }
                 context.startActivity(intent)
             }
-            if (NotificationManagerCompat.from(context).areNotificationsEnabled())
-                isPermitted = true
-        }
     }
 
     /**
@@ -70,15 +65,23 @@ class NotificationHelper(
 
     /**
      * 发送通知
+     *
+     * @param contentTitle 通知标题
+     * @param contentText 通知内容文本
+     * @param smallIcon 小图标
+     * @param largeIcon 大图标
+     * @param contentIntent 点击意图
+     * @param deleteIntent 删除意图
+     * @param autoCancel 点击自动取消
      */
     fun launchNotification(
         contentTitle: String = "",
         contentText: String = "",
         smallIcon: Int = R.mipmap.ic_launcher,
-        largeIcon: Bitmap? = BitmapFactory.decodeResource(context.resources, R.mipmap.ic_launcher),
+        largeIcon: Bitmap = BitmapFactory.decodeResource(context.resources, R.mipmap.ic_launcher),
         contentIntent: PendingIntent? = null,
         deleteIntent: PendingIntent? = null,
-        autoCancel: Boolean = false,
+        autoCancel: Boolean = true,
     ) {
         val notification = NotificationCompat.Builder(context, defaultNotificationID)
             .setContentTitle(contentTitle)
