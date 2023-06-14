@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="white">#FFFFFFFF</color>
+    <color name="appBackground">#FFFFFF</color>
+    <color name="cardBackground">#A3CCD3</color>
+    <color name="buttonBackground">#337875</color>
+    <color name="secondaryButtonBackground">#E2ECEB</color>
+    <color name="fontColor">#363B3B</color>
+    <color name="primaryFontColor">#458684</color>
+    <color name="onPrimaryFontColor">#F1FAFC</color>
+    <color name="secondaryFontColor">#C9D9D8</color>
+    <color name="onSecondaryFontColor">#547475</color>
 </resources>
