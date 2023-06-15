@@ -75,4 +75,8 @@ dependencies {
 
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+
+    /* 异步网络图片 */
+    implementation "io.coil-kt:coil-compose:2.1.0"
+
 }
