@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">第六医院</string>
-    <string name="admin_url"></string>
+    <string name="admin_url">http://192.168.43.47:8004</string>
 </resources>

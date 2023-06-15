@@ -8,7 +8,13 @@ import edu.swu.xn.app.MainActivity
 import kotlinx.coroutines.MainScope
 
 @SuppressLint("StaticFieldLeak")
-class AppData(val main: MainActivity) : ViewModel() {
+class AppData : ViewModel() {
+  // 初始化
+  var isInit = false
+
+  // Main
+  lateinit var main: MainActivity
+
   // 当前账户ID
   var hashID = ""
 
@@ -16,18 +22,26 @@ class AppData(val main: MainActivity) : ViewModel() {
   val mainScope = MainScope()
 
   // 设置值
-  var settings: SharedPreferences = main.getSharedPreferences("setting", Context.MODE_PRIVATE)
+  lateinit var settings: SharedPreferences
 
   // 数据库管理
-  var dbHelper: DbHelper = DbHelper(main, "hd_app.db", 1)
+  lateinit var dbHelper: DbHelper
 
   // 网络管理
   val netHelper = NetHelper()
 
   // 通知管理
-  var notificationHelper: NotificationHelper = NotificationHelper(main)
+  lateinit var notificationHelper: NotificationHelper
 
-  init {
+  fun init(m: MainActivity) {
+    isInit = true
+    main = m
+    // 设置存储
+    settings = main.getSharedPreferences("setting", Context.MODE_PRIVATE)
+    // 数据库管理
+    dbHelper = DbHelper(main, "hd_app.db", 1)
+    //通知管理
+    notificationHelper = NotificationHelper(main)
   }
 
   fun dp2px(dp: Float): Float = dp * main.resources.displayMetrics.density
