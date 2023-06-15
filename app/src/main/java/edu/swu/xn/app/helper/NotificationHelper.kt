@@ -73,8 +73,8 @@ class NotificationHelper(
         contentIntent: PendingIntent? = null,
         deleteIntent: PendingIntent? = null,
         autoCancel: Boolean = true,
-        smallIcon: Int = R.drawable.icon,
-        largeIcon: Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.icon)
+        smallIcon: Int = R.drawable.app_icon,
+        largeIcon: Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.app_icon)
     ) {
         val notification = NotificationCompat.Builder(context, defaultNotificationID)
             .setContentTitle(contentTitle)
