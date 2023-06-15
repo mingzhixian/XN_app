@@ -1,4 +1,4 @@
-package edu.swu.xn.app.activity
+package edu.swu.xn.app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
