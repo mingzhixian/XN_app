@@ -1,6 +1,5 @@
 package edu.swu.xn.app
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -44,7 +43,7 @@ import androidx.lifecycle.ViewModelProvider
 import edu.swu.xn.app.component.MyButton
 import edu.swu.xn.app.entity.Operation
 import edu.swu.xn.app.helper.AppData
-import edu.swu.xn.app.ui.theme.XN_appTheme
+import edu.swu.xn.app.ui.theme.AppTheme
 
 lateinit var appData: AppData
 
@@ -58,8 +57,7 @@ class MainActivity : ComponentActivity() {
         // 检测登录
 
         setContent {
-            XN_appTheme {
-                // A surface container using the 'background' color from the theme
+            AppTheme {
                 HomePage(name = "小老弟")
             }
         }
