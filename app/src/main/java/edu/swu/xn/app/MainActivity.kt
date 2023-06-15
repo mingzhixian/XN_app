@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -23,8 +23,10 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -40,7 +42,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
-import edu.swu.xn.app.component.MyButton
+import edu.swu.xn.app.component.OperateItem
+import edu.swu.xn.app.component.VerticalIconButton
 import edu.swu.xn.app.entity.Operation
 import edu.swu.xn.app.helper.AppData
 import edu.swu.xn.app.ui.theme.AppTheme
@@ -91,25 +94,30 @@ class MainActivity : ComponentActivity() {
             Operation("待办", painterResource(id = R.drawable.pending)) {
 
             }
-        )
-
+        ),
     ) {
+        var colors: ColorScheme = MaterialTheme.colorScheme
+        AppTheme {
+            colors = MaterialTheme.colorScheme
+        }
         Box(
             modifier = modifier.background(Color.White)
         )
         {
+            /* 顶部背景椭圆 */
             Canvas(
                 modifier = Modifier.fillMaxSize()
             ) {
 
                 scale(scaleX = 15f, scaleY = 10f) {
                     drawCircle(
-                        Color.Blue,
+                        color = colors.primary,
                         radius = 40.dp.toPx(),
                         center = this.center + Offset(0f, -160f)
                     )
                 }
             }
+            /* 内容 */
             Column(
                 modifier = Modifier
             ) {
@@ -177,8 +185,39 @@ class MainActivity : ComponentActivity() {
                 }
                 Spacer(modifier = Modifier.size(20.dp))
                 /* 病历 + 人 */
-                Row {
-
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Card(
+                        modifier = Modifier
+                            .padding(20.dp)
+                            .weight(0.5f),
+                        colors = CardDefaults.cardColors(
+                            containerColor = colors.tertiaryContainer
+                        ),
+                        elevation = CardDefaults.cardElevation(
+                            defaultElevation = 4.dp
+                        )
+                    ) {
+                        VerticalIconButton(
+                            text = "病历"
+                        )
+                    }
+                    Card(
+                        modifier = Modifier
+                            .padding(20.dp)
+                            .weight(0.5f),
+                        colors = CardDefaults.cardColors(
+                            containerColor = colors.tertiaryContainer
+                        ),
+                        elevation = CardDefaults.cardElevation(
+                            defaultElevation = 4.dp
+                        )
+                    ) {
+                        VerticalIconButton(
+                            text = "病人"
+                        )
+                    }
                 }
                 /* 卡片操作栏 */
                 Card(
@@ -194,20 +233,18 @@ class MainActivity : ComponentActivity() {
                     )
                 ) {
                     LazyVerticalGrid(
-                        columns = GridCells.Adaptive(minSize = 128.dp),
+                        columns = GridCells.Adaptive(minSize = 96.dp),
                         contentPadding = PaddingValues(20.dp),
                         horizontalArrangement = Arrangement.SpaceBetween
                     )
                     {
                         items(operations.size) {
-                            MyButton(
-                                modifier = Modifier
-                                    .height(80.dp)
-                                    .padding(4.dp),
+                            OperateItem(
                                 text = operations[it].text,
                                 icon = operations[it].icon,
-                                onClick = operations[it].onClick
-                            ).show()
+                                onClick = operations[it].onClick,
+                                iconSize = 50.dp
+                            )
                         }
                     }
                 }
