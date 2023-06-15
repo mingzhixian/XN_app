@@ -3,7 +3,7 @@ package edu.swu.xn.app.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.OutlinedButton
@@ -22,7 +22,7 @@ import edu.swu.xn.app.R
 
 
 @Composable
-fun OperateItem(
+fun VerticalIconButton(
     modifier: Modifier = Modifier,
     text: String = "",
     textColor: Color = Color.Gray,
@@ -34,8 +34,8 @@ fun OperateItem(
         onClick = onClick,
         border = null,
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
+        Row(
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
                 painter = icon,
@@ -54,14 +54,10 @@ fun OperateItem(
             )
         }
     }
-
-
 }
 
 @Preview
 @Composable
-fun OperateItemPreview() {
-    OperateItem(
-        text = "挂号"
-    )
+fun VerticalIconButtonPreview() {
+    VerticalIconButton(text = "ABC")
 }
