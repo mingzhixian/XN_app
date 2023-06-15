@@ -31,3 +31,6 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+g2m.cmd
+m2g.cmd
