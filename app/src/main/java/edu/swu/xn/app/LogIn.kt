@@ -2,12 +2,14 @@ package edu.swu.xn.app
 
 import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import org.json.JSONObject
 import java.security.MessageDigest
 
 class LogIn : AppCompatActivity() {
@@ -18,27 +20,31 @@ class LogIn : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_log_in)
+    setButtonLogInListener()
+    setButtonRegisterListener()
   }
 
   // 设置登录按键监听
   private fun setButtonLogInListener() {
     findViewById<Button>(R.id.log_in_button_log_in).setOnClickListener {
-      val phone = findViewById<EditText>(R.id.log_in_phone).text.toString()
+      val name = findViewById<EditText>(R.id.log_in_name).text.toString()
       val password = findViewById<EditText>(R.id.log_in_password).text.toString()
-      val postValue = ContentValues().apply {
-        put("phonenumber", phone)
+      val postValue = JSONObject().apply {
+        put("userName", "user-$name")
         put("password", MD5Util.encode(password))
       }
-      appData.netHelper.get("${R.string.admin_url}/api/service-user/user/addUser", postValue) {
+      appData.netHelper.get("${getString(R.string.admin_url)}/api/security-auth/login", postValue) {
         // 密码账户错误
-        if (it.getInt("")) {
+        if (it.getInt("code") != 200) {
           val checkError = findViewById<TextView>(R.id.log_in_password_check_error)
           checkError.visibility = View.VISIBLE
           checkError.text = "*密码或账户错误"
           return@get
         }
         // 登录成功向数据库保存哈希值
-        saveHashID(it.getString(""))
+        val data = it.getJSONObject("data")
+        val userVO = data.getJSONObject("userVO")
+        saveID(data.getString("token"), userVO.getInt("id"), userVO.getString("userName"))
         setResult(1)
         finish()
       }
@@ -48,20 +54,22 @@ class LogIn : AppCompatActivity() {
   // 设置注册按键监听
   private fun setButtonRegisterListener() {
     findViewById<Button>(R.id.log_in_button_register).setOnClickListener {
-      val nameView = findViewById<EditText>(R.id.log_in_name)
+      val phoneView = findViewById<EditText>(R.id.log_in_phone)
       // 切换为注册页面
       if (status == 0) {
         status = 1
-        nameView.visibility = View.VISIBLE
+        findViewById<TextView>(R.id.log_in_title).visibility = View.GONE
+        phoneView.visibility = View.VISIBLE
         val cardView = findViewById<View>(R.id.log_in_card)
-        val cardViewLayout = cardView.layoutParams as LinearLayout.LayoutParams
+        val cardViewLayout = cardView.layoutParams as ConstraintLayout.LayoutParams
         cardViewLayout.bottomMargin = appData.dp2px(-30f).toInt()
+        cardView.layoutParams = cardViewLayout
         findViewById<View>(R.id.log_in_button_log_in).visibility = View.GONE
         findViewById<View>(R.id.log_in_button_space).visibility = View.GONE
         return@setOnClickListener
       }
-      val name = nameView.text.toString()
-      val phone = findViewById<EditText>(R.id.log_in_phone).text.toString()
+      val phone = phoneView.text.toString()
+      val name = findViewById<EditText>(R.id.log_in_name).text.toString()
       val password = findViewById<EditText>(R.id.log_in_password).text.toString()
       // 检查密码强度
       if (!checkPassword(password)) {
@@ -70,22 +78,28 @@ class LogIn : AppCompatActivity() {
         checkError.text = "*需大于8位小于16位，并至少包含数字、小写字母、大写字母、特殊符号中的三项"
         return@setOnClickListener
       }
-      val postValue = ContentValues().apply {
+      val postValue = JSONObject().apply {
         put("userName", name)
         put("phonenumber", phone)
         put("password", MD5Util.encode(password))
       }
-      appData.netHelper.get("${R.string.admin_url}/api/service-user/user/addUser", postValue) {
-        saveHashID(it.getString(""))
+      appData.netHelper.get(
+        "${getString(R.string.admin_url)}/api/service-user/user/addUser",
+        postValue
+      ) {
+        val data = it.getJSONObject("data")
+        saveID(data.getString("token"), data.getInt("id"), data.getString("userName"))
         setResult(1)
         finish()
       }
     }
   }
 
-  private fun saveHashID(hashID: String) {
+  private fun saveID(hashID: String, id: Int, userName: String) {
     appData.settings.edit().apply {
       putString("hashID", hashID)
+      putInt("id", id)
+      putString("userName", userName)
       apply()
     }
   }
@@ -99,6 +113,12 @@ class LogIn : AppCompatActivity() {
     if (password.matches(Regex(".*[a-z]+.*"))) i++
     if (password.matches(Regex(".*[~!@#$%^&*()_+|<>,.?/:;'\\[\\]{}\"]+.*"))) i++
     return i >= 3
+  }
+
+  // 检查协议是否同意
+  private fun checkAgreement(): Boolean {
+    // todo 检查
+    return true
   }
 
 
