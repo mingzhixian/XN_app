@@ -1,17 +1,8 @@
-package edu.swu.xn.app
+package edu.swu.xn.app.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModelProvider
-import edu.swu.xn.app.ui.theme.XN_appTheme
 import edu.swu.xn.app.helper.AppData
 
 lateinit var appData: AppData
