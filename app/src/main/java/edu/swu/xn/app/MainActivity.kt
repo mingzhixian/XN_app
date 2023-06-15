@@ -2,7 +2,6 @@ package edu.swu.xn.app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -51,6 +50,7 @@ import edu.swu.xn.app.ui.theme.AppTheme
 lateinit var appData: AppData
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         appData = ViewModelProvider(this).get(AppData::class.java)
@@ -249,28 +249,67 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
+          }
         }
-    }
+        Spacer(modifier = Modifier.size(20.dp))
+        /* 病历 + 人 */
+        Row {
 
-    @Preview
-    @Composable
-    fun HomePagePreview() {
-        HomePage(
-            name = "小老弟"
-        )
-    }
-
-
-    // 第一次使用
-    private fun firstUse() {
-        // 通知注册
-        appData.notificationHelper.registerChannel()
-        // 权限申请
-        appData.notificationHelper.requireNotificationPermission()
-        // 保存
-        appData.settings.edit().apply {
-            putBoolean("FirstUse", false)
-            apply()
         }
+        /* 卡片操作栏 */
+        Card(
+          modifier = Modifier.padding(
+            start = 20.dp,
+            end = 20.dp
+          ),
+          colors = CardDefaults.cardColors(
+            containerColor = Color.White,
+          ),
+          elevation = CardDefaults.cardElevation(
+            defaultElevation = 4.dp
+          )
+        ) {
+          LazyVerticalGrid(
+            columns = GridCells.Adaptive(minSize = 128.dp),
+            contentPadding = PaddingValues(20.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+          )
+          {
+            items(operations.size) {
+              MyButton(
+                modifier = Modifier
+                  .height(80.dp)
+                  .padding(4.dp),
+                text = operations[it].text,
+                icon = operations[it].icon,
+                onClick = operations[it].onClick
+              ).show()
+            }
+          }
+        }
+      }
     }
+  }
+
+  @Preview
+  @Composable
+  fun HomePagePreview() {
+    HomePage(
+      name = "小老弟"
+    )
+  }
+
+
+  // 第一次使用
+  private fun firstUse() {
+    // 通知注册
+    appData.notificationHelper.registerChannel()
+    // 权限申请
+    appData.notificationHelper.requireNotificationPermission()
+    // 保存
+    appData.settings.edit().apply {
+      putBoolean("FirstUse", false)
+      apply()
+    }
+  }
 }
