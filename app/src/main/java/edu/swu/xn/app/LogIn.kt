@@ -31,7 +31,7 @@ class LogIn : AppCompatActivity() {
       }
       appData.netHelper.get("${R.string.admin_url}/api/service-user/user/addUser", postValue) {
         // 密码账户错误
-        if () {
+        if (it.getInt("")) {
           val checkError = findViewById<TextView>(R.id.log_in_password_check_error)
           checkError.visibility = View.VISIBLE
           checkError.text = "*密码或账户错误"
@@ -39,6 +39,7 @@ class LogIn : AppCompatActivity() {
         }
         // 登录成功向数据库保存哈希值
         saveHashID(it.getString(""))
+        setResult(1)
         finish()
       }
     }
@@ -76,6 +77,7 @@ class LogIn : AppCompatActivity() {
       }
       appData.netHelper.get("${R.string.admin_url}/api/service-user/user/addUser", postValue) {
         saveHashID(it.getString(""))
+        setResult(1)
         finish()
       }
     }
