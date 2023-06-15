@@ -127,5 +127,4 @@ class LogIn : AppCompatActivity() {
       return hexValue.toString()
     }
   }
-
 }
