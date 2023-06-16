@@ -21,7 +21,10 @@
             android:name=".SearchActivity"
             android:exported="false" />
         <activity
-            android:name=".LogIn"
+            android:name=".SubjectActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LogInActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
