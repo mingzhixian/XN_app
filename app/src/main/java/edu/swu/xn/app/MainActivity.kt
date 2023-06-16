@@ -2,7 +2,6 @@ package edu.swu.xn.app
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Canvas
@@ -69,7 +68,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         appData = ViewModelProvider(this).get(AppData()::class.java)
         if (!appData.isInit) appData.init(this)
-         //     第一次使用
+        //     第一次使用
         if (appData.settings.getBoolean("FirstUse", true)) firstUse()
         //     检测登录
         appData.hashID = appData.settings.getString("hashID", "").toString()
@@ -81,50 +80,6 @@ class MainActivity : ComponentActivity() {
                 ), 1
             )
         }
-        setContent {
-            AppTheme {
-                HomePage(
-                    name = "小老弟",
-                    commonSenses = listOf(
-                        CommonSense(
-                            url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-                            title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-                            content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-                        ),
-                        CommonSense(
-                            url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-                            title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-                            content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-                        ),
-                        CommonSense(
-                            url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-                            title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-                            content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-                        ),
-                        CommonSense(
-                            url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-                            title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-                            content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-                        ),
-                        CommonSense(
-                            url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-                            title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-                            content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-                        ),
-                        CommonSense(
-                            url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-                            title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-                            content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-                        ),
-                        CommonSense(
-                            url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-                            title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-                            content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-                        )
-                    )
-                )
-            }
-        }
     }
 
     // 其他页面回调
@@ -134,7 +89,50 @@ class MainActivity : ComponentActivity() {
         // 登录页面回调
         if (requestCode == 1) {
             if (resultCode == 1) {
-                Log.i("xn.app", "登录成功")
+                setContent {
+                    AppTheme {
+                        HomePage(
+                            name = "小老弟",
+                            commonSenses = listOf(
+                                CommonSense(
+                                    url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+                                    title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+                                    content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+                                ),
+                                CommonSense(
+                                    url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+                                    title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+                                    content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+                                ),
+                                CommonSense(
+                                    url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+                                    title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+                                    content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+                                ),
+                                CommonSense(
+                                    url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+                                    title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+                                    content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+                                ),
+                                CommonSense(
+                                    url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+                                    title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+                                    content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+                                ),
+                                CommonSense(
+                                    url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+                                    title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+                                    content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+                                ),
+                                CommonSense(
+                                    url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+                                    title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+                                    content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+                                )
+                            )
+                        )
+                    }
+                }
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
@@ -183,7 +181,7 @@ class MainActivity : ComponentActivity() {
 
         Box(
             modifier = modifier
-                .background(Color.White)
+                .background(colors.background)
                 .fillMaxSize()
         )
         {
@@ -297,14 +295,16 @@ class MainActivity : ComponentActivity() {
                                 .padding(20.dp)
                                 .weight(0.5f),
                             colors = CardDefaults.cardColors(
-                                containerColor = colors.tertiaryContainer
+                                containerColor = colors.primaryContainer
                             ),
                             elevation = CardDefaults.cardElevation(
                                 defaultElevation = 4.dp
                             )
                         ) {
                             VerticalIconButton(
-                                text = "病历"
+                                text = "病历",
+                                icon = painterResource(id = R.drawable.medical_record),
+                                iconSize = 40.dp
                             )
                         }
                         Card(
@@ -312,14 +312,16 @@ class MainActivity : ComponentActivity() {
                                 .padding(20.dp)
                                 .weight(0.5f),
                             colors = CardDefaults.cardColors(
-                                containerColor = colors.tertiaryContainer
+                                containerColor = colors.primaryContainer
                             ),
                             elevation = CardDefaults.cardElevation(
                                 defaultElevation = 4.dp
                             )
                         ) {
                             VerticalIconButton(
-                                text = "病人"
+                                text = "就诊人",
+                                icon = painterResource(id = R.drawable.patient),
+                                iconSize = 40.dp
                             )
                         }
                     }
@@ -334,7 +336,7 @@ class MainActivity : ComponentActivity() {
                             )
                             .height(306.dp),
                         colors = CardDefaults.cardColors(
-                            containerColor = Color.White,
+                            containerColor = colors.secondaryContainer,
                         ),
                         elevation = CardDefaults.cardElevation(
                             defaultElevation = 4.dp
@@ -362,7 +364,7 @@ class MainActivity : ComponentActivity() {
                 /* 常识列表 */
                 items(commonSenses.size) { index ->
                     CommonSenseCard(
-                        modifier = Modifier.background(Color.White),
+                        modifier = Modifier.background(colors.background),
                         commonSense = commonSenses[index]
                     )
                 }
