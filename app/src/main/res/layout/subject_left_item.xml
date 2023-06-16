@@ -4,8 +4,19 @@
     android:id="@+id/subject_left_item_layout"
     android:layout_width="match_parent"
     android:layout_height="60dp"
+    android:layout_marginStart="-20dp"
+    android:background="@drawable/corn_s"
     android:gravity="center_vertical"
-    android:orientation="vertical">
+    android:orientation="horizontal"
+    android:paddingStart="20dp">
+
+    <View
+        android:id="@+id/subject_left_item_select"
+        android:layout_width="5dp"
+        android:layout_height="match_parent"
+        android:background="@color/md_theme_primary"
+        android:visibility="gone" />
+
 
     <TextView
         android:id="@+id/subject_left_item_text"
@@ -18,10 +29,4 @@
         android:text="测试"
         android:textSize="18sp" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.8dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="20dp"
-        android:background="@color/md_theme_onBackground" />
 </LinearLayout>

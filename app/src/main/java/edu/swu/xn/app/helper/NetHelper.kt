@@ -33,7 +33,9 @@ class NetHelper {
             handle(JSONObject(response.body!!.string()))
           }
         } catch (_: Exception) {
-          Toast.makeText(appData.main, "网络错误", Toast.LENGTH_SHORT).show()
+          withContext(Dispatchers.Main){
+            Toast.makeText(appData.main, "网络错误", Toast.LENGTH_SHORT).show()
+          }
         }
       }
     }
