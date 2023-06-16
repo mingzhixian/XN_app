@@ -52,6 +52,8 @@ class NetHelper {
         }
         try {
           okhttpClient.newCall(request.build()).execute().use { response ->
+            Log.i("response",response.toString())
+            Log.i("hzd",response.body!!.string())
             handle(JSONObject(response.body!!.string()))
           }
         } catch (_: Exception) {
