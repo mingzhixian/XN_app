@@ -10,27 +10,29 @@
     tools:context=".SubjectActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/subject_left"
+        android:id="@+id/appointment_top"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         android:layout_marginTop="40dp"
-        android:layout_marginBottom="20dp"
-        android:layout_weight="35"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/corn_s"
         android:backgroundTint="@color/md_theme_surfaceVariant"
+        android:orientation="horizontal"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
         tools:ignore="RtlSymmetry"
-        tools:listitem="@layout/subject_left_item" />
+        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/appointment_top_item" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/subject_right"
+        android:id="@+id/appointment_bottom"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_weight="50"
-        tools:listitem="@layout/subject_right_item" />
+        android:layout_weight="1"
+        tools:listitem="@layout/appointment_bottom_item" />
 
 </LinearLayout>

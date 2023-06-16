@@ -1,9 +1,9 @@
 package edu.swu.xn.app
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
@@ -11,10 +11,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import edu.swu.xn.app.entity.Subject
-import edu.swu.xn.app.helper.SubjectAdapter
-import okhttp3.internal.notify
-import java.util.LinkedList
+import edu.swu.xn.app.helper.RecyclerViewAdapter
 
 class SubjectActivity : AppCompatActivity() {
   @SuppressLint("NotifyDataSetChanged")
@@ -28,11 +25,11 @@ class SubjectActivity : AppCompatActivity() {
       // 取消加载框
       appData.loadingDialog.cancel()
       var subSubjectList = appData.subjectList[0].subList
-      lateinit var subjectRightAdapter: SubjectAdapter
+      lateinit var subjectRightAdapter: RecyclerViewAdapter
       // 左部分
       val subjectLeft = findViewById<RecyclerView>(R.id.subject_left)
       subjectLeft.layoutManager = LinearLayoutManager(this)
-      subjectLeft.adapter = SubjectAdapter(R.layout.subject_left_item,
+      subjectLeft.adapter = RecyclerViewAdapter(R.layout.subject_left_item,
         { appData.subjectList.size }) { holder, position ->
         holder.itemView.findViewById<TextView>(R.id.subject_left_item_text).text =
           appData.subjectList[position].name
@@ -64,7 +61,9 @@ class SubjectActivity : AppCompatActivity() {
       val subjectRight = findViewById<RecyclerView>(R.id.subject_right)
       subjectRight.layoutManager = LinearLayoutManager(this)
       subjectRightAdapter =
-        SubjectAdapter(R.layout.subject_right_item, { subSubjectList.size }) { holder, position ->
+        RecyclerViewAdapter(
+          R.layout.subject_right_item,
+          { subSubjectList.size }) { holder, position ->
           val rightItem = holder.itemView.findViewById<LinearLayout>(R.id.subject_right_item_layout)
           val rightList = holder.itemView.findViewById<LinearLayout>(R.id.subject_right_item_list)
           holder.itemView.findViewById<TextView>(R.id.subject_right_item_text).text =
@@ -82,7 +81,9 @@ class SubjectActivity : AppCompatActivity() {
                 subList[i].name
               listItem.setOnClickListener {
                 // todo 跳转订号页面
-                subList[i].name
+                val intent = Intent(this, AppointmentActivity::class.java)
+                intent.putExtra("deptName", subList[i].name)
+                startActivity(intent)
               }
               rightList.addView(listItem)
             }
