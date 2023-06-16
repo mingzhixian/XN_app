@@ -40,7 +40,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -77,7 +76,8 @@ class MainActivity : ComponentActivity() {
     if (appData.settings.getBoolean("FirstUse", true)) firstUse()
     // 检测登录
     appData.hashID = appData.settings.getString("hashID", "").toString()
-    if (appData.hashID == "") {
+    //TODO 测试
+    if (false) {
       startActivityForResult(
         Intent(
           this,
@@ -196,7 +196,9 @@ class MainActivity : ComponentActivity() {
     fontSize: Int = 14,
     icon: Painter = painterResource(id = R.drawable.usericon),
     iconSize: Dp = 48.dp,
-    searchOnClick: () -> Unit = {},
+    searchOnClick: () -> Unit = {
+      startActivity(Intent(this, SearchActivity::class.java))
+    },
     messageOnClick: () -> Unit = {},
     operations: List<Operation> = listOf(
       Operation("挂号", painterResource(id = R.drawable.register)) {
@@ -225,12 +227,12 @@ class MainActivity : ComponentActivity() {
       colors = MaterialTheme.colorScheme
     }
     /* 消息数状态 */
-    var badgeNumber by rememberSaveable {
-      mutableStateOf(0)
+    val badgeNumber by rememberSaveable {
+      mutableStateOf(8)
     }
     Box(
       modifier = modifier
-        .background(Color.White)
+        .background(colors.background)
         .fillMaxSize()
     )
     {
@@ -241,7 +243,7 @@ class MainActivity : ComponentActivity() {
       ) {
         scale(scaleX = 15f, scaleY = 10f) {
           drawCircle(
-            color = colors.primary,
+            color = colors.primaryContainer,
             radius = 40.dp.toPx(),
             center = this.center + Offset(0f, -160f)
           )
@@ -344,7 +346,7 @@ class MainActivity : ComponentActivity() {
                 .padding(20.dp)
                 .weight(0.5f),
               colors = CardDefaults.cardColors(
-                containerColor = colors.primaryContainer
+                containerColor = colors.background
               ),
               elevation = CardDefaults.cardElevation(
                 defaultElevation = 4.dp
@@ -361,7 +363,7 @@ class MainActivity : ComponentActivity() {
                 .padding(20.dp)
                 .weight(0.5f),
               colors = CardDefaults.cardColors(
-                containerColor = colors.primaryContainer
+                containerColor = colors.background
               ),
               elevation = CardDefaults.cardElevation(
                 defaultElevation = 4.dp
@@ -385,7 +387,7 @@ class MainActivity : ComponentActivity() {
               )
               .height(306.dp),
             colors = CardDefaults.cardColors(
-              containerColor = colors.secondaryContainer,
+              containerColor = colors.background,
             ),
             elevation = CardDefaults.cardElevation(
               defaultElevation = 4.dp
