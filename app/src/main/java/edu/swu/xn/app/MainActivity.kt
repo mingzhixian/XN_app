@@ -2,7 +2,6 @@ package edu.swu.xn.app
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Canvas
@@ -65,79 +64,78 @@ lateinit var appData: AppData
 
 class MainActivity : ComponentActivity() {
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    appData = ViewModelProvider(this).get(AppData()::class.java)
-    if (!appData.isInit) appData.init(this)
-    // 第一次使用
-    if (appData.settings.getBoolean("FirstUse", true)) firstUse()
-    // 检测登录
-    appData.hashID = appData.settings.getString("hashID", "").toString()
-    if (appData.hashID == "") {
-      startActivityForResult(
-        Intent(
-          this,
-          LogInActivity::class.java
-        ), 1
-      )
-    }
-    setContent {
-      AppTheme {
-        HomePage(
-          name = "小老弟",
-          commonSenses = listOf(
-            CommonSense(
-              url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-              title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-              content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-            ),
-            CommonSense(
-              url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-              title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-              content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-            ),
-            CommonSense(
-              url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-              title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-              content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-            ),
-            CommonSense(
-              url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-              title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-              content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-            ),
-            CommonSense(
-              url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-              title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-              content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-            ),
-            CommonSense(
-              url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-              title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-              content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-            ),
-            CommonSense(
-              url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-              title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-              content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        appData = ViewModelProvider(this).get(AppData()::class.java)
+        if (!appData.isInit) appData.init(this)
+        //     第一次使用
+        if (appData.settings.getBoolean("FirstUse", true)) firstUse()
+        //     检测登录
+        appData.hashID = appData.settings.getString("hashID", "").toString()
+        if (appData.hashID == "") {
+            startActivityForResult(
+                Intent(
+                    this,
+                    LogIn::class.java
+                ), 1
             )
-          )
-        )
-      }
-    }
+        }
   }
 
-  // 其他页面回调
-  // 1为登录界面回调，
-  @Deprecated("Deprecated in Java")
-  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    // 登录页面回调
-    if (requestCode == 1) {
-      if (resultCode == 1) {
-        Log.i("xn.app", "登录成功")
-      }
-    }
-    super.onActivityResult(requestCode, resultCode, data)
+    // 其他页面回调
+    // 1为登录界面回调，
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        // 登录页面回调
+        if (requestCode == 1) {
+            if (resultCode == 1) {
+                setContent {
+                    AppTheme {
+                        HomePage(
+                            name = "小老弟",
+                            commonSenses = listOf(
+                                CommonSense(
+                                    url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+                                    title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+                                    content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+                                ),
+                                CommonSense(
+                                    url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+                                    title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+                                    content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+                                ),
+                                CommonSense(
+                                    url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+                                    title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+                                    content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+                                ),
+                                CommonSense(
+                                    url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+                                    title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+                                    content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+                                ),
+                                CommonSense(
+                                    url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+                                    title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+                                    content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+                                ),
+                                CommonSense(
+                                    url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+                                    title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+                                    content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+                                ),
+                                CommonSense(
+                                    url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+                                    title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+                                    content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+                                )
+                            )
+                        )
+                    }
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
   }
 
   @OptIn(ExperimentalMaterial3Api::class)
@@ -180,7 +178,16 @@ class MainActivity : ComponentActivity() {
     var badgeNumber by rememberSaveable {
       mutableStateOf(0)
     }
-
+// todo
+        Box(
+            modifier = modifier
+                .background(colors.background)
+                .fillMaxSize()
+        )
+        {
+            /* 顶部背景椭圆 */
+            Canvas(
+// todo
     Box(
       modifier = modifier
         .background(Color.White)
@@ -224,6 +231,7 @@ class MainActivity : ComponentActivity() {
               Icon(
                 painter = icon,
                 contentDescription = null,
+// todo
                 modifier = Modifier
                   .size(iconSize)
                   .clip(CircleShape),
@@ -303,6 +311,173 @@ class MainActivity : ComponentActivity() {
                 defaultElevation = 4.dp
               )
             ) {
+// todo
+                /* 顶部欢迎栏 */
+                item {
+                    Row(
+                        modifier = Modifier
+                            .background(Color.Transparent)
+                            .padding(top = 20.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        // 右侧
+                        Row(
+                            modifier = Modifier
+                                .background(Color.Transparent)
+                                .weight(0.5f)
+                                .padding(start = 20.dp)
+                        ) {
+                            Icon(
+                                painter = icon,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .size(iconSize)
+                                    .clip(CircleShape),
+                                tint = Color.Unspecified
+                            )
+                            Spacer(modifier = Modifier.size(8.dp))
+                            Column {
+                                Text(
+                                    text = "Hi $name,",
+                                    fontSize = fontSize.sp,
+                                    color = Color.White
+                                )
+                                Text(
+                                    text = "欢迎回来！",
+                                    fontSize = (fontSize - 2).sp,
+                                    color = Color.LightGray
+                                )
+                            }
+                        }
+                        // 左侧
+                        Row(
+                            modifier = Modifier
+                                .background(Color.Transparent)
+                                .weight(0.5f),
+                            horizontalArrangement = Arrangement.End
+                        ) {
+                            IconButton(onClick = searchOnClick) {
+                                Icon(
+                                    imageVector = Icons.Filled.Search,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(20.dp),
+                                    tint = Color.White
+                                )
+                            }
+                            IconButton(onClick = messageOnClick) {
+                                Icon(
+                                    imageVector = Icons.Default.Email,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(20.dp),
+                                    tint = Color.White
+                                )
+                                if (badgeNumber > 0) {
+                                    Badge(
+                                        modifier = Modifier.padding(
+                                            bottom = 15.dp,
+                                            start = 15.dp
+                                        )
+                                    ) {
+                                        Text(
+                                            badgeNumber.toString(),
+                                            modifier = Modifier.semantics {
+                                                contentDescription =
+                                                    "$badgeNumber new notifications"
+                                            }
+                                        )
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                    Spacer(modifier = Modifier.size(20.dp))
+                }
+                /* 病历 + 人 */
+                item {
+                    Row(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Card(
+                            modifier = Modifier
+                                .padding(20.dp)
+                                .weight(0.5f),
+                            colors = CardDefaults.cardColors(
+                                containerColor = colors.primaryContainer
+                            ),
+                            elevation = CardDefaults.cardElevation(
+                                defaultElevation = 4.dp
+                            )
+                        ) {
+                            VerticalIconButton(
+                                text = "病历",
+                                icon = painterResource(id = R.drawable.medical_record),
+                                iconSize = 40.dp
+                            )
+                        }
+                        Card(
+                            modifier = Modifier
+                                .padding(20.dp)
+                                .weight(0.5f),
+                            colors = CardDefaults.cardColors(
+                                containerColor = colors.primaryContainer
+                            ),
+                            elevation = CardDefaults.cardElevation(
+                                defaultElevation = 4.dp
+                            )
+                        ) {
+                            VerticalIconButton(
+                                text = "就诊人",
+                                icon = painterResource(id = R.drawable.patient),
+                                iconSize = 40.dp
+                            )
+                        }
+                    }
+                }
+                /* 卡片操作栏 */
+                item {
+                    Card(
+                        modifier = Modifier
+                            .padding(
+                                start = 20.dp,
+                                end = 20.dp
+                            )
+                            .height(306.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = colors.secondaryContainer,
+                        ),
+                        elevation = CardDefaults.cardElevation(
+                            defaultElevation = 4.dp
+                        )
+                    ) {
+                        LazyVerticalGrid(
+                            columns = GridCells.Fixed(2),
+                            contentPadding = PaddingValues(20.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            userScrollEnabled = false
+                        )
+                        {
+                            items(operations.size) {
+                                OperateItem(
+                                    text = operations[it].text,
+                                    icon = operations[it].icon,
+                                    onClick = operations[it].onClick,
+                                    iconSize = 50.dp
+                                )
+                            }
+                        }
+                    }
+                    Spacer(modifier = Modifier.size(10.dp))
+                }
+                /* 常识列表 */
+                items(commonSenses.size) { index ->
+                    CommonSenseCard(
+                        modifier = Modifier.background(colors.background),
+                        commonSense = commonSenses[index]
+                    )
+                }
+// todo
               VerticalIconButton(
                 text = "病历"
               )
@@ -355,6 +530,7 @@ class MainActivity : ComponentActivity() {
                   iconSize = 50.dp
                 )
               }
+// todo
             }
           }
           Spacer(modifier = Modifier.size(10.dp))

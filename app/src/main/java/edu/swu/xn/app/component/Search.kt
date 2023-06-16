@@ -79,7 +79,7 @@ fun Search(
             unfocusedIndicatorColor = Color.Transparent
         ),
         /* 图形 */
-        shape = MaterialTheme.shapes.extraLarge,
+        shape = MaterialTheme.shapes.large,
         /* 键盘操作变焦 */
         keyboardActions = KeyboardActions(
             /* 键盘输入完成回调 */
