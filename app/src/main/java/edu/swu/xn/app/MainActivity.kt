@@ -21,18 +21,23 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Badge
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,6 +46,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -133,6 +140,7 @@ class MainActivity : ComponentActivity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun HomePage(
         modifier: Modifier = Modifier,
@@ -168,11 +176,15 @@ class MainActivity : ComponentActivity() {
         AppTheme {
             colors = MaterialTheme.colorScheme
         }
-        val state = rememberScrollState()
+        /* 消息数状态 */
+        var badgeNumber by rememberSaveable {
+            mutableStateOf(0)
+        }
+
         Box(
             modifier = modifier
-              .background(Color.White)
-              .fillMaxSize()
+                .background(Color.White)
+                .fillMaxSize()
         )
         {
             /* 顶部背景椭圆 */
@@ -193,28 +205,28 @@ class MainActivity : ComponentActivity() {
                 modifier = Modifier
                     .fillMaxSize(),
             ) {
+                /* 顶部欢迎栏 */
                 item {
-                    /* 顶部欢迎栏 */
                     Row(
                         modifier = Modifier
-                          .background(Color.Transparent)
-                          .padding(top = 20.dp),
+                            .background(Color.Transparent)
+                            .padding(top = 20.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         // 右侧
                         Row(
                             modifier = Modifier
-                              .background(Color.Transparent)
-                              .weight(0.5f)
-                              .padding(start = 20.dp)
+                                .background(Color.Transparent)
+                                .weight(0.5f)
+                                .padding(start = 20.dp)
                         ) {
                             Icon(
                                 painter = icon,
                                 contentDescription = null,
                                 modifier = Modifier
-                                  .size(iconSize)
-                                  .clip(CircleShape),
+                                    .size(iconSize)
+                                    .clip(CircleShape),
                                 tint = Color.Unspecified
                             )
                             Spacer(modifier = Modifier.size(8.dp))
@@ -234,8 +246,8 @@ class MainActivity : ComponentActivity() {
                         // 左侧
                         Row(
                             modifier = Modifier
-                              .background(Color.Transparent)
-                              .weight(0.5f),
+                                .background(Color.Transparent)
+                                .weight(0.5f),
                             horizontalArrangement = Arrangement.End
                         ) {
                             IconButton(onClick = searchOnClick) {
@@ -253,18 +265,37 @@ class MainActivity : ComponentActivity() {
                                     modifier = Modifier.size(20.dp),
                                     tint = Color.White
                                 )
+                                if (badgeNumber > 0) {
+                                    Badge(
+                                        modifier = Modifier.padding(
+                                            bottom = 15.dp,
+                                            start = 15.dp
+                                        )
+                                    ) {
+                                        Text(
+                                            badgeNumber.toString(),
+                                            modifier = Modifier.semantics {
+                                                contentDescription =
+                                                    "$badgeNumber new notifications"
+                                            }
+                                        )
+                                    }
+                                }
                             }
+
                         }
                     }
                     Spacer(modifier = Modifier.size(20.dp))
-                    /* 病历 + 人 */
+                }
+                /* 病历 + 人 */
+                item {
                     Row(
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Card(
                             modifier = Modifier
-                              .padding(20.dp)
-                              .weight(0.5f),
+                                .padding(20.dp)
+                                .weight(0.5f),
                             colors = CardDefaults.cardColors(
                                 containerColor = colors.tertiaryContainer
                             ),
@@ -278,8 +309,8 @@ class MainActivity : ComponentActivity() {
                         }
                         Card(
                             modifier = Modifier
-                              .padding(20.dp)
-                              .weight(0.5f),
+                                .padding(20.dp)
+                                .weight(0.5f),
                             colors = CardDefaults.cardColors(
                                 containerColor = colors.tertiaryContainer
                             ),
@@ -292,14 +323,16 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                     }
-                    /* 卡片操作栏 */
+                }
+                /* 卡片操作栏 */
+                item {
                     Card(
                         modifier = Modifier
-                          .padding(
-                            start = 20.dp,
-                            end = 20.dp
-                          )
-                          .height((3 * 96 + 20).dp),
+                            .padding(
+                                start = 20.dp,
+                                end = 20.dp
+                            )
+                            .height(306.dp),
                         colors = CardDefaults.cardColors(
                             containerColor = Color.White,
                         ),
@@ -308,7 +341,6 @@ class MainActivity : ComponentActivity() {
                         )
                     ) {
                         LazyVerticalGrid(
-//              columns = GridCells.Adaptive(minSize = 96.dp),
                             columns = GridCells.Fixed(2),
                             contentPadding = PaddingValues(20.dp),
                             horizontalArrangement = Arrangement.SpaceBetween,
@@ -325,18 +357,14 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                     }
+                    Spacer(modifier = Modifier.size(10.dp))
                 }
                 /* 常识列表 */
-//        Column(
-//          modifier = Modifier
-//            .fillMaxWidth()
-//        ) {
-//          commonSenses.forEach{ commonSense ->
-//            CommonSenseCard(commonSense = commonSense)
-//          }
-//        }
                 items(commonSenses.size) { index ->
-                    CommonSenseCard(commonSense = commonSenses[index])
+                    CommonSenseCard(
+                        modifier = Modifier.background(Color.White),
+                        commonSense = commonSenses[index]
+                    )
                 }
             }
         }
@@ -348,11 +376,6 @@ class MainActivity : ComponentActivity() {
         HomePage(
             name = "小老弟",
             commonSenses = listOf(
-                CommonSense(
-                    url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-                    title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-                    content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-                ),
                 CommonSense(
                     url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
                     title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
