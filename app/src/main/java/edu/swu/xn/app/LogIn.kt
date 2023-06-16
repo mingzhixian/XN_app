@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import org.json.JSONObject
@@ -24,9 +26,16 @@ class LogIn : AppCompatActivity() {
     setButtonRegisterListener()
   }
 
+  // 禁止返回上一级
+  @Deprecated("Deprecated in Java")
+  override fun onBackPressed() {
+    Toast.makeText(appData.main, "请先登录", Toast.LENGTH_SHORT).show()
+  }
+
   // 设置登录按键监听
   private fun setButtonLogInListener() {
     findViewById<Button>(R.id.log_in_button_log_in).setOnClickListener {
+      if (!checkAgreement()) return@setOnClickListener
       val name = findViewById<EditText>(R.id.log_in_name).text.toString()
       val password = findViewById<EditText>(R.id.log_in_password).text.toString()
       val postValue = JSONObject().apply {
@@ -54,6 +63,7 @@ class LogIn : AppCompatActivity() {
   // 设置注册按键监听
   private fun setButtonRegisterListener() {
     findViewById<Button>(R.id.log_in_button_register).setOnClickListener {
+      if (!checkAgreement()) return@setOnClickListener
       val phoneView = findViewById<EditText>(R.id.log_in_phone)
       // 切换为注册页面
       if (status == 0) {
@@ -117,7 +127,10 @@ class LogIn : AppCompatActivity() {
 
   // 检查协议是否同意
   private fun checkAgreement(): Boolean {
-    // todo 检查
+    if (!findViewById<CheckBox>(R.id.log_in_pri_agreement).isChecked || !findViewById<CheckBox>(R.id.log_in_pri_agreement).isChecked) {
+      Toast.makeText(appData.main, "请先同意隐私与用户协议", Toast.LENGTH_SHORT).show()
+      return false
+    }
     return true
   }
 

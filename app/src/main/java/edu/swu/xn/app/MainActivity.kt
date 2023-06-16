@@ -69,9 +69,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         appData = ViewModelProvider(this).get(AppData()::class.java)
         if (!appData.isInit) appData.init(this)
-//     第一次使用
+         //     第一次使用
         if (appData.settings.getBoolean("FirstUse", true)) firstUse()
-//     检测登录
+        //     检测登录
         appData.hashID = appData.settings.getString("hashID", "").toString()
         if (appData.hashID == "") {
             startActivityForResult(
