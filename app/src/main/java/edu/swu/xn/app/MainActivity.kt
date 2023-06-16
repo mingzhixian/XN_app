@@ -65,352 +65,352 @@ lateinit var appData: AppData
 
 class MainActivity : ComponentActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        appData = ViewModelProvider(this).get(AppData()::class.java)
-        if (!appData.isInit) appData.init(this)
-         //     第一次使用
-        if (appData.settings.getBoolean("FirstUse", true)) firstUse()
-        //     检测登录
-        appData.hashID = appData.settings.getString("hashID", "").toString()
-        if (appData.hashID == "") {
-            startActivityForResult(
-                Intent(
-                    this,
-                    LogIn::class.java
-                ), 1
-            )
-        }
-        setContent {
-            AppTheme {
-                HomePage(
-                    name = "小老弟",
-                    commonSenses = listOf(
-                        CommonSense(
-                            url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-                            title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-                            content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-                        ),
-                        CommonSense(
-                            url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-                            title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-                            content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-                        ),
-                        CommonSense(
-                            url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-                            title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-                            content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-                        ),
-                        CommonSense(
-                            url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-                            title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-                            content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-                        ),
-                        CommonSense(
-                            url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-                            title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-                            content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-                        ),
-                        CommonSense(
-                            url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-                            title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-                            content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-                        ),
-                        CommonSense(
-                            url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-                            title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-                            content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-                        )
-                    )
-                )
-            }
-        }
-    }
-
-    // 其他页面回调
-    // 1为登录界面回调，
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        // 登录页面回调
-        if (requestCode == 1) {
-            if (resultCode == 1) {
-                Log.i("xn.app", "登录成功")
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data)
-    }
-
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    fun HomePage(
-        modifier: Modifier = Modifier,
-        name: String = "",
-        fontSize: Int = 14,
-        icon: Painter = painterResource(id = R.drawable.usericon),
-        iconSize: Dp = 48.dp,
-        searchOnClick: () -> Unit = {},
-        messageOnClick: () -> Unit = {},
-        operations: List<Operation> = listOf(
-            Operation("挂号", painterResource(id = R.drawable.register)) {
-
-            },
-            Operation("缴费", painterResource(id = R.drawable.pay)) {
-
-            },
-            Operation("报告单", painterResource(id = R.drawable.report)) {
-
-            },
-            Operation("订单", painterResource(id = R.drawable.order)) {
-
-            },
-            Operation("智能导诊", painterResource(id = R.drawable.intelligent_guidance)) {
-
-            },
-            Operation("待办", painterResource(id = R.drawable.pending)) {
-
-            }
-        ),
-        commonSenses: List<CommonSense> = listOf(),
-    ) {
-        var colors = MaterialTheme.colorScheme
-        AppTheme {
-            colors = MaterialTheme.colorScheme
-        }
-        /* 消息数状态 */
-        var badgeNumber by rememberSaveable {
-            mutableStateOf(0)
-        }
-
-        Box(
-            modifier = modifier
-                .background(Color.White)
-                .fillMaxSize()
-        )
-        {
-            /* 顶部背景椭圆 */
-            Canvas(
-                modifier = Modifier
-                    .fillMaxSize()
-            ) {
-                scale(scaleX = 15f, scaleY = 10f) {
-                    drawCircle(
-                        color = colors.primary,
-                        radius = 40.dp.toPx(),
-                        center = this.center + Offset(0f, -160f)
-                    )
-                }
-            }
-            /* 内容 */
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize(),
-            ) {
-                /* 顶部欢迎栏 */
-                item {
-                    Row(
-                        modifier = Modifier
-                            .background(Color.Transparent)
-                            .padding(top = 20.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        // 右侧
-                        Row(
-                            modifier = Modifier
-                                .background(Color.Transparent)
-                                .weight(0.5f)
-                                .padding(start = 20.dp)
-                        ) {
-                            Icon(
-                                painter = icon,
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(iconSize)
-                                    .clip(CircleShape),
-                                tint = Color.Unspecified
-                            )
-                            Spacer(modifier = Modifier.size(8.dp))
-                            Column {
-                                Text(
-                                    text = "Hi $name,",
-                                    fontSize = fontSize.sp,
-                                    color = Color.White
-                                )
-                                Text(
-                                    text = "欢迎回来！",
-                                    fontSize = (fontSize - 2).sp,
-                                    color = Color.LightGray
-                                )
-                            }
-                        }
-                        // 左侧
-                        Row(
-                            modifier = Modifier
-                                .background(Color.Transparent)
-                                .weight(0.5f),
-                            horizontalArrangement = Arrangement.End
-                        ) {
-                            IconButton(onClick = searchOnClick) {
-                                Icon(
-                                    imageVector = Icons.Filled.Search,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(20.dp),
-                                    tint = Color.White
-                                )
-                            }
-                            IconButton(onClick = messageOnClick) {
-                                Icon(
-                                    imageVector = Icons.Default.Email,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(20.dp),
-                                    tint = Color.White
-                                )
-                                if (badgeNumber > 0) {
-                                    Badge(
-                                        modifier = Modifier.padding(
-                                            bottom = 15.dp,
-                                            start = 15.dp
-                                        )
-                                    ) {
-                                        Text(
-                                            badgeNumber.toString(),
-                                            modifier = Modifier.semantics {
-                                                contentDescription =
-                                                    "$badgeNumber new notifications"
-                                            }
-                                        )
-                                    }
-                                }
-                            }
-
-                        }
-                    }
-                    Spacer(modifier = Modifier.size(20.dp))
-                }
-                /* 病历 + 人 */
-                item {
-                    Row(
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Card(
-                            modifier = Modifier
-                                .padding(20.dp)
-                                .weight(0.5f),
-                            colors = CardDefaults.cardColors(
-                                containerColor = colors.tertiaryContainer
-                            ),
-                            elevation = CardDefaults.cardElevation(
-                                defaultElevation = 4.dp
-                            )
-                        ) {
-                            VerticalIconButton(
-                                text = "病历"
-                            )
-                        }
-                        Card(
-                            modifier = Modifier
-                                .padding(20.dp)
-                                .weight(0.5f),
-                            colors = CardDefaults.cardColors(
-                                containerColor = colors.tertiaryContainer
-                            ),
-                            elevation = CardDefaults.cardElevation(
-                                defaultElevation = 4.dp
-                            )
-                        ) {
-                            VerticalIconButton(
-                                text = "病人"
-                            )
-                        }
-                    }
-                }
-                /* 卡片操作栏 */
-                item {
-                    Card(
-                        modifier = Modifier
-                            .padding(
-                                start = 20.dp,
-                                end = 20.dp
-                            )
-                            .height(306.dp),
-                        colors = CardDefaults.cardColors(
-                            containerColor = Color.White,
-                        ),
-                        elevation = CardDefaults.cardElevation(
-                            defaultElevation = 4.dp
-                        )
-                    ) {
-                        LazyVerticalGrid(
-                            columns = GridCells.Fixed(2),
-                            contentPadding = PaddingValues(20.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            userScrollEnabled = false
-                        )
-                        {
-                            items(operations.size) {
-                                OperateItem(
-                                    text = operations[it].text,
-                                    icon = operations[it].icon,
-                                    onClick = operations[it].onClick,
-                                    iconSize = 50.dp
-                                )
-                            }
-                        }
-                    }
-                    Spacer(modifier = Modifier.size(10.dp))
-                }
-                /* 常识列表 */
-                items(commonSenses.size) { index ->
-                    CommonSenseCard(
-                        modifier = Modifier.background(Color.White),
-                        commonSense = commonSenses[index]
-                    )
-                }
-            }
-        }
-    }
-
-    @Preview
-    @Composable
-    fun HomePagePreview() {
-        HomePage(
-            name = "小老弟",
-            commonSenses = listOf(
-                CommonSense(
-                    url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-                    title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-                    content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-                ),
-                CommonSense(
-                    url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-                    title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-                    content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-                ),
-                CommonSense(
-                    url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-                    title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-                    content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-                ),
-                CommonSense(
-                    url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-                    title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-                    content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-                )
-            )
-        )
-    }
-
-
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    appData = ViewModelProvider(this).get(AppData()::class.java)
+    if (!appData.isInit) appData.init(this)
     // 第一次使用
-    private fun firstUse() {
-        // 通知注册
-        appData.notificationHelper.registerChannel()
-        // 权限申请
-        appData.notificationHelper.requireNotificationPermission()
-        // 保存
-        appData.settings.edit().apply {
-            putBoolean("FirstUse", false)
-            apply()
-        }
+    if (appData.settings.getBoolean("FirstUse", true)) firstUse()
+    // 检测登录
+    appData.hashID = appData.settings.getString("hashID", "").toString()
+    if (appData.hashID == "") {
+      startActivityForResult(
+        Intent(
+          this,
+          LogInActivity::class.java
+        ), 1
+      )
     }
+    setContent {
+      AppTheme {
+        HomePage(
+          name = "小老弟",
+          commonSenses = listOf(
+            CommonSense(
+              url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+              title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+              content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+            ),
+            CommonSense(
+              url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+              title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+              content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+            ),
+            CommonSense(
+              url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+              title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+              content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+            ),
+            CommonSense(
+              url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+              title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+              content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+            ),
+            CommonSense(
+              url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+              title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+              content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+            ),
+            CommonSense(
+              url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+              title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+              content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+            ),
+            CommonSense(
+              url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+              title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+              content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+            )
+          )
+        )
+      }
+    }
+  }
+
+  // 其他页面回调
+  // 1为登录界面回调，
+  @Deprecated("Deprecated in Java")
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    // 登录页面回调
+    if (requestCode == 1) {
+      if (resultCode == 1) {
+        Log.i("xn.app", "登录成功")
+      }
+    }
+    super.onActivityResult(requestCode, resultCode, data)
+  }
+
+  @OptIn(ExperimentalMaterial3Api::class)
+  @Composable
+  fun HomePage(
+    modifier: Modifier = Modifier,
+    name: String = "",
+    fontSize: Int = 14,
+    icon: Painter = painterResource(id = R.drawable.usericon),
+    iconSize: Dp = 48.dp,
+    searchOnClick: () -> Unit = {},
+    messageOnClick: () -> Unit = {},
+    operations: List<Operation> = listOf(
+      Operation("挂号", painterResource(id = R.drawable.register)) {
+
+      },
+      Operation("缴费", painterResource(id = R.drawable.pay)) {
+
+      },
+      Operation("报告单", painterResource(id = R.drawable.report)) {
+
+      },
+      Operation("订单", painterResource(id = R.drawable.order)) {
+
+      },
+      Operation("智能导诊", painterResource(id = R.drawable.intelligent_guidance)) {
+
+      },
+      Operation("待办", painterResource(id = R.drawable.pending)) {
+
+      }
+    ),
+    commonSenses: List<CommonSense> = listOf(),
+  ) {
+    var colors = MaterialTheme.colorScheme
+    AppTheme {
+      colors = MaterialTheme.colorScheme
+    }
+    /* 消息数状态 */
+    var badgeNumber by rememberSaveable {
+      mutableStateOf(0)
+    }
+
+    Box(
+      modifier = modifier
+        .background(Color.White)
+        .fillMaxSize()
+    )
+    {
+      /* 顶部背景椭圆 */
+      Canvas(
+        modifier = Modifier
+          .fillMaxSize()
+      ) {
+        scale(scaleX = 15f, scaleY = 10f) {
+          drawCircle(
+            color = colors.primary,
+            radius = 40.dp.toPx(),
+            center = this.center + Offset(0f, -160f)
+          )
+        }
+      }
+      /* 内容 */
+      LazyColumn(
+        modifier = Modifier
+          .fillMaxSize(),
+      ) {
+        /* 顶部欢迎栏 */
+        item {
+          Row(
+            modifier = Modifier
+              .background(Color.Transparent)
+              .padding(top = 20.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+          ) {
+            // 右侧
+            Row(
+              modifier = Modifier
+                .background(Color.Transparent)
+                .weight(0.5f)
+                .padding(start = 20.dp)
+            ) {
+              Icon(
+                painter = icon,
+                contentDescription = null,
+                modifier = Modifier
+                  .size(iconSize)
+                  .clip(CircleShape),
+                tint = Color.Unspecified
+              )
+              Spacer(modifier = Modifier.size(8.dp))
+              Column {
+                Text(
+                  text = "Hi $name,",
+                  fontSize = fontSize.sp,
+                  color = Color.White
+                )
+                Text(
+                  text = "欢迎回来！",
+                  fontSize = (fontSize - 2).sp,
+                  color = Color.LightGray
+                )
+              }
+            }
+            // 左侧
+            Row(
+              modifier = Modifier
+                .background(Color.Transparent)
+                .weight(0.5f),
+              horizontalArrangement = Arrangement.End
+            ) {
+              IconButton(onClick = searchOnClick) {
+                Icon(
+                  imageVector = Icons.Filled.Search,
+                  contentDescription = null,
+                  modifier = Modifier.size(20.dp),
+                  tint = Color.White
+                )
+              }
+              IconButton(onClick = messageOnClick) {
+                Icon(
+                  imageVector = Icons.Default.Email,
+                  contentDescription = null,
+                  modifier = Modifier.size(20.dp),
+                  tint = Color.White
+                )
+                if (badgeNumber > 0) {
+                  Badge(
+                    modifier = Modifier.padding(
+                      bottom = 15.dp,
+                      start = 15.dp
+                    )
+                  ) {
+                    Text(
+                      badgeNumber.toString(),
+                      modifier = Modifier.semantics {
+                        contentDescription =
+                          "$badgeNumber new notifications"
+                      }
+                    )
+                  }
+                }
+              }
+
+            }
+          }
+          Spacer(modifier = Modifier.size(20.dp))
+        }
+        /* 病历 + 人 */
+        item {
+          Row(
+            modifier = Modifier.fillMaxWidth()
+          ) {
+            Card(
+              modifier = Modifier
+                .padding(20.dp)
+                .weight(0.5f),
+              colors = CardDefaults.cardColors(
+                containerColor = colors.tertiaryContainer
+              ),
+              elevation = CardDefaults.cardElevation(
+                defaultElevation = 4.dp
+              )
+            ) {
+              VerticalIconButton(
+                text = "病历"
+              )
+            }
+            Card(
+              modifier = Modifier
+                .padding(20.dp)
+                .weight(0.5f),
+              colors = CardDefaults.cardColors(
+                containerColor = colors.tertiaryContainer
+              ),
+              elevation = CardDefaults.cardElevation(
+                defaultElevation = 4.dp
+              )
+            ) {
+              VerticalIconButton(
+                text = "病人"
+              )
+            }
+          }
+        }
+        /* 卡片操作栏 */
+        item {
+          Card(
+            modifier = Modifier
+              .padding(
+                start = 20.dp,
+                end = 20.dp
+              )
+              .height(306.dp),
+            colors = CardDefaults.cardColors(
+              containerColor = Color.White,
+            ),
+            elevation = CardDefaults.cardElevation(
+              defaultElevation = 4.dp
+            )
+          ) {
+            LazyVerticalGrid(
+              columns = GridCells.Fixed(2),
+              contentPadding = PaddingValues(20.dp),
+              horizontalArrangement = Arrangement.SpaceBetween,
+              userScrollEnabled = false
+            )
+            {
+              items(operations.size) {
+                OperateItem(
+                  text = operations[it].text,
+                  icon = operations[it].icon,
+                  onClick = operations[it].onClick,
+                  iconSize = 50.dp
+                )
+              }
+            }
+          }
+          Spacer(modifier = Modifier.size(10.dp))
+        }
+        /* 常识列表 */
+        items(commonSenses.size) { index ->
+          CommonSenseCard(
+            modifier = Modifier.background(Color.White),
+            commonSense = commonSenses[index]
+          )
+        }
+      }
+    }
+  }
+
+  @Preview
+  @Composable
+  fun HomePagePreview() {
+    HomePage(
+      name = "小老弟",
+      commonSenses = listOf(
+        CommonSense(
+          url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+          title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+          content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+        ),
+        CommonSense(
+          url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+          title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+          content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+        ),
+        CommonSense(
+          url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+          title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+          content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+        ),
+        CommonSense(
+          url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+          title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+          content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+        )
+      )
+    )
+  }
+
+
+  // 第一次使用
+  private fun firstUse() {
+    // 通知注册
+    appData.notificationHelper.registerChannel()
+    // 权限申请
+    appData.notificationHelper.requireNotificationPermission()
+    // 保存
+    appData.settings.edit().apply {
+      putBoolean("FirstUse", false)
+      apply()
+    }
+  }
 }

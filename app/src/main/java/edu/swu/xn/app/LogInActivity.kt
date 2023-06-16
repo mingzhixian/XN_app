@@ -1,8 +1,6 @@
 package edu.swu.xn.app
 
-import android.content.ContentValues
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
@@ -14,7 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import org.json.JSONObject
 import java.security.MessageDigest
 
-class LogIn : AppCompatActivity() {
+class LogInActivity : AppCompatActivity() {
 
   // 页面状态，0位登录页面，1为注册页面
   private var status = 0
