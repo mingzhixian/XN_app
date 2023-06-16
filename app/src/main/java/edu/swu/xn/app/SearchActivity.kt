@@ -176,8 +176,7 @@ fun SearchPage(
               var obj = JSONObject()
               obj.put("data",searchText)
               appData.netHelper.get(
-//                "${appData.main.getString(R.string.admin_url)}/api/service-user/doctor/searchDoctorOrDept",
-                url = "http://192.168.1.25:8004/api/service-user/doctor/searchDoctorOrDept",
+                "${appData.main.getString(R.string.admin_url)}/api/service-user/doctor/searchDoctorOrDept",
                 value = obj
               ) { data ->
                 val deptList = data.getJSONObject("data").getJSONArray("deptNames")
