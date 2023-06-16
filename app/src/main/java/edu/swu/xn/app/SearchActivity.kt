@@ -42,6 +42,7 @@ import edu.swu.xn.app.component.DoctorCard
 import edu.swu.xn.app.component.Search
 import edu.swu.xn.app.entity.Doctor
 import edu.swu.xn.app.ui.theme.AppTheme
+import org.json.JSONObject
 
 class SearchActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -172,8 +173,12 @@ fun SearchPage(
               searchText = it
             },
             onSearchDone = {
+              var obj = JSONObject()
+              obj.put("data",searchText)
               appData.netHelper.get(
-                "${appData.main.getString(R.string.admin_url)}/api/service-user/doctor/searchDoctorOrDept"
+//                "${appData.main.getString(R.string.admin_url)}/api/service-user/doctor/searchDoctorOrDept",
+                url = "http://192.168.1.25:8004/api/service-user/doctor/searchDoctorOrDept",
+                value = obj
               ) { data ->
                 val deptList = data.getJSONObject("data").getJSONArray("deptNames")
                 for (i in 0 until deptList.length()) {
