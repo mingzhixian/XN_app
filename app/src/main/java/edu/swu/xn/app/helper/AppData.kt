@@ -13,8 +13,11 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import edu.swu.xn.app.MainActivity
 import edu.swu.xn.app.R
+import edu.swu.xn.app.appData
 import edu.swu.xn.app.entity.Subject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.withContext
 import java.util.LinkedList
 
 @SuppressLint("StaticFieldLeak")
@@ -50,9 +53,6 @@ class AppData : ViewModel() {
   @SuppressLint("StaticFieldLeak")
   lateinit var loadingDialog: AlertDialog
 
-  @SuppressLint("StaticFieldLeak")
-  lateinit var loading: View
-
   fun init(m: MainActivity) {
     isInit = true
     main = m
@@ -62,14 +62,6 @@ class AppData : ViewModel() {
     dbHelper = DbHelper(main, "hd_app.db", 1)
     //通知管理
     notificationHelper = NotificationHelper(main)
-    // 加载框
-    val builder: AlertDialog.Builder = AlertDialog.Builder(main)
-    builder.setCancelable(false)
-    loadingDialog = builder.create()
-    loadingDialog.setCanceledOnTouchOutside(false)
-    loadingDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-    loading = LayoutInflater.from(main).inflate(R.layout.loading, null, false)
-    loadingDialog.setView(loading)
   }
 
   // 获取科目诊室列表
@@ -109,13 +101,21 @@ class AppData : ViewModel() {
           }
           subjectList.add(sub1Obj)
         }
-        handle()
+        appData.main.runOnUiThread { handle() }
       }
     }
   }
 
   // 显示加载框
-  fun showLoading(text: String, isCanCancel: Boolean, cancelFun: (() -> Unit)?) {
+  fun showLoading(text: String, context: Context, isCanCancel: Boolean, cancelFun: (() -> Unit)?) {
+    // 加载框
+    val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+    builder.setCancelable(false)
+    loadingDialog = builder.create()
+    loadingDialog.setCanceledOnTouchOutside(false)
+    loadingDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+    val loading = LayoutInflater.from(context).inflate(R.layout.loading, null, false)
+    loadingDialog.setView(loading)
     loading.findViewById<TextView>(R.id.loading_text).text = text
     if (isCanCancel) {
       loading.findViewById<Button>(R.id.loading_cancel).visibility = View.VISIBLE

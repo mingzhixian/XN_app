@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.swu.xn.app.entity.Subject
@@ -21,7 +22,7 @@ class SubjectActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_subject)
     // 显示加载框
-    appData.showLoading("加载中", false, null)
+    appData.showLoading("加载中", this, false, null)
     // 获取信息
     appData.getSubjectList {
       // 取消加载框
@@ -35,13 +36,29 @@ class SubjectActivity : AppCompatActivity() {
         { appData.subjectList.size }) { holder, position ->
         holder.itemView.findViewById<TextView>(R.id.subject_left_item_text).text =
           appData.subjectList[position].name
-        holder.itemView.findViewById<LinearLayout>(R.id.subject_left_item_layout)
-          .setOnClickListener {
-            subSubjectList = appData.subjectList[position].subList
-            synchronized(subjectRightAdapter) {
-              subjectRightAdapter.notifyDataSetChanged()
-            }
+        val layout = holder.itemView.findViewById<LinearLayout>(R.id.subject_left_item_layout)
+        if (position == 0) {
+          layout.backgroundTintList =
+            ContextCompat.getColorStateList(this, R.color.md_theme_surface)
+          layout.findViewById<View>(R.id.subject_left_item_select).visibility = View.VISIBLE
+        }
+        layout.setOnClickListener {
+          // 更新ui
+          for (i in 0 until appData.subjectList.size) {
+            val childItem =
+              subjectLeft.getChildAt(i).findViewById<LinearLayout>(R.id.subject_left_item_layout)
+            childItem.backgroundTintList =
+              ContextCompat.getColorStateList(this, R.color.md_theme_surfaceVariant)
+            childItem.findViewById<View>(R.id.subject_left_item_select).visibility = View.GONE
           }
+          it.backgroundTintList = ContextCompat.getColorStateList(this, R.color.md_theme_surface)
+          it.findViewById<View>(R.id.subject_left_item_select).visibility = View.VISIBLE
+          // 更新右边栏
+          subSubjectList = appData.subjectList[position].subList
+          synchronized(subjectRightAdapter) {
+            subjectRightAdapter.notifyDataSetChanged()
+          }
+        }
       }
       // 右部分
       val subjectRight = findViewById<RecyclerView>(R.id.subject_right)

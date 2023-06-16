@@ -1,6 +1,7 @@
 package edu.swu.xn.app
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
@@ -125,7 +126,7 @@ class LogInActivity : AppCompatActivity() {
 
   // 检查协议是否同意
   private fun checkAgreement(): Boolean {
-    if (!findViewById<CheckBox>(R.id.log_in_pri_agreement).isChecked || !findViewById<CheckBox>(R.id.log_in_pri_agreement).isChecked) {
+    if (!findViewById<CheckBox>(R.id.log_in_pri_agreement).isChecked || !findViewById<CheckBox>(R.id.log_in_user_agreement).isChecked) {
       Toast.makeText(appData.main, "请先同意隐私与用户协议", Toast.LENGTH_SHORT).show()
       return false
     }

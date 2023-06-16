@@ -2,7 +2,10 @@ package edu.swu.xn.app
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.view.WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Canvas
@@ -81,6 +84,51 @@ class MainActivity : ComponentActivity() {
           LogInActivity::class.java
         ), 1
       )
+    } else {
+      setContent {
+        AppTheme {
+          HomePage(
+            name = "小老弟",
+            commonSenses = listOf(
+              CommonSense(
+                url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+                title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+                content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+              ),
+              CommonSense(
+                url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+                title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+                content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+              ),
+              CommonSense(
+                url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+                title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+                content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+              ),
+              CommonSense(
+                url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+                title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+                content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+              ),
+              CommonSense(
+                url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+                title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+                content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+              ),
+              CommonSense(
+                url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+                title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+                content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+              ),
+              CommonSense(
+                url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+                title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+                content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+              )
+            )
+          )
+        }
+      }
     }
   }
 
@@ -152,7 +200,7 @@ class MainActivity : ComponentActivity() {
     messageOnClick: () -> Unit = {},
     operations: List<Operation> = listOf(
       Operation("挂号", painterResource(id = R.drawable.register)) {
-
+        startActivity(Intent(this, SubjectActivity::class.java))
       },
       Operation("缴费", painterResource(id = R.drawable.pay)) {
 
