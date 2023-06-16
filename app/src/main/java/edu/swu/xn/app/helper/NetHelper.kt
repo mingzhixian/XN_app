@@ -34,7 +34,6 @@ class NetHelper {
   }
 
   fun get(url: String, value: JSONObject, handle: (json: JSONObject) -> Unit) {
-    Log.e("aaaaaa",value.toString())
     appData.mainScope.launch {
       withContext(Dispatchers.IO) {
         val requestBody = value.toString()
@@ -44,8 +43,6 @@ class NetHelper {
           .post(requestBody)
           .build()
         okhttpClient.newCall(request).execute().use { response ->
-          Log.e("aaaaaaa",response.toString())
-          Log.e("aaaaaaa",response.body.toString())
           handle(JSONObject(response.body!!.string()))
         }
       }
