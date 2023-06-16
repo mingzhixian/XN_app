@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -28,88 +27,93 @@ import edu.swu.xn.app.entity.Doctor
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DoctorCard(
-    modifier: Modifier = Modifier,
-    doctor: Doctor,
-    containerColor: Color = Color.White,
-    onClick: () -> Unit = {},
+  modifier: Modifier = Modifier,
+  doctor: Doctor,
+  containerColor: Color = Color.White,
+  onClick: () -> Unit = {},
 
+  ) {
+  Card(
+    modifier = modifier
+        .padding(10.dp)
+        .fillMaxWidth()
+        .border(
+            width = 1.dp,
+            color = Color.Gray,
+            shape = MaterialTheme.shapes.medium
+        ),
+    colors = CardDefaults.cardColors(
+      containerColor = containerColor,
+    ),
+    elevation = CardDefaults.cardElevation(
+      defaultElevation = 0.dp
+    ),
+    onClick = onClick
+  ) {
+    Row(
+      modifier = Modifier
+          .padding(10.dp)
+          .fillMaxWidth(),
+      verticalAlignment = Alignment.CenterVertically,
     ) {
-    Card(
-        modifier = modifier
-            .padding(10.dp)
-            .fillMaxWidth()
+      AsyncImage(
+        modifier = Modifier
+            .clip(MaterialTheme.shapes.medium)
             .border(
                 width = 1.dp,
-                color = Color.Gray,
+                color = Color.LightGray,
                 shape = MaterialTheme.shapes.medium
             ),
-        colors = CardDefaults.cardColors(
-            containerColor = containerColor,
-        ),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 0.dp
-        ),
-        onClick = onClick
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(10.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            AsyncImage(
-                modifier = Modifier
-                    .size(60.dp)
-                    .clip(MaterialTheme.shapes.medium)
-                    .border(
-                        width = 1.dp,
-                        color = Color.LightGray,
-                        shape = MaterialTheme.shapes.medium
-                    ),
-                model = doctor.avatar,
-                contentDescription = null
-            )
-            Column {
-                Text(
-                    modifier = Modifier.padding(
-                        start = 10.dp,
-                        bottom = 4.dp
-                    ),
-                    text = doctor.realName,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-                Text(
-                    modifier = Modifier.padding(
-                        start = 10.dp
-                    ),
-                    text = doctor.introduce,
-                    fontSize = 12.sp,
-                    color = Color.Gray
-                )
-            }
-
-
-        }
+        model = doctor.avatar,
+        contentDescription = null
+      )
+      Column {
+        Text(
+          modifier = Modifier.padding(
+            start = 10.dp,
+            bottom = 4.dp
+          ),
+          text = doctor.realName + " " + doctor.sex,
+          fontSize = 18.sp,
+          fontWeight = FontWeight.SemiBold
+        )
+        Text(
+          modifier = Modifier.padding(
+            start = 10.dp
+          ),
+          text = doctor.title,
+          fontSize = 14.sp,
+          color = Color.Gray
+        )
+        Text(
+          modifier = Modifier.padding(
+            start = 10.dp
+          ),
+          text = "Phone: ${doctor.phoneNumber}\nEmail: ${doctor.email}\n医生简介: ${doctor.introduce}",
+          fontSize = 12.sp,
+          color = Color.Gray
+        )
+      }
     }
+  }
 }
 
 @Preview
 @Composable
 fun DoctorCardPreview() {
-    DoctorCard(
-        doctor = Doctor(
-            20,
-            "https://img0.baidu.com/it/u=3495541663,4174246784&fm=253&fmt=auto&app=120&f=JPEG?w=343&h=500",
-            "10",
-            "string.email",
-            "78",
-            "主治传染皮肤病",
-            "110",
-            "周矣",
-            "男",
-            "普通医生",
-            "zhouyi01"
-        )
+  DoctorCard(
+    doctor = Doctor(
+      20,
+      "https://img0.baidu.com/it/u=3495541663,4174246784&fm=253&fmt=auto&app=120&f=JPEG?w=343&h=500",
+      "10",
+      "string.email",
+      "78",
+      "主治传染皮肤病",
+      "110",
+      "周矣",
+      "男",
+      "普通医生",
+      "zhouyi01"
     )
+  )
 }
