@@ -1,7 +1,6 @@
 package edu.swu.xn.app
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
@@ -110,7 +109,7 @@ class LogInActivity : AppCompatActivity() {
     appData.userName = userName
     appData.settings.edit().apply {
       putString("hashID", hashID)
-      putInt("id", id)
+      putInt("userID", id)
       putString("userName", userName)
       apply()
     }
