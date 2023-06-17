@@ -103,7 +103,7 @@ class VisitorActivity : AppCompatActivity() {
     }
 
     val obj = JSONObject()
-    obj.put("userID", appData.userID)
+    obj.put("userID", appData.userId)
     appData.netHelper.get(
       url = stringResource(R.string.admin_url) + "/api/service-user/patient/getPatientInfo",
       value = obj
@@ -482,7 +482,7 @@ class VisitorActivity : AppCompatActivity() {
                         "0"
                       }
                     )
-                    obj.put("userId", appData.userID)
+                    obj.put("userId", appData.userId)
                     obj.put("userName", name.value)
 
                     appData.netHelper.get(

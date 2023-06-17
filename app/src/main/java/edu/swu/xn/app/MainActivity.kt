@@ -72,11 +72,11 @@ class MainActivity : ComponentActivity() {
     // 第一次使用
     if (appData.settings.getBoolean("FirstUse", true)) firstUse()
     // 检测登录
-    appData.hashID = appData.settings.getString("hashID", "").toString()
-    appData.userID = appData.settings.getInt("userID", 0)
+    appData.hashId = appData.settings.getString("hashId", "").toString()
+    appData.userId = appData.settings.getInt("userId", 0)
     appData.userName = appData.settings.getString("userName", "").toString()
 
-    if (appData.hashID == "") {
+    if (appData.hashId == "") {
       startActivityForResult(
         Intent(
           this,

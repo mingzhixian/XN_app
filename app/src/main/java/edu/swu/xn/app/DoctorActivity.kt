@@ -3,13 +3,15 @@ package edu.swu.xn.app
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.GridLayout
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +21,7 @@ import org.json.JSONObject
 class DoctorActivity : AppCompatActivity() {
 
   lateinit var clock: GridLayout
+  val subProductIdList = Array(9) { 0 }
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_doctor)
@@ -30,21 +33,22 @@ class DoctorActivity : AppCompatActivity() {
   // 设置填充值
   @SuppressLint("SetTextI18n")
   private fun setValue() {
-    findViewById<TextView>(R.id.doctor_image).text = intent.getStringExtra("realName")
-    findViewById<TextView>(R.id.doctor_name).text = intent.getStringExtra("realName")
-    findViewById<TextView>(R.id.doctor_sex).text = "性别：${intent.getStringExtra("sex")}"
-    findViewById<TextView>(R.id.doctor_title).text = intent.getStringExtra("title")
-    findViewById<TextView>(R.id.doctor_introduce).text = intent.getStringExtra("introduce")
-    findViewById<TextView>(R.id.doctor_count).text = "余量：${intent.getStringExtra("count")}"
-    findViewById<TextView>(R.id.doctor_amount).text = "价格：${intent.getStringExtra("amount")}"
+    val extra = intent.extras!!
+    val realName = extra.getString("realName")
+    findViewById<TextView>(R.id.doctor_image).text = realName
+    findViewById<TextView>(R.id.doctor_name).text = realName
+    findViewById<TextView>(R.id.doctor_sex).text =
+      "性别：${if (extra.getString("sex")!!.toInt() == 0) "男" else "女"}"
+    findViewById<TextView>(R.id.doctor_title).text = extra.getString("title")
+    findViewById<TextView>(R.id.doctor_introduce).text = extra.getString("introduce")
+    findViewById<TextView>(R.id.doctor_count).text = "余量：${extra.getString("count")}"
+    findViewById<TextView>(R.id.doctor_amount).text = "价格：${extra.getString("amount")}"
     // 获取每个时间段是否空余
     // 显示加载框
     appData.showLoading("加载中", this, false, null)
     appData.netHelper.get(
-      "${appData.main.getString(R.string.admin_url)}/api/service-product/product/getDoctorProductByTime?productId=${
-        intent.getStringExtra(
-          "productId"
-        )
+      "${appData.main.getString(R.string.admin_url)}/api/service-ware/ware/getDoctorProductByTime?productId=${
+        extra.getString("productId")
       }"
     ) {
       appData.loadingDialog.cancel()
@@ -52,8 +56,9 @@ class DoctorActivity : AppCompatActivity() {
         Toast.makeText(this, "未知错误", Toast.LENGTH_SHORT).show()
         return@get
       }
-      val hours = it.getJSONObject("data").getJSONArray("hours")
+      val hours = it.getJSONArray("data")
       for (i in 0 until hours.length()) {
+        subProductIdList[i] = hours.getJSONObject(i).getString("productId").toInt()
         if (hours.getJSONObject(i).getInt("count") == 0) {
           val child = clock.getChildAt(i)
           child.tag = -1
@@ -75,7 +80,7 @@ class DoctorActivity : AppCompatActivity() {
     // 显示加载框
     appData.showLoading("加载中", this, false, null)
     val post1 = JSONObject()
-    post1.put("userID", appData.userID)
+    post1.put("userID", appData.userId)
     appData.netHelper.get(
       "${appData.main.getString(R.string.admin_url)}/api/service-user/patient/getPatientInfo",
       post1
@@ -94,38 +99,42 @@ class DoctorActivity : AppCompatActivity() {
       patientDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
       val patientListView = LayoutInflater.from(this).inflate(R.layout.patient_list, null, false)
       patientDialog.setView(patientListView)
+      // 设置就诊人列表
       val patientList = patientListView.findViewById<RecyclerView>(R.id.patient_list)
       patientList.layoutManager = LinearLayoutManager(this)
-      val patientListAdapter = RecyclerViewAdapter(R.layout.subject_left_item,
+      val patientListAdapter = RecyclerViewAdapter(R.layout.patient_list_item,
         { patientListData.length() }) { holder, position ->
         holder.itemView.findViewById<TextView>(R.id.patient_list_item_text).text =
           patientListData.getJSONObject(position).getString("userName")
         // 选定就诊人下订单
-        holder.itemView.findViewById<TextView>(R.id.patient_list_item_layout).setOnClickListener {
-          // 显示加载框
-          appData.showLoading("加载中", this, false, null)
-          val post = JSONObject()
-          post.put("userID", appData.userID)
-          post.put("productId", intent.getStringExtra("productId"))
-          post.put("offset", view.tag)
-          post.put("patientID", patientListData.getJSONObject(position).getString("userId"))
-          appData.netHelper.get(
-            // todo 下订单url
-            "${appData.main.getString(R.string.admin_url)}/api/service-product/product/getWareByDeptForDays",
-            post
-          ) {
-            appData.loadingDialog.cancel()
-            if (it.getInt("code") != 200) {
-              Toast.makeText(this, "下单失败", Toast.LENGTH_SHORT).show()
-              return@get
+        holder.itemView.findViewById<LinearLayout>(R.id.patient_list_item_layout)
+          .setOnClickListener {
+            patientDialog.cancel()
+            // 显示加载框
+            appData.showLoading("加载中", this, false, null)
+            val post2 = JSONObject()
+            post2.put("userId", appData.userId)
+            post2.put("productId", subProductIdList[view.tag.toString().toInt()])
+            post2.put("patientID", patientListData.getJSONObject(position).getString("id").toInt())
+            post2.put("type", 0)
+            appData.netHelper.get(
+              "${appData.main.getString(R.string.admin_url)}/api/service-order/order-info/createOrder",
+              post2
+            ) {
+              appData.loadingDialog.cancel()
+              if (it.getInt("code") != 200) {
+                Toast.makeText(this, "下单失败", Toast.LENGTH_SHORT).show()
+                return@get
+              }
+              val intent = Intent(this, PayActivity::class.java)
+              intent.putExtra("orderId", it.getJSONObject("data").getString("orderId"))
+              intent.putExtra("amount", findViewById<TextView>(R.id.doctor_amount).text)
+              startActivity(intent)
             }
-            val intent = Intent(this, PayActivity::class.java)
-            intent.putExtra("orderId", it.getJSONObject("data").getString("orderId"))
-            startActivity(intent)
           }
-        }
       }
       patientList.adapter = patientListAdapter
+      patientDialog.show()
     }
   }
 }

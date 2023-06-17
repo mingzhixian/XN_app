@@ -96,14 +96,17 @@ class AppointmentActivity : AppCompatActivity() {
           holder.itemView.findViewById<LinearLayout>(R.id.appointment_bottom_item_layout)
             .setOnClickListener {
               val intent = Intent(this, DoctorActivity::class.java)
-              intent.putExtra("id", tmpDoctor.getInt("id"))
-              intent.putExtra("id", tmpDoctor.getInt("id"))
               intent.putExtra("productId", tmpDoctor.getString("productId"))
-              intent.putExtra("name", tmpDoctor.getString("name"))
+              intent.putExtra("realName", tmpDoctor.getString("realName"))
+              intent.putExtra("title", tmpDoctor.getString("title"))
               intent.putExtra("sex", tmpDoctor.getString("sex"))
               intent.putExtra("count", tmpDoctor.getString("count"))
               intent.putExtra("amount", tmpDoctor.getString("amount"))
-              intent.putExtra("introduce", tmpDoctor.getString("introduce"))
+              val introduce = tmpDoctor.getString("introduce")
+              intent.putExtra(
+                "introduce",
+                if (introduce.length > 100) introduce.substring(0, 100) else introduce
+              )
               startActivity(intent)
             }
         }
