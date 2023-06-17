@@ -1,7 +1,6 @@
 package edu.swu.xn.app
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Canvas
@@ -47,7 +46,6 @@ import org.json.JSONObject
 class SearchActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    Log.e("hzd", "innnnnnnn")
     setContent {
       AppTheme {
         SearchPage()
@@ -122,8 +120,8 @@ fun SearchPage(
   /* 顶部背景椭圆 */
   Canvas(
     modifier = modifier
-        .fillMaxSize()
-        .background(colors.background)
+      .fillMaxSize()
+      .background(colors.background)
   ) {
     scale(scaleX = 15f, scaleY = 10f) {
       drawCircle(
@@ -142,9 +140,9 @@ fun SearchPage(
     item {
       Card(
         modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .padding(20.dp),
+          .fillMaxWidth()
+          .wrapContentHeight()
+          .padding(20.dp),
         elevation = CardDefaults.cardElevation(
           defaultElevation = 0.dp
         ),
@@ -166,15 +164,15 @@ fun SearchPage(
           Search(
             text = searchText,
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp),
+              .fillMaxWidth()
+              .padding(20.dp),
             placeholderText = "查找医生或科室...",
             onTextChanged = {
               searchText = it
             },
             onSearchDone = {
               var obj = JSONObject()
-              obj.put("data",searchText)
+              obj.put("data", searchText)
               appData.netHelper.get(
                 "${appData.main.getString(R.string.admin_url)}/api/service-user/doctor/searchDoctorOrDept",
                 value = obj
@@ -224,8 +222,8 @@ fun SearchPage(
       item {
         Column(
           modifier = Modifier
-              .fillMaxWidth()
-              .background(colors.background)
+            .fillMaxWidth()
+            .background(colors.background)
         ) {
           Text(
             modifier = Modifier.padding(
@@ -250,9 +248,9 @@ fun SearchPage(
         DeptCard(
           deptName = depts[index],
           modifier = Modifier
-              .fillMaxWidth()
-              .height(100.dp)
-              .background(colors.background),
+            .fillMaxWidth()
+            .height(100.dp)
+            .background(colors.background),
           containerColor = colors.background
         )
       }
@@ -262,8 +260,8 @@ fun SearchPage(
       item {
         Column(
           modifier = Modifier
-              .fillMaxWidth()
-              .background(colors.background)
+            .fillMaxWidth()
+            .background(colors.background)
         ) {
           Text(
             modifier = Modifier.padding(
@@ -287,8 +285,8 @@ fun SearchPage(
       items(doctors.size) { index ->
         DoctorCard(
           modifier = Modifier
-              .fillMaxWidth()
-              .background(colors.background),
+            .fillMaxWidth()
+            .background(colors.background),
           doctor = doctors[index],
           containerColor = colors.background
         )
