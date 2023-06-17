@@ -37,10 +37,12 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import edu.swu.xn.app.ui.theme.AppTheme
+import java.text.DecimalFormat
 
 class PayActivity : AppCompatActivity() {
   private lateinit var orderID:String
@@ -84,6 +86,10 @@ class PayActivity : AppCompatActivity() {
 
     var ok_icon by remember { mutableStateOf(R.drawable.wechat) }
     var isOK by remember { mutableStateOf(false) }
+
+    var amount by remember { mutableStateOf(12.34) }
+    val decimalFormat = DecimalFormat("#0.00")
+
 
     var colors = MaterialTheme.colorScheme
     AppTheme {
@@ -130,6 +136,35 @@ class PayActivity : AppCompatActivity() {
             modifier = Modifier.size(50.dp)
           )
         }
+
+        item {
+          Text(
+            text = "支付金额",
+            modifier = Modifier.padding(
+              start = 30.dp
+            ),
+            color = Color.Gray
+          )
+          Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+          ) {
+            Text(
+              text = "￥",
+              fontSize = 30.sp,
+              fontWeight = FontWeight.ExtraBold
+            )
+            Text(
+              modifier = Modifier.padding(
+                bottom = 50.dp
+              ),
+              text = decimalFormat.format(amount),
+              fontSize = 40.sp,
+              fontWeight = FontWeight.ExtraBold
+            )
+          }
+        }
+
         items(payItems.size) { index ->
           Card(
             modifier = Modifier
@@ -179,7 +214,12 @@ class PayActivity : AppCompatActivity() {
           modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(40.dp),
+            .padding(
+              top = 150.dp,
+              bottom = 100.dp,
+              start = 40.dp,
+              end = 40.dp
+            ),
           elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp
           ),
@@ -194,8 +234,8 @@ class PayActivity : AppCompatActivity() {
           ) {
             Icon(
               modifier = Modifier
-                .padding(top = 80.dp)
-                .size(100.dp),
+                .padding(top = 40.dp)
+                .size(80.dp),
               painter = painterResource(id = ok_icon),
               contentDescription = null,
             )
@@ -206,7 +246,8 @@ class PayActivity : AppCompatActivity() {
               ),
               text = "支付成功",
               fontSize = 28.sp,
-              color = Color.DarkGray
+              color = Color.DarkGray,
+              fontWeight = FontWeight.Bold
             )
             Text(
               modifier = Modifier.padding(

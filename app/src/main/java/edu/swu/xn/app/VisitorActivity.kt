@@ -2,7 +2,6 @@ package edu.swu.xn.app
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
@@ -56,11 +55,13 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import edu.swu.xn.app.component.LoadingProgress
 import edu.swu.xn.app.entity.Visitor
 import edu.swu.xn.app.ui.theme.AppTheme
 import org.json.JSONObject
 
 class VisitorActivity : AppCompatActivity() {
+  var init: Boolean = true
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
@@ -80,57 +81,45 @@ class VisitorActivity : AppCompatActivity() {
     }
 
     val visitors = remember {
-      mutableStateListOf(
-        Visitor(
-          name = "用户",
-          id = 1,
-          sex = "男",
-          phoneNumber = "12345678",
-          medicalHistory = "近期进行过大型手术",
-          cardID = "4290052003",
-          age = 15
-        ),
-        Visitor(
-          name = "瓜娃",
-          id = 2,
-          sex = "女",
-          phoneNumber = "x12345678",
-          medicalHistory = "近期进行过小型手术",
-          cardID = "42900520032222",
-          age = 20
-        )
+      mutableStateListOf<Visitor>()
+    }
+    var progress = remember { mutableStateOf(false) }
+    if (init) {
+      progress.value = true
+      val obj = JSONObject()
+      obj.put("userID", appData.userId)
+      appData.netHelper.get(
+        url = stringResource(R.string.admin_url) + "/api/service-user/patient/getPatientInfo",
+        value = obj
       )
+      { data ->
+        val dataList = data.getJSONArray("data")
+        for (i in 0 until dataList.length()) {
+          visitors.add(
+            Visitor(
+              name = dataList.getJSONObject(i).getString("userName"),
+              id = dataList.getJSONObject(i).getString("id").toInt(),
+              sex = if (dataList.getJSONObject(i).getString("sex") == "0") {
+                "男"
+              } else {
+                "女"
+              },
+              phoneNumber = dataList.getJSONObject(i).getString("phonenumber"),
+              medicalHistory = dataList.getJSONObject(i).getString("medicalHistory"),
+              cardID = dataList.getJSONObject(i).getString("cardId"),
+              age = dataList.getJSONObject(i).getInt("age")
+            )
+          )
+        }
+        progress.value = false
+      }
+      init = false
     }
 
-    val obj = JSONObject()
-    obj.put("userID", appData.userId)
-    appData.netHelper.get(
-      url = stringResource(R.string.admin_url) + "/api/service-user/patient/getPatientInfo",
-      value = obj
-    )
-    { data ->
-      val dataList = data.getJSONArray("data")
-      for (i in 0 until dataList.length()) {
-        visitors.add(
-          Visitor(
-            name = dataList.getJSONObject(i).getString("userName"),
-            id = dataList.getJSONObject(i).getString("id").toInt(),
-            sex = if (dataList.getJSONObject(i).getString("sex") == "0") {
-              "男"
-            } else {
-              "女"
-            },
-            phoneNumber = dataList.getJSONObject(i).getString("phonenumber"),
-            medicalHistory = dataList.getJSONObject(i).getString("medicalHistory"),
-            cardID = dataList.getJSONObject(i).getString("cardId"),
-            age = dataList.getJSONObject(i).getInt("age")
-          )
-        )
-      }
-    }
 
     val isAdd = remember { mutableStateOf(false) }
     val isUpdate = remember { mutableStateOf(false) }
+    val updateIndex = remember { mutableStateOf(0) }
     val isRead = remember { mutableStateOf(false) }
     val age = remember { mutableStateOf(0) }
     val isAgeError = remember { mutableStateOf(false) }
@@ -138,6 +127,7 @@ class VisitorActivity : AppCompatActivity() {
       isAgeError.value = age in 0..200
     }
 
+    val id = remember { mutableStateOf(0) }
     val cardID = remember { mutableStateOf("") }
     val medicalHistory = remember { mutableStateOf("") }
     val phoneNumber = remember { mutableStateOf("") }
@@ -162,6 +152,7 @@ class VisitorActivity : AppCompatActivity() {
       phoneNumber.value = visitors[index].phoneNumber
       sex.value = visitors[index].sex == "男"
       name.value = visitors[index].name
+      id.value = visitors[index].id
     }
 
     /* 顶部背景椭圆 */
@@ -179,6 +170,8 @@ class VisitorActivity : AppCompatActivity() {
       }
     }
     Box {
+      if (progress.value)
+        LoadingProgress()
       LazyColumn(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -206,6 +199,7 @@ class VisitorActivity : AppCompatActivity() {
                 onLongClick = {
                   isUpdate.value = true
                   setStates(index)
+                  updateIndex.value = index
                 },
                 onClick = {
                   isRead.value = true
@@ -270,9 +264,9 @@ class VisitorActivity : AppCompatActivity() {
               IconButton(
                 modifier = Modifier.size(40.dp),
                 onClick = {
+                  progress.value = true
                   val obj = JSONObject()
                   obj.put("id", visitors[index].id)
-                  Log.i("hzd", obj.toString())
                   appData.netHelper.get(
                     appData.main.getString(R.string.admin_url) + "/api/service-user/patient/deletePatient",
                     obj
@@ -283,6 +277,7 @@ class VisitorActivity : AppCompatActivity() {
                       Toast.makeText(context, "删除成功！", Toast.LENGTH_LONG).show()
                       visitors.removeAt(index)
                     }
+                    progress.value = false
                   }
                 }
               ) {
@@ -470,6 +465,7 @@ class VisitorActivity : AppCompatActivity() {
               if (!isRead.value) {
                 IconButton(
                   onClick = {
+                    progress.value = true
                     val obj = JSONObject()
                     obj.put("age", age.value)
                     obj.put("cardId", cardID.value)
@@ -484,6 +480,7 @@ class VisitorActivity : AppCompatActivity() {
                     )
                     obj.put("userId", appData.userId)
                     obj.put("userName", name.value)
+                    obj.put("id", id.value)
 
                     appData.netHelper.get(
                       url = appData.main.getString(R.string.admin_url) +
@@ -491,7 +488,6 @@ class VisitorActivity : AppCompatActivity() {
                           else "/api/service-user/patient/modifyPatientInfo",
                       value = obj
                     ) { data ->
-                      Log.i("hzd", data.toString())
                       if (data.getString("code") != "200") {
                         Toast.makeText(
                           context,
@@ -506,12 +502,33 @@ class VisitorActivity : AppCompatActivity() {
                         ).show()
                       }
                       if (isAdd.value) {
+                        visitors.add(
+                          Visitor(
+                            name = name.value,
+                            id = id.value,
+                            sex = if (sex.value) "男" else "女",
+                            phoneNumber = phoneNumber.value,
+                            medicalHistory = medicalHistory.value,
+                            cardID = cardID.value,
+                            age = age.value
+                          )
+                        )
                         isAdd.value = false
                       }
                       if (isUpdate.value) {
+                        visitors[updateIndex.value] = Visitor(
+                          name = name.value,
+                          id = id.value,
+                          sex = if (sex.value) "男" else "女",
+                          phoneNumber = phoneNumber.value,
+                          medicalHistory = medicalHistory.value,
+                          cardID = cardID.value,
+                          age = age.value
+                        )
                         isUpdate.value = false
                       }
                       cleanStates()
+                      progress.value = false
                     }
 
                   }) {
