@@ -2,10 +2,7 @@ package edu.swu.xn.app
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.view.View
-import android.view.WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Canvas
@@ -374,7 +371,10 @@ class MainActivity : ComponentActivity() {
               VerticalIconButton(
                 text = "就诊人",
                 icon = painterResource(id = R.drawable.patient),
-                iconSize = 40.dp
+                iconSize = 40.dp,
+                onClick = {
+                  startActivity(Intent(appData.main, VisitorActivity::class.java))
+                }
               )
             }
           }
