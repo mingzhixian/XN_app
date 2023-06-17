@@ -41,7 +41,7 @@ class SubjectActivity : AppCompatActivity() {
         }
         layout.setOnClickListener {
           // 更新ui
-          for (i in 0 until appData.subjectList.size) {
+          for (i in 0 until subjectLeft.childCount) {
             val childItem =
               subjectLeft.getChildAt(i).findViewById<LinearLayout>(R.id.subject_left_item_layout)
             childItem.backgroundTintList =
@@ -80,7 +80,6 @@ class SubjectActivity : AppCompatActivity() {
               listItem.findViewById<TextView>(R.id.subject_right_item_list_item_text).text =
                 subList[i].name
               listItem.setOnClickListener {
-                // todo 跳转订号页面
                 val intent = Intent(this, AppointmentActivity::class.java)
                 intent.putExtra("deptName", subList[i].name)
                 startActivity(intent)
