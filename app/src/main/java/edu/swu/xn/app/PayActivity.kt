@@ -2,6 +2,7 @@ package edu.swu.xn.app
 
 import android.content.Context
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Canvas
@@ -41,14 +42,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import edu.swu.xn.app.component.LoadingProgress
 import edu.swu.xn.app.ui.theme.AppTheme
+import org.json.JSONObject
 import java.text.DecimalFormat
 
 class PayActivity : AppCompatActivity() {
-  private lateinit var orderID:String
+  private lateinit var orderID: String
+  private var amount: Float = 0f
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    orderID = intent.getStringExtra("orderId")!!
+    orderID = intent.extras?.getString("orderId")!!
+    amount = intent.extras!!.getString("amount")!!.toFloat()
     setContent {
       AppTheme {
         PayPage()
@@ -87,9 +92,10 @@ class PayActivity : AppCompatActivity() {
     var ok_icon by remember { mutableStateOf(R.drawable.wechat) }
     var isOK by remember { mutableStateOf(false) }
 
-    var amount by remember { mutableStateOf(12.34) }
+    val amount by remember { mutableStateOf(amount) }
     val decimalFormat = DecimalFormat("#0.00")
 
+    val progress = remember { mutableStateOf(false) }
 
     var colors = MaterialTheme.colorScheme
     AppTheme {
@@ -111,6 +117,8 @@ class PayActivity : AppCompatActivity() {
       }
     }
     Box {
+      if (progress.value)
+        LoadingProgress()
       LazyColumn(
         modifier = modifier
           .fillMaxSize()
@@ -179,6 +187,21 @@ class PayActivity : AppCompatActivity() {
             ),
             onClick = {
               ok_icon = payItems[index].iconID
+              progress.value = true
+              val obj = JSONObject()
+              obj.put("orderId", orderID)
+              appData.netHelper.get(
+                url = appData.main.getString(R.string.admin_url) + "/api/service-order/order-info/payOrder",
+                value = obj
+              ) { data ->
+                if (data.getString("code") == "200") {
+                  Toast.makeText(this@PayActivity, "支付成功", Toast.LENGTH_LONG).show()
+                } else {
+                  Toast.makeText(this@PayActivity, "支付失败", Toast.LENGTH_LONG).show()
+                }
+                progress.value = false
+              }
+
               isOK = true
             }
           ) {
