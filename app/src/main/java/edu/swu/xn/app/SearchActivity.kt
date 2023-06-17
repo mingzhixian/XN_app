@@ -1,5 +1,6 @@
 package edu.swu.xn.app
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
@@ -52,253 +53,254 @@ class SearchActivity : AppCompatActivity() {
       }
     }
   }
-}
 
-@Composable
-fun SearchPage(
-  modifier: Modifier = Modifier,
-) {
-  var searchText by rememberSaveable {
-    mutableStateOf("")
-  }
-
-  val depts = remember {
-    mutableStateListOf<String>(
-      "心脏科室", "内科科室", "骨科科室"
-    )
-  }
-
-  val doctors = remember {
-    mutableStateListOf<Doctor>(
-      Doctor(
-        20,
-        "https://img0.baidu.com/it/u=3495541663,4174246784&fm=253&fmt=auto&app=120&f=JPEG?w=343&h=500",
-        "10",
-        "string.email",
-        "78",
-        "主治传染皮肤病",
-        "110",
-        "周矣",
-        "男",
-        "普通医生",
-        "zhouyi01"
-      ),
-      Doctor(
-        20,
-        "https://img0.baidu.com/it/u=3495541663,4174246784&fm=253&fmt=auto&app=120&f=JPEG?w=343&h=500",
-        "10",
-        "string.email",
-        "78",
-        "主治传染皮肤病",
-        "110",
-        "周矣",
-        "男",
-        "普通医生",
-        "zhouyi01"
-      ),
-      Doctor(
-        20,
-        "https://img0.baidu.com/it/u=3495541663,4174246784&fm=253&fmt=auto&app=120&f=JPEG?w=343&h=500",
-        "10",
-        "string.email",
-        "78",
-        "主治传染皮肤病",
-        "110",
-        "周矣",
-        "男",
-        "普通医生",
-        "zhouyi01"
-      )
-    )
-  }
-
-  var colors = MaterialTheme.colorScheme
-  AppTheme {
-    colors = MaterialTheme.colorScheme
-  }
-
-  /* 顶部背景椭圆 */
-  Canvas(
-    modifier = modifier
-      .fillMaxSize()
-      .background(colors.background)
+  @Composable
+  fun SearchPage(
+    modifier: Modifier = Modifier,
+    context: Context = this
   ) {
-    scale(scaleX = 15f, scaleY = 10f) {
-      drawCircle(
-        color = colors.primaryContainer,
-        radius = 40.dp.toPx(),
-        center = this.center + Offset(0f, -160f)
+    var searchText by rememberSaveable {
+      mutableStateOf("")
+    }
+
+    val depts = remember {
+      mutableStateListOf<String>(
+        "心脏科室", "内科科室", "骨科科室"
       )
     }
-  }
 
-  LazyColumn(
-    modifier = modifier
-      .fillMaxSize()
-  ) {
-
-    item {
-      Card(
-        modifier = Modifier
-          .fillMaxWidth()
-          .wrapContentHeight()
-          .padding(20.dp),
-        elevation = CardDefaults.cardElevation(
-          defaultElevation = 0.dp
+    val doctors = remember {
+      mutableStateListOf<Doctor>(
+        Doctor(
+          20,
+          "https://img0.baidu.com/it/u=3495541663,4174246784&fm=253&fmt=auto&app=120&f=JPEG?w=343&h=500",
+          "10",
+          "string.email",
+          "78",
+          "主治传染皮肤病",
+          "110",
+          "周矣",
+          "男",
+          "普通医生",
+          "zhouyi01"
         ),
-        colors = CardDefaults.cardColors(
-          containerColor = Color.Transparent
+        Doctor(
+          20,
+          "https://img0.baidu.com/it/u=3495541663,4174246784&fm=253&fmt=auto&app=120&f=JPEG?w=343&h=500",
+          "10",
+          "string.email",
+          "78",
+          "主治传染皮肤病",
+          "110",
+          "周矣",
+          "男",
+          "普通医生",
+          "zhouyi01"
+        ),
+        Doctor(
+          20,
+          "https://img0.baidu.com/it/u=3495541663,4174246784&fm=253&fmt=auto&app=120&f=JPEG?w=343&h=500",
+          "10",
+          "string.email",
+          "78",
+          "主治传染皮肤病",
+          "110",
+          "周矣",
+          "男",
+          "普通医生",
+          "zhouyi01"
         )
       )
-      {
-        Column(
-          modifier = Modifier,
-          verticalArrangement = Arrangement.Center,
-          horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-          Image(
-            painter = painterResource(id = R.drawable.hospital),
-            modifier = Modifier.size(100.dp),
-            contentDescription = null
+    }
+
+    var colors = MaterialTheme.colorScheme
+    AppTheme {
+      colors = MaterialTheme.colorScheme
+    }
+
+    /* 顶部背景椭圆 */
+    Canvas(
+      modifier = modifier
+        .fillMaxSize()
+        .background(colors.background)
+    ) {
+      scale(scaleX = 15f, scaleY = 10f) {
+        drawCircle(
+          color = colors.primaryContainer,
+          radius = 40.dp.toPx(),
+          center = this.center + Offset(0f, -160f)
+        )
+      }
+    }
+
+    LazyColumn(
+      modifier = modifier
+        .fillMaxSize()
+    ) {
+
+      item {
+        Card(
+          modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(20.dp),
+          elevation = CardDefaults.cardElevation(
+            defaultElevation = 0.dp
+          ),
+          colors = CardDefaults.cardColors(
+            containerColor = Color.Transparent
           )
-          Search(
-            text = searchText,
+        )
+        {
+          Column(
+            modifier = Modifier,
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+          ) {
+            Image(
+              painter = painterResource(id = R.drawable.hospital),
+              modifier = Modifier.size(100.dp),
+              contentDescription = null
+            )
+            Search(
+              text = searchText,
+              modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp),
+              placeholderText = "查找医生或科室...",
+              onTextChanged = {
+                searchText = it
+              },
+              onSearchDone = {
+                var obj = JSONObject()
+                obj.put("data", searchText)
+                appData.netHelper.get(
+                  "${appData.main.getString(R.string.admin_url)}/api/service-user/doctor/searchDoctorOrDept",
+                  value = obj
+                ) { data ->
+                  val deptList = data.getJSONObject("data").getJSONArray("deptNames")
+                  for (i in 0 until deptList.length()) {
+                    depts.add(deptList.getString(i))
+                  }
+                  val doctorList =
+                    data.getJSONObject("data").getJSONArray("doctorList")
+                  for (i in 0 until doctorList.length()) {
+                    doctors.add(
+                      Doctor(
+                        amount = doctorList.getJSONObject(i).getInt("amount"),
+                        avatar = doctorList.getJSONObject(i)
+                          .getString("avatar"),
+                        deptID = doctorList.getJSONObject(i)
+                          .getString("deptId"),
+                        email = doctorList.getJSONObject(i).getString("email"),
+                        id = doctorList.getJSONObject(i).getString("id"),
+                        introduce = doctorList.getJSONObject(i)
+                          .getString("introduce"),
+                        phoneNumber = doctorList.getJSONObject(i)
+                          .getString("phonenumber"),
+                        realName = doctorList.getJSONObject(i)
+                          .getString("realName"),
+                        sex = if (doctorList.getJSONObject(i)
+                            .getString("sex") == "0"
+                        ) {
+                          "男"
+                        } else {
+                          "女"
+                        },
+                        title = doctorList.getJSONObject(i).getString("title"),
+                        userName = doctorList.getJSONObject(i)
+                          .getString("userName"),
+                      )
+                    )
+                  }
+                }
+              },
+            )
+          }
+        }
+      }
+      if (depts.size > 0) {
+        item {
+          Column(
             modifier = Modifier
               .fillMaxWidth()
-              .padding(20.dp),
-            placeholderText = "查找医生或科室...",
-            onTextChanged = {
-              searchText = it
-            },
-            onSearchDone = {
-              var obj = JSONObject()
-              obj.put("data", searchText)
-              appData.netHelper.get(
-                "${appData.main.getString(R.string.admin_url)}/api/service-user/doctor/searchDoctorOrDept",
-                value = obj
-              ) { data ->
-                val deptList = data.getJSONObject("data").getJSONArray("deptNames")
-                for (i in 0 until deptList.length()) {
-                  depts.add(deptList.getString(i))
-                }
-                val doctorList =
-                  data.getJSONObject("data").getJSONArray("doctorList")
-                for (i in 0 until doctorList.length()) {
-                  doctors.add(
-                    Doctor(
-                      amount = doctorList.getJSONObject(i).getInt("amount"),
-                      avatar = doctorList.getJSONObject(i)
-                        .getString("avatar"),
-                      deptID = doctorList.getJSONObject(i)
-                        .getString("deptId"),
-                      email = doctorList.getJSONObject(i).getString("email"),
-                      id = doctorList.getJSONObject(i).getString("id"),
-                      introduce = doctorList.getJSONObject(i)
-                        .getString("introduce"),
-                      phoneNumber = doctorList.getJSONObject(i)
-                        .getString("phonenumber"),
-                      realName = doctorList.getJSONObject(i)
-                        .getString("realName"),
-                      sex = if (doctorList.getJSONObject(i)
-                          .getString("sex") == "0"
-                      ) {
-                        "男"
-                      } else {
-                        "女"
-                      },
-                      title = doctorList.getJSONObject(i).getString("title"),
-                      userName = doctorList.getJSONObject(i)
-                        .getString("userName"),
-                    )
-                  )
-                }
-              }
-            },
+              .background(colors.background)
+          ) {
+            Text(
+              modifier = Modifier.padding(
+                start = 10.dp,
+                bottom = 4.dp
+              ),
+              text = "科室",
+              fontSize = 20.sp,
+              fontWeight = FontWeight.SemiBold
+            )
+            Text(
+              modifier = Modifier.padding(
+                start = 10.dp
+              ),
+              text = "找到您可能想要的科室",
+              fontSize = 14.sp,
+              color = Color.Gray
+            )
+          }
+        }
+        items(depts.size) { index ->
+          DeptCard(
+            deptName = depts[index],
+            modifier = Modifier
+              .fillMaxWidth()
+              .height(100.dp)
+              .background(colors.background),
+            containerColor = colors.background
           )
         }
       }
-    }
-    if (depts.size > 0) {
-      item {
-        Column(
-          modifier = Modifier
-            .fillMaxWidth()
-            .background(colors.background)
-        ) {
-          Text(
-            modifier = Modifier.padding(
-              start = 10.dp,
-              bottom = 4.dp
-            ),
-            text = "科室",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.SemiBold
-          )
-          Text(
-            modifier = Modifier.padding(
-              start = 10.dp
-            ),
-            text = "找到您可能想要的科室",
-            fontSize = 14.sp,
-            color = Color.Gray
-          )
-        }
-      }
-      items(depts.size) { index ->
-        DeptCard(
-          deptName = depts[index],
-          modifier = Modifier
-            .fillMaxWidth()
-            .height(100.dp)
-            .background(colors.background),
-          containerColor = colors.background
-        )
-      }
-    }
 
-    if (doctors.size > 0) {
-      item {
-        Column(
-          modifier = Modifier
-            .fillMaxWidth()
-            .background(colors.background)
-        ) {
-          Text(
-            modifier = Modifier.padding(
-              start = 10.dp,
-              bottom = 4.dp
-            ),
-            text = "医生",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.SemiBold
-          )
-          Text(
-            modifier = Modifier.padding(
-              start = 10.dp
-            ),
-            text = "找到您可能想要的医生",
-            fontSize = 14.sp,
-            color = Color.Gray
+      if (doctors.size > 0) {
+        item {
+          Column(
+            modifier = Modifier
+              .fillMaxWidth()
+              .background(colors.background)
+          ) {
+            Text(
+              modifier = Modifier.padding(
+                start = 10.dp,
+                bottom = 4.dp
+              ),
+              text = "医生",
+              fontSize = 20.sp,
+              fontWeight = FontWeight.SemiBold
+            )
+            Text(
+              modifier = Modifier.padding(
+                start = 10.dp
+              ),
+              text = "找到您可能想要的医生",
+              fontSize = 14.sp,
+              color = Color.Gray
+            )
+          }
+        }
+        items(doctors.size) { index ->
+          DoctorCard(
+            modifier = Modifier
+              .fillMaxWidth()
+              .background(colors.background),
+            doctor = doctors[index],
+            containerColor = colors.background
           )
         }
       }
-      items(doctors.size) { index ->
-        DoctorCard(
-          modifier = Modifier
-            .fillMaxWidth()
-            .background(colors.background),
-          doctor = doctors[index],
-          containerColor = colors.background
-        )
-      }
-    }
 
+    }
   }
-}
 
 
-@Preview
-@Composable
-fun SearchPagePreview() {
-  SearchPage()
+  @Preview
+  @Composable
+  fun SearchPagePreview() {
+    SearchPage()
+  }
 }

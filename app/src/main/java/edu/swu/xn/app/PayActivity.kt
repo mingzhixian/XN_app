@@ -1,5 +1,6 @@
 package edu.swu.xn.app
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
@@ -42,8 +43,10 @@ import androidx.compose.ui.unit.sp
 import edu.swu.xn.app.ui.theme.AppTheme
 
 class PayActivity : AppCompatActivity() {
+  private lateinit var orderID:String
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    orderID = intent.getStringExtra("orderId")!!
     setContent {
       AppTheme {
         PayPage()
@@ -59,7 +62,8 @@ class PayActivity : AppCompatActivity() {
   @OptIn(ExperimentalMaterial3Api::class)
   @Composable
   fun PayPage(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    context: Context = this,
   ) {
     val payItems: List<PayItem> = rememberSaveable {
       mutableListOf<PayItem>(
