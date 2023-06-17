@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.swu.xn.app.helper.RecyclerViewAdapter
+import okhttp3.internal.notify
 import org.json.JSONArray
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -21,6 +22,7 @@ import java.util.Date
 
 class AppointmentActivity : AppCompatActivity() {
 
+  lateinit var topAdapter: RecyclerViewAdapter
   lateinit var bottomAdapter: RecyclerViewAdapter
   lateinit var doctors: JSONArray
 
@@ -30,33 +32,31 @@ class AppointmentActivity : AppCompatActivity() {
     setContentView(R.layout.activity_appointment)
     // 上部分
     val topRecyclerView = findViewById<RecyclerView>(R.id.appointment_top)
+    var selectItem = 0
     val linearLayoutManager = LinearLayoutManager(this)
     linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
     topRecyclerView.layoutManager = linearLayoutManager
     val mDateFormat = SimpleDateFormat("MM-dd")
     val date = Date()
-    topRecyclerView.adapter = RecyclerViewAdapter(R.layout.appointment_top_item,
+    topAdapter = RecyclerViewAdapter(R.layout.appointment_top_item,
       { 20 }) { holder, position ->
       val tmpDate = date.time.plus(86400000 * position)
       holder.itemView.findViewById<TextView>(R.id.appointment_top_item_text).text =
         mDateFormat.format(tmpDate)
       // 默认选中第一个
       val layout = holder.itemView.findViewById<LinearLayout>(R.id.appointment_top_item_layout)
-      if (position == 0) {
+      if (position == selectItem) {
         layout.backgroundTintList =
           ContextCompat.getColorStateList(this, R.color.md_theme_surface)
+      } else {
+        layout.backgroundTintList =
+          ContextCompat.getColorStateList(this, R.color.md_theme_surfaceVariant)
       }
       layout.setOnClickListener {
-        // 更新ui
-        Log.e("aaaaa",topRecyclerView.childCount.toString())
-        for (i in 0 until topRecyclerView.childCount) {
-          val childItem =
-            topRecyclerView.getChildAt(i)
-              .findViewById<LinearLayout>(R.id.appointment_top_item_layout)
-          childItem.backgroundTintList =
-            ContextCompat.getColorStateList(this, R.color.md_theme_surfaceVariant)
+        selectItem = position
+        synchronized(topAdapter) {
+          topAdapter.notifyDataSetChanged()
         }
-        it.backgroundTintList = ContextCompat.getColorStateList(this, R.color.md_theme_surface)
         // 更新下边栏
         getDoctors(tmpDate) {
           synchronized(bottomAdapter) {
@@ -65,6 +65,7 @@ class AppointmentActivity : AppCompatActivity() {
         }
       }
     }
+    topRecyclerView.adapter = topAdapter
     // 下部分
     getDoctors(date.time) {
       val appointmentBottom = findViewById<RecyclerView>(R.id.appointment_bottom)
@@ -94,10 +95,16 @@ class AppointmentActivity : AppCompatActivity() {
           // 点击跳转
           holder.itemView.findViewById<LinearLayout>(R.id.appointment_bottom_item_layout)
             .setOnClickListener {
-              // todo 跳转医生界面
-//            val intent = Intent(this, AppointmentActivity::class.java)
-//            intent.putExtra("id", tmpDoctor.getInt("id"))
-//            startActivity(intent)
+              val intent = Intent(this, DoctorActivity::class.java)
+              intent.putExtra("id", tmpDoctor.getInt("id"))
+              intent.putExtra("id", tmpDoctor.getInt("id"))
+              intent.putExtra("productId", tmpDoctor.getString("productId"))
+              intent.putExtra("name", tmpDoctor.getString("name"))
+              intent.putExtra("sex", tmpDoctor.getString("sex"))
+              intent.putExtra("count", tmpDoctor.getString("count"))
+              intent.putExtra("amount", tmpDoctor.getString("amount"))
+              intent.putExtra("introduce", tmpDoctor.getString("introduce"))
+              startActivity(intent)
             }
         }
       appointmentBottom.adapter = bottomAdapter
@@ -121,7 +128,7 @@ class AppointmentActivity : AppCompatActivity() {
         Toast.makeText(this, "未知错误", Toast.LENGTH_SHORT).show()
         return@get
       }
-      doctors = it.getJSONObject("data").getJSONArray("doctors")
+      doctors = it.getJSONArray("data")
       handle()
     }
   }
