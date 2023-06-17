@@ -31,6 +31,12 @@ class AppData : ViewModel() {
   // 当前账户ID
   var hashID = ""
 
+  // 用户ID
+  var userID = 0
+
+  // 用户名
+  var userName=""
+
   // 总协程域
   val mainScope = MainScope()
 
