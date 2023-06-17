@@ -29,10 +29,10 @@ class AppData : ViewModel() {
   lateinit var main: MainActivity
 
   // 当前账户ID
-  var hashID = ""
+  var hashId = ""
 
   // 用户ID
-  var userID = 0
+  var userId = 0
 
   // 用户名
   var userName=""

@@ -103,13 +103,13 @@ class LogInActivity : AppCompatActivity() {
     }
   }
 
-  private fun saveID(hashID: String, id: Int, userName: String) {
-    appData.hashID = hashID
-    appData.userID = id
+  private fun saveID(hashId: String, id: Int, userName: String) {
+    appData.hashId = hashId
+    appData.userId = id
     appData.userName = userName
     appData.settings.edit().apply {
-      putString("hashID", hashID)
-      putInt("userID", id)
+      putString("hashId", hashId)
+      putInt("userId", id)
       putString("userName", userName)
       apply()
     }
