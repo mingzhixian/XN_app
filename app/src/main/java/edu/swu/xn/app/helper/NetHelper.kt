@@ -30,7 +30,10 @@ class NetHelper {
         }
         try {
           okhttpClient.newCall(request.build()).execute().use { response ->
-            handle(JSONObject(response.body!!.string()))
+            val body = response.body!!.string()
+            withContext(Dispatchers.Main) {
+              handle(JSONObject(body))
+            }
           }
         } catch (_: Exception) {
           withContext(Dispatchers.Main) {
@@ -52,7 +55,10 @@ class NetHelper {
         }
         try {
           okhttpClient.newCall(request.build()).execute().use { response ->
-            handle(JSONObject(response.body!!.string()))
+            val body = response.body!!.string()
+            withContext(Dispatchers.Main) {
+              handle(JSONObject(body))
+            }
           }
         } catch (_: Exception) {
           withContext(Dispatchers.Main) {

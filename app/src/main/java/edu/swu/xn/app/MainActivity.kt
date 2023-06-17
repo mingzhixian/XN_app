@@ -76,6 +76,8 @@ class MainActivity : ComponentActivity() {
     if (appData.settings.getBoolean("FirstUse", true)) firstUse()
     // 检测登录
     appData.hashID = appData.settings.getString("hashID", "").toString()
+    appData.userID = appData.settings.getInt("userID", 0)
+    appData.userName = appData.settings.getString("userName", "").toString()
 
     if (appData.hashID == "") {
       startActivityForResult(
