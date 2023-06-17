@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.GridLayout
@@ -128,7 +127,8 @@ class DoctorActivity : AppCompatActivity() {
               }
               val intent = Intent(this, PayActivity::class.java)
               intent.putExtra("orderId", it.getJSONObject("data").getString("orderId"))
-              intent.putExtra("amount", findViewById<TextView>(R.id.doctor_amount).text)
+              val amountText = findViewById<TextView>(R.id.doctor_amount).text
+              intent.putExtra("amount", amountText.substring(3, amountText.length))
               startActivity(intent)
             }
           }
