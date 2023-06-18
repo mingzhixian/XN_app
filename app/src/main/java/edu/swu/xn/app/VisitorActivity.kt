@@ -1,13 +1,10 @@
 package edu.swu.xn.app
 
-import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,6 +28,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -45,9 +43,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -56,16 +52,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import edu.swu.xn.app.component.LoadingProgress
+import edu.swu.xn.app.component.TopRoundBackground
 import edu.swu.xn.app.entity.Visitor
 import edu.swu.xn.app.ui.theme.AppTheme
 import org.json.JSONObject
 
 class VisitorActivity : AppCompatActivity() {
-  var init: Boolean = true
+  private var init: Boolean = true
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
-      VisitorPage(context = this)
+      AppTheme {
+        VisitorPage(colors = MaterialTheme.colorScheme)
+      }
     }
   }
 
@@ -73,19 +72,16 @@ class VisitorActivity : AppCompatActivity() {
   @Composable
   fun VisitorPage(
     modifier: Modifier = Modifier,
-    context: Context = this
+    colors: ColorScheme = MaterialTheme.colorScheme
   ) {
-    var colors = MaterialTheme.colorScheme
-    AppTheme {
-      colors = MaterialTheme.colorScheme
-    }
 
     val visitors = remember {
       mutableStateListOf<Visitor>()
     }
-    var progress = remember { mutableStateOf(false) }
-    if (init) {
+    val progress = remember { mutableStateOf(false) }
+    if (!init) {
       progress.value = true
+      /* 请求就诊人信息 */
       val obj = JSONObject()
       obj.put("userID", appData.userId)
       appData.netHelper.get(
@@ -156,19 +152,11 @@ class VisitorActivity : AppCompatActivity() {
     }
 
     /* 顶部背景椭圆 */
-    Canvas(
-      modifier = modifier
-        .fillMaxSize()
-        .background(colors.background)
-    ) {
-      scale(scaleX = 15f, scaleY = 10f) {
-        drawCircle(
-          color = colors.primaryContainer,
-          radius = 40.dp.toPx(),
-          center = this.center + Offset(0f, -200f)
-        )
-      }
-    }
+    TopRoundBackground(
+      backgroundColor = colors.background,
+      containerColor = colors.primaryContainer,
+      offset = -200f
+    )
     Box {
       if (progress.value)
         LoadingProgress()
@@ -265,6 +253,7 @@ class VisitorActivity : AppCompatActivity() {
                 modifier = Modifier.size(40.dp),
                 onClick = {
                   progress.value = true
+                  /* 请求删除就诊人 */
                   val obj = JSONObject()
                   obj.put("id", visitors[index].id)
                   appData.netHelper.get(
@@ -272,9 +261,9 @@ class VisitorActivity : AppCompatActivity() {
                     obj
                   ) { data ->
                     if (data.getString("code") != "200") {
-                      Toast.makeText(context, "删除失败！", Toast.LENGTH_LONG).show()
+                      Toast.makeText(this@VisitorActivity, "删除失败！", Toast.LENGTH_LONG).show()
                     } else {
-                      Toast.makeText(context, "删除成功！", Toast.LENGTH_LONG).show()
+                      Toast.makeText(this@VisitorActivity, "删除成功！", Toast.LENGTH_LONG).show()
                       visitors.removeAt(index)
                     }
                     progress.value = false
@@ -466,6 +455,7 @@ class VisitorActivity : AppCompatActivity() {
                 IconButton(
                   onClick = {
                     progress.value = true
+                    /* 请求添加就诊人 */
                     val obj = JSONObject()
                     obj.put("age", age.value)
                     obj.put("cardId", cardID.value)
@@ -490,13 +480,13 @@ class VisitorActivity : AppCompatActivity() {
                     ) { data ->
                       if (data.getString("code") != "200") {
                         Toast.makeText(
-                          context,
+                          this@VisitorActivity,
                           if (isAdd.value) "添加失败!" else "更新失败!",
                           Toast.LENGTH_LONG
                         ).show()
                       } else {
                         Toast.makeText(
-                          context,
+                          this@VisitorActivity,
                           if (isAdd.value) "添加成功!" else "更新成功!",
                           Toast.LENGTH_LONG
                         ).show()
@@ -568,7 +558,9 @@ class VisitorActivity : AppCompatActivity() {
   @Preview
   @Composable
   fun VisitorPagePreview() {
-    VisitorPage(context = this)
+    AppTheme {
+      VisitorPage(colors = MaterialTheme.colorScheme)
+    }
   }
 
 }

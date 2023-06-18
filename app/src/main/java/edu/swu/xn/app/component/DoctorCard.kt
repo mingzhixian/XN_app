@@ -24,7 +24,9 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import edu.swu.xn.app.entity.Doctor
 
-
+/**
+ *  医生卡片
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DoctorCard(
@@ -36,13 +38,13 @@ fun DoctorCard(
   ) {
   Card(
     modifier = modifier
-        .padding(10.dp)
-        .fillMaxWidth()
-        .border(
-            width = 1.dp,
-            color = Color.Gray,
-            shape = MaterialTheme.shapes.medium
-        ),
+      .padding(10.dp)
+      .fillMaxWidth()
+      .border(
+        width = 1.dp,
+        color = Color.Gray,
+        shape = MaterialTheme.shapes.medium
+      ),
     colors = CardDefaults.cardColors(
       containerColor = containerColor,
     ),

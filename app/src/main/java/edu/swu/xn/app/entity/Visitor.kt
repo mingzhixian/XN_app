@@ -1,5 +1,8 @@
 package edu.swu.xn.app.entity
 
+/**
+ *  就诊人
+ */
 data class Visitor(
   val name : String,
   val id : Int,

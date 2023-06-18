@@ -1,5 +1,8 @@
 package edu.swu.xn.app.entity
 
+/**
+ * 医生
+ */
 data class Doctor(
     val amount: Int,
     val avatar: String,
@@ -12,5 +15,4 @@ data class Doctor(
     val sex: String,
     val title: String,
     val userName: String
-) {
-}
+)

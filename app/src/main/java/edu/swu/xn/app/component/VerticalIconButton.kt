@@ -20,7 +20,16 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import edu.swu.xn.app.R
 
-
+/**
+ * 纵向图标按钮
+ *
+ * @param modifier 修饰器
+ * @param text 按钮文本
+ * @param textColor 文本颜色
+ * @param onClick 点击事件
+ * @param icon 按钮图标
+ * @param iconSize 图标大小
+ */
 @Composable
 fun VerticalIconButton(
     modifier: Modifier = Modifier,
@@ -42,8 +51,8 @@ fun VerticalIconButton(
                 contentDescription = null,
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
-                    .size(iconSize)
-                    .background(Color.Transparent)
+                  .size(iconSize)
+                  .background(Color.Transparent)
             )
             Spacer(
                 modifier = Modifier.size(4.dp)
