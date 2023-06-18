@@ -28,6 +28,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Badge
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -88,6 +89,7 @@ class MainActivity : ComponentActivity() {
         AppTheme {
           HomePage(
             name = "小老弟",
+            colors = MaterialTheme.colorScheme,
             commonSenses = listOf(
               CommonSense(
                 url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
@@ -220,11 +222,8 @@ class MainActivity : ComponentActivity() {
       }
     ),
     commonSenses: List<CommonSense> = listOf(),
+    colors: ColorScheme = MaterialTheme.colorScheme
   ) {
-    var colors = MaterialTheme.colorScheme
-    AppTheme {
-      colors = MaterialTheme.colorScheme
-    }
     /* 消息数状态 */
     val badgeNumber by rememberSaveable {
       mutableStateOf(8)
@@ -428,31 +427,34 @@ class MainActivity : ComponentActivity() {
   @Preview
   @Composable
   fun HomePagePreview() {
-    HomePage(
-      name = "小老弟",
-      commonSenses = listOf(
-        CommonSense(
-          url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-          title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-          content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-        ),
-        CommonSense(
-          url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-          title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-          content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-        ),
-        CommonSense(
-          url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-          title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-          content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
-        ),
-        CommonSense(
-          url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-          title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-          content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+    AppTheme {
+      HomePage(
+        name = "小老弟",
+        colors = MaterialTheme.colorScheme,
+        commonSenses = listOf(
+          CommonSense(
+            url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+            title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+            content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+          ),
+          CommonSense(
+            url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+            title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+            content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+          ),
+          CommonSense(
+            url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+            title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+            content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+          ),
+          CommonSense(
+            url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
+            title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
+            content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+          )
         )
       )
-    )
+    }
   }
 
 

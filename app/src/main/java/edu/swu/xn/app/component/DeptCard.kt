@@ -29,7 +29,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import edu.swu.xn.app.R
 
-
+/**
+ *  部门、科室卡片
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DeptCard(
@@ -41,13 +43,13 @@ fun DeptCard(
 ) {
     Card(
         modifier = modifier
-            .padding(10.dp)
-            .fillMaxWidth()
-            .border(
-                width = 1.dp,
-                color = Color.Gray,
-                shape = MaterialTheme.shapes.medium
-            ),
+          .padding(10.dp)
+          .fillMaxWidth()
+          .border(
+            width = 1.dp,
+            color = Color.Gray,
+            shape = MaterialTheme.shapes.medium
+          ),
         colors = CardDefaults.cardColors(
             containerColor = containerColor,
         ),
@@ -58,8 +60,8 @@ fun DeptCard(
     ) {
         Row(
             modifier = Modifier
-                .padding(10.dp)
-                .fillMaxWidth(),
+              .padding(10.dp)
+              .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {

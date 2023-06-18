@@ -1,11 +1,9 @@
 package edu.swu.xn.app
 
-import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -20,6 +18,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,9 +30,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -43,6 +40,7 @@ import edu.swu.xn.app.component.DeptCard
 import edu.swu.xn.app.component.DoctorCard
 import edu.swu.xn.app.component.LoadingProgress
 import edu.swu.xn.app.component.Search
+import edu.swu.xn.app.component.TopRoundBackground
 import edu.swu.xn.app.entity.Doctor
 import edu.swu.xn.app.ui.theme.AppTheme
 import org.json.JSONObject
@@ -52,7 +50,7 @@ class SearchActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContent {
       AppTheme {
-        SearchPage()
+        SearchPage(colors = MaterialTheme.colorScheme)
       }
     }
   }
@@ -60,44 +58,26 @@ class SearchActivity : AppCompatActivity() {
   @Composable
   fun SearchPage(
     modifier: Modifier = Modifier,
-    context: Context = this
+    colors: ColorScheme = MaterialTheme.colorScheme
   ) {
-    var searchText by rememberSaveable {
-      mutableStateOf("")
-    }
+    var searchText by rememberSaveable { mutableStateOf("") }
 
-    val depts = remember {
-      mutableStateListOf<String>()
-    }
+    val depts = remember { mutableStateListOf<String>() }
 
-    val doctors = remember {
-      mutableStateListOf<Doctor>()
-    }
+    val doctors = remember { mutableStateListOf<Doctor>() }
 
     val progress = remember { mutableStateOf(false) }
 
-    var colors = MaterialTheme.colorScheme
-    AppTheme {
-      colors = MaterialTheme.colorScheme
-    }
 
     /* 顶部背景椭圆 */
-    Canvas(
-      modifier = modifier
-        .fillMaxSize()
-        .background(colors.background)
-    ) {
-      scale(scaleX = 15f, scaleY = 10f) {
-        drawCircle(
-          color = colors.primaryContainer,
-          radius = 40.dp.toPx(),
-          center = this.center + Offset(0f, -160f)
-        )
-      }
-    }
+    TopRoundBackground(
+      backgroundColor = colors.background,
+      containerColor = colors.primaryContainer,
+    )
     Box {
       if (progress.value)
         LoadingProgress()
+
       LazyColumn(
         modifier = modifier
           .fillMaxSize()
@@ -138,6 +118,7 @@ class SearchActivity : AppCompatActivity() {
                 },
                 onSearchDone = {
                   progress.value = true
+                  /* 请求查询医生与部门 */
                   val obj = JSONObject()
                   obj.put("data", searchText)
                   appData.netHelper.get(
@@ -194,6 +175,7 @@ class SearchActivity : AppCompatActivity() {
             }
           }
         }
+
         if (depts.size > 0) {
           item {
             Column(
@@ -277,6 +259,8 @@ class SearchActivity : AppCompatActivity() {
   @Preview
   @Composable
   fun SearchPagePreview() {
-    SearchPage()
+    AppTheme {
+      SearchPage(colors = MaterialTheme.colorScheme)
+    }
   }
 }
