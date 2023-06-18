@@ -20,7 +20,16 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import edu.swu.xn.app.R
 
-
+/**
+ * 操作卡片
+ *
+ * @param modifier 修饰器
+ * @param text 卡片文本
+ * @param textColor 文本颜色
+ * @param onClick 点击事件
+ * @param icon 卡片图标
+ * @param iconSize 图标大小
+ */
 @Composable
 fun OperateItem(
     modifier: Modifier = Modifier,
@@ -42,8 +51,8 @@ fun OperateItem(
                 contentDescription = null,
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
-                    .size(iconSize)
-                    .background(Color.Transparent)
+                  .size(iconSize)
+                  .background(Color.Transparent)
             )
             Spacer(
                 modifier = Modifier.size(4.dp)

@@ -17,7 +17,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-
+/**
+ *  加载进度环
+ */
 @Composable
 fun LoadingProgress(
     modifier: Modifier = Modifier,
@@ -26,8 +28,8 @@ fun LoadingProgress(
 ) {
     Column(
         modifier = modifier
-            .fillMaxSize()
-            .background(backgroundColor),
+          .fillMaxSize()
+          .background(backgroundColor),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
