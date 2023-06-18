@@ -23,7 +23,9 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import edu.swu.xn.app.entity.CommonSense
 
-
+/**
+ *  常识卡片
+ */
 @Composable
 fun CommonSenseCard(
     modifier: Modifier = Modifier,
@@ -31,8 +33,8 @@ fun CommonSenseCard(
 ) {
     Card(
         modifier = modifier
-            .padding(10.dp)
-            .fillMaxWidth(),
+          .padding(10.dp)
+          .fillMaxWidth(),
         colors = CardDefaults.cardColors(
             containerColor = Color.White,
         ),
@@ -45,8 +47,8 @@ fun CommonSenseCard(
         ) {
             AsyncImage(
                 modifier = Modifier
-                    .size(100.dp)
-                    .clip(RoundedCornerShape(16.dp)),
+                  .size(100.dp)
+                  .clip(RoundedCornerShape(16.dp)),
                 model = commonSense.url,
                 contentDescription = null
             )

@@ -1,12 +1,9 @@
 package edu.swu.xn.app
 
-import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +19,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -34,15 +32,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import edu.swu.xn.app.component.LoadingProgress
+import edu.swu.xn.app.component.TopRoundBackground
 import edu.swu.xn.app.ui.theme.AppTheme
 import org.json.JSONObject
 import java.text.DecimalFormat
@@ -56,7 +53,7 @@ class PayActivity : AppCompatActivity() {
     amount = intent.extras!!.getString("amount")!!.toFloat()
     setContent {
       AppTheme {
-        PayPage()
+        PayPage(colors = MaterialTheme.colorScheme)
       }
     }
   }
@@ -70,10 +67,10 @@ class PayActivity : AppCompatActivity() {
   @Composable
   fun PayPage(
     modifier: Modifier = Modifier,
-    context: Context = this,
+    colors: ColorScheme = MaterialTheme.colorScheme
   ) {
     val payItems: List<PayItem> = rememberSaveable {
-      mutableListOf<PayItem>(
+      mutableListOf(
         PayItem(
           payType = "微信支付",
           iconID = R.drawable.wechat
@@ -89,7 +86,7 @@ class PayActivity : AppCompatActivity() {
       )
     }
 
-    var ok_icon by remember { mutableStateOf(R.drawable.wechat) }
+    var okIcon by remember { mutableStateOf(R.drawable.wechat) }
     var isOK by remember { mutableStateOf(false) }
 
     val amount by remember { mutableStateOf(amount) }
@@ -97,32 +94,23 @@ class PayActivity : AppCompatActivity() {
 
     val progress = remember { mutableStateOf(false) }
 
-    var colors = MaterialTheme.colorScheme
-    AppTheme {
-      colors = MaterialTheme.colorScheme
-    }
 
     /* 顶部背景椭圆 */
-    Canvas(
-      modifier = modifier
-        .fillMaxSize()
-        .background(colors.background)
-    ) {
-      scale(scaleX = 15f, scaleY = 10f) {
-        drawCircle(
-          color = colors.primaryContainer,
-          radius = 40.dp.toPx(),
-          center = this.center + Offset(0f, -200f)
-        )
-      }
-    }
+    TopRoundBackground(
+      backgroundColor = colors.background,
+      containerColor = colors.primaryContainer,
+      offset = -200f
+    )
+
     Box {
       if (progress.value)
         LoadingProgress()
+
       LazyColumn(
         modifier = modifier
           .fillMaxSize()
       ) {
+        /* 标题文本 */
         item {
           Text(
             modifier = Modifier.padding(
@@ -144,7 +132,7 @@ class PayActivity : AppCompatActivity() {
             modifier = Modifier.size(50.dp)
           )
         }
-
+        /* 支付金额 */
         item {
           Text(
             text = "支付金额",
@@ -172,7 +160,7 @@ class PayActivity : AppCompatActivity() {
             )
           }
         }
-
+        /* 支付方式 */
         items(payItems.size) { index ->
           Card(
             modifier = Modifier
@@ -186,8 +174,9 @@ class PayActivity : AppCompatActivity() {
               contentColor = Color.Unspecified
             ),
             onClick = {
-              ok_icon = payItems[index].iconID
+              okIcon = payItems[index].iconID
               progress.value = true
+              /* 请求支付订单 */
               val obj = JSONObject()
               obj.put("orderId", orderID)
               appData.netHelper.get(
@@ -232,6 +221,8 @@ class PayActivity : AppCompatActivity() {
           }
         }
       }
+
+      /* 支付成功卡片 */
       if (isOK) {
         Card(
           modifier = Modifier
@@ -259,7 +250,7 @@ class PayActivity : AppCompatActivity() {
               modifier = Modifier
                 .padding(top = 40.dp)
                 .size(80.dp),
-              painter = painterResource(id = ok_icon),
+              painter = painterResource(id = okIcon),
               contentDescription = null,
             )
             Text(
@@ -307,7 +298,9 @@ class PayActivity : AppCompatActivity() {
   @Preview
   @Composable
   fun PayPagePreview() {
-    PayPage()
+    AppTheme {
+      PayPage(colors = MaterialTheme.colorScheme)
+    }
   }
 
 }
