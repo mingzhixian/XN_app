@@ -464,7 +464,14 @@ class MainActivity : ComponentActivity() {
           CommonSenseCard(
             modifier = Modifier.background(colors.background),
             commonSense = commonSenses[index],
-            containerColor = colors.primaryContainer
+            containerColor = colors.primaryContainer,
+            onClick = {
+              val intent = Intent(this@MainActivity, ArticleActivity::class.java)
+              intent.putExtra(
+                "url", commonSenses[index].url
+              )
+              startActivity(intent)
+            }
           )
         }
       }
