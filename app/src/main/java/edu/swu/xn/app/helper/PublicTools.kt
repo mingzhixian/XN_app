@@ -1,10 +1,8 @@
 package edu.swu.xn.app.helper
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
@@ -28,6 +26,8 @@ class PublicTools(private val main: MainActivity) {
   }
 
   fun dp2px(dp: Float): Float = dp * main.resources.displayMetrics.density
+
+  fun px2dp(px: Float): Int = (px / main.resources.displayMetrics.density + 0.5f).toInt()
 
   // 显示加载框
   fun showLoading(
