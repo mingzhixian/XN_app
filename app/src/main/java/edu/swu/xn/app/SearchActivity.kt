@@ -73,7 +73,7 @@ class SearchActivity : AppCompatActivity() {
     /* 顶部背景椭圆 */
     TopRoundBackground(
       backgroundColor = colors.background,
-      containerColor = colors.primaryContainer,
+      containerColor = colors.primary,
     )
     Box {
       if (progress.value)

@@ -80,7 +80,7 @@ class VisitorActivity : AppCompatActivity() {
       mutableStateListOf<Visitor>()
     }
     val progress = remember { mutableStateOf(false) }
-    if (!init) {
+    if (init) {
       progress.value = true
       /* 请求就诊人信息 */
       val obj = JSONObject()
@@ -155,7 +155,7 @@ class VisitorActivity : AppCompatActivity() {
     /* 顶部背景椭圆 */
     TopRoundBackground(
       backgroundColor = colors.background,
-      containerColor = colors.primaryContainer,
+      containerColor = colors.primary,
       offset = -200f
     )
     Box {
