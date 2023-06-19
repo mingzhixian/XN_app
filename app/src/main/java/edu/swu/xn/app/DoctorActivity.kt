@@ -23,7 +23,7 @@ class DoctorActivity : AppCompatActivity() {
   val subProductIdList = Array(9) { 0 }
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    appData.publicTools.setFullScreen(this)
+    appData.publicTools.setStatusAndNavBar(this)
     setContentView(R.layout.activity_doctor)
     clock = findViewById<GridLayout>(R.id.doctor_clock)
     // 设置填充值
@@ -137,5 +137,13 @@ class DoctorActivity : AppCompatActivity() {
       patientList.adapter = patientListAdapter
       patientDialog.show()
     }
+  }
+
+  fun onBackClick(view: View) {
+    finish()
+  }
+
+  fun onSearchClick(view: View) {
+    startActivity(Intent(this, SearchActivity::class.java))
   }
 }

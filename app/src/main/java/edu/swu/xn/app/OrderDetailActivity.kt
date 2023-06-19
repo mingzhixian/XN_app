@@ -42,7 +42,7 @@ class OrderDetailActivity : AppCompatActivity() {
   private var init = true
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-
+    appData.publicTools.setStatusAndNavBar(this)
     val orderId = intent.getStringExtra("orderId")!!
 
     item = OrderDetailItem(

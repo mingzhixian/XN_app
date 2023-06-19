@@ -61,7 +61,7 @@ class VisitorActivity : AppCompatActivity() {
   private var init: Boolean = true
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    appData.publicTools.setFullScreen(this)
+    appData.publicTools.setStatusAndNavBar(this)
     setContent {
       AppTheme {
         VisitorPage(colors = MaterialTheme.colorScheme)

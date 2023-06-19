@@ -19,8 +19,10 @@ import java.util.Date
 class OrderActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    appData.publicTools.setFullScreen(this)
+    appData.publicTools.setStatusAndNavBar(this)
     setContentView(R.layout.activity_order)
+    if (intent.extras!!.getString("for") != "fullOrderList")
+      findViewById<TextView>(R.id.activity_title).text = "未缴费订单"
     drawUI()
   }
 
@@ -120,5 +122,13 @@ class OrderActivity : AppCompatActivity() {
       }
       orderListView.adapter = orderListViewAdapter
     }
+  }
+
+  fun onBackClick(view: View) {
+    finish()
+  }
+
+  fun onSearchClick(view: View) {
+    startActivity(Intent(this, SearchActivity::class.java))
   }
 }
