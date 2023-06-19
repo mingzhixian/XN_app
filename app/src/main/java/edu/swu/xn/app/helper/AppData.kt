@@ -59,7 +59,7 @@ class AppData : ViewModel() {
   lateinit var subjectList: LinkedList<Subject>
 
   // 状态栏高度
-  var statusBar = 0
+  var statusBarHeight = 0
 
   fun init(m: MainActivity) {
     isInit = true
@@ -73,7 +73,7 @@ class AppData : ViewModel() {
     // 公共数据库
     publicTools = PublicTools(main)
     // 状态栏高度
-    statusBar = getStatusBar()
+    statusBarHeight = getStatusBar()
   }
 
   // 获取科目诊室列表

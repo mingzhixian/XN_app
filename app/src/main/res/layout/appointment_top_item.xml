@@ -8,22 +8,24 @@
     android:paddingStart="10dp"
     android:paddingTop="6dp"
     android:paddingEnd="10dp"
-    android:paddingBottom="6dp">
-
-    <View
-        android:id="@+id/appointment_top_item_select"
-        android:layout_width="5dp"
-        android:layout_height="match_parent"
-        android:background="@color/buttonColor"
-        android:visibility="gone" />
+    android:paddingBottom="6dp"
+    android:layout_marginBottom="8dp"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/appointment_top_item_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="9dp"
-        android:layout_marginBottom="9dp"
         android:maxLines="1"
         android:text="测试"
+        android:textColor="@color/onCardBackgroundSecond"
         android:textSize="18sp" />
+
+    <View
+        android:id="@+id/appointment_top_item_select"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/buttonColor"
+        android:visibility="gone" />
 </LinearLayout>

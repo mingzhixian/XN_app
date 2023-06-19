@@ -11,6 +11,7 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:text="提示"
+        android:textColor="@color/onCardBackground"
         android:textSize="16sp" />
 
 </LinearLayout>
