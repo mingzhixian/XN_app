@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
-    tools:context=".SubjectActivity">
+    tools:context=".AppointmentActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,6 +20,7 @@
         android:paddingEnd="12dp">
 
         <ImageView
+            android:onClick="onBackClick"
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:paddingTop="1dp"
@@ -32,6 +33,7 @@
             android:layout_weight="1" />
 
         <TextView
+            android:id="@+id/activity_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -46,6 +48,7 @@
             android:layout_weight="1" />
 
         <ImageView
+            android:onClick="onSearchClick"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/search"

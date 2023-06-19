@@ -17,7 +17,7 @@ class SubjectActivity : AppCompatActivity() {
   @SuppressLint("NotifyDataSetChanged")
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    appData.publicTools.setFullScreen(this)
+    appData.publicTools.setStatusAndNavBar(this)
     setContentView(R.layout.activity_subject)
     try {
       appData.subjectList.size
@@ -102,5 +102,13 @@ class SubjectActivity : AppCompatActivity() {
       }
     }
     subjectRight.adapter = subjectRightAdapter
+  }
+
+  fun onBackClick(view: View) {
+    finish()
+  }
+
+  fun onSearchClick(view: View) {
+    startActivity(Intent(this, SearchActivity::class.java))
   }
 }

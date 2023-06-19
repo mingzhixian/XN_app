@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import android.view.WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
 import android.widget.Button
 import android.widget.TextView
@@ -13,16 +14,16 @@ import edu.swu.xn.app.R
 
 class PublicTools(private val main: MainActivity) {
 
-  // 设置全面屏
-  fun setFullScreen(context: Activity) {
-    // 全屏显示
-    context.window.decorView.systemUiVisibility =
-      (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_STABLE)
-    // 设置异形屏
-    context.window.attributes.layoutInDisplayCutoutMode =
-      LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
-    // 隐藏标题栏
-    context.actionBar?.hide()
+  // 设置状态栏导航栏颜色
+  fun setStatusAndNavBar(context: Activity) {
+    // 导航栏
+//    context.window.navigationBarColor = context.resources.getColor(R.color.background)
+//    context.window.navigationBarDividerColor = context.resources.getColor(R.color.onBackground)
+    // 状态栏
+    context.window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+    context.window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+    context.window.statusBarColor = context.resources.getColor(R.color.background)
+    context.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
   }
 
   fun dp2px(dp: Float): Float = dp * main.resources.displayMetrics.density

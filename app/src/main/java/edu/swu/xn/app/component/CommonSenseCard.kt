@@ -54,7 +54,7 @@ fun CommonSenseCard(
                 modifier = Modifier
                     .size(100.dp)
                     .clip(RoundedCornerShape(16.dp)),
-                model = commonSense.url,
+                model = commonSense.imgUrl,
                 contentDescription = null
             )
             Spacer(modifier = Modifier.size(8.dp))

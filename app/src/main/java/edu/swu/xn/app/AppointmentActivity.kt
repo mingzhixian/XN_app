@@ -29,8 +29,9 @@ class AppointmentActivity : AppCompatActivity() {
   @SuppressLint("NotifyDataSetChanged", "SimpleDateFormat", "SetTextI18n")
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    appData.publicTools.setFullScreen(this)
     setContentView(R.layout.activity_appointment)
+    appData.publicTools.setStatusAndNavBar(this)
+    findViewById<TextView>(R.id.activity_title).text = intent.getStringExtra("deptName")
     // 上部分
     val topRecyclerView = findViewById<RecyclerView>(R.id.appointment_top)
     var selectItem = 0
@@ -121,7 +122,7 @@ class AppointmentActivity : AppCompatActivity() {
   @SuppressLint("NotifyDataSetChanged")
   private fun getDoctors(tmpDate: Long, handle: () -> Unit) {
     // 显示加载框
-    val alert=appData.publicTools.showLoading("加载中", this, false, null)
+    val alert = appData.publicTools.showLoading("加载中", this, false, null)
     appData.netHelper.get(
       "${appData.main.getString(R.string.admin_url)}/api/service-product/product/getWareByDeptForDays?deptName=${
         intent.getStringExtra(
@@ -137,5 +138,13 @@ class AppointmentActivity : AppCompatActivity() {
       doctors = it.getJSONArray("data")
       handle()
     }
+  }
+
+  fun onBackClick(view: View) {
+    finish()
+  }
+
+  fun onSearchClick(view: View) {
+    startActivity(Intent(this, SearchActivity::class.java))
   }
 }

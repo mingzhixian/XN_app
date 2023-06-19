@@ -19,7 +19,7 @@ class LogInActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    appData.publicTools.setFullScreen(this)
+    appData.publicTools.setStatusAndNavBar(this)
     setContentView(R.layout.activity_log_in)
     setButtonLogInListener()
     setButtonRegisterListener()
