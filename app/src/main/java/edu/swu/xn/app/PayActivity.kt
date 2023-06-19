@@ -1,5 +1,6 @@
 package edu.swu.xn.app
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
@@ -39,6 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import edu.swu.xn.app.component.LoadingProgress
+import edu.swu.xn.app.component.TopBar
 import edu.swu.xn.app.component.TopRoundBackground
 import edu.swu.xn.app.ui.theme.AppTheme
 import org.json.JSONObject
@@ -113,6 +115,11 @@ class PayActivity : AppCompatActivity() {
       ) {
         /* 标题文本 */
         item {
+          TopBar(
+            background = colors.background,
+            backOnClick = { finish() },
+            searchOnClick = { startActivity(Intent(this@PayActivity, SearchActivity::class.java)) }
+          )
           Text(
             modifier = Modifier.padding(
               start = 10.dp
@@ -239,6 +246,7 @@ class PayActivity : AppCompatActivity() {
             defaultElevation = 8.dp
           ),
           colors = CardDefaults.cardColors(
+            containerColor = colors.background,
             contentColor = Color.Unspecified
           )
         ) {
