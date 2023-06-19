@@ -1,23 +1,15 @@
 package edu.swu.xn.app.helper
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import edu.swu.xn.app.MainActivity
 import edu.swu.xn.app.R
 import edu.swu.xn.app.appData
 import edu.swu.xn.app.entity.Subject
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.withContext
 import java.util.LinkedList
 
 @SuppressLint("StaticFieldLeak")
@@ -59,7 +51,7 @@ class AppData : ViewModel() {
   lateinit var subjectList: LinkedList<Subject>
 
   // 状态栏高度
-  var statusBar = 0
+  var statusBarHeight = 0
 
   fun init(m: MainActivity) {
     isInit = true
@@ -73,7 +65,7 @@ class AppData : ViewModel() {
     // 公共数据库
     publicTools = PublicTools(main)
     // 状态栏高度
-    statusBar = getStatusBar()
+    statusBarHeight = getStatusBar()
   }
 
   // 获取科目诊室列表

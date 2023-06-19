@@ -266,7 +266,11 @@ class MainActivity : ComponentActivity() {
             Row(
               modifier = Modifier
                 .background(Color.Transparent)
-                .weight(0.5f),
+                .weight(0.5f)
+                .padding(
+                  top = appData.publicTools.px2dp(appData.statusBarHeight.toFloat()).dp,
+                  end = 20.dp
+                ),
               horizontalArrangement = Arrangement.End
             ) {
               IconButton(onClick = searchOnClick) {
