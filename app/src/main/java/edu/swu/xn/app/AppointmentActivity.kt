@@ -29,6 +29,7 @@ class AppointmentActivity : AppCompatActivity() {
   @SuppressLint("NotifyDataSetChanged", "SimpleDateFormat", "SetTextI18n")
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    appData.publicTools.setFullScreen(this)
     setContentView(R.layout.activity_appointment)
     // 上部分
     val topRecyclerView = findViewById<RecyclerView>(R.id.appointment_top)
@@ -46,11 +47,13 @@ class AppointmentActivity : AppCompatActivity() {
       // 默认选中第一个
       val layout = holder.itemView.findViewById<LinearLayout>(R.id.appointment_top_item_layout)
       if (position == selectItem) {
-        layout.backgroundTintList =
-          ContextCompat.getColorStateList(this, R.color.md_theme_surface)
+        layout.findViewById<TextView>(R.id.appointment_top_item_text)
+          .setTextColor(this.resources.getColor(R.color.onCardBackground))
+        layout.findViewById<View>(R.id.appointment_top_item_select).visibility = View.VISIBLE
       } else {
-        layout.backgroundTintList =
-          ContextCompat.getColorStateList(this, R.color.md_theme_surfaceVariant)
+        layout.findViewById<TextView>(R.id.appointment_top_item_text)
+          .setTextColor(this.resources.getColor(R.color.onCardBackgroundSecond))
+        layout.findViewById<View>(R.id.appointment_top_item_select).visibility = View.GONE
       }
       layout.setOnClickListener {
         selectItem = position
@@ -118,7 +121,7 @@ class AppointmentActivity : AppCompatActivity() {
   @SuppressLint("NotifyDataSetChanged")
   private fun getDoctors(tmpDate: Long, handle: () -> Unit) {
     // 显示加载框
-    appData.showLoading("加载中", this, false, null)
+    val alert=appData.publicTools.showLoading("加载中", this, false, null)
     appData.netHelper.get(
       "${appData.main.getString(R.string.admin_url)}/api/service-product/product/getWareByDeptForDays?deptName=${
         intent.getStringExtra(
@@ -126,7 +129,7 @@ class AppointmentActivity : AppCompatActivity() {
         )
       }&dateSecond=${tmpDate / 1000}"
     ) {
-      appData.loadingDialog.cancel()
+      alert.cancel()
       if (it.getInt("code") != 200) {
         Toast.makeText(this, "未知错误", Toast.LENGTH_SHORT).show()
         return@get

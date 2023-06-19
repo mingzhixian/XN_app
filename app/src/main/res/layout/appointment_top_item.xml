@@ -10,6 +10,13 @@
     android:paddingEnd="10dp"
     android:paddingBottom="6dp">
 
+    <View
+        android:id="@+id/appointment_top_item_select"
+        android:layout_width="5dp"
+        android:layout_height="match_parent"
+        android:background="@color/buttonColor"
+        android:visibility="gone" />
+
     <TextView
         android:id="@+id/appointment_top_item_text"
         android:layout_width="wrap_content"

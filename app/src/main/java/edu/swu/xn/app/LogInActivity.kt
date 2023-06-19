@@ -19,6 +19,7 @@ class LogInActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    appData.publicTools.setFullScreen(this)
     setContentView(R.layout.activity_log_in)
     setButtonLogInListener()
     setButtonRegisterListener()
@@ -70,7 +71,7 @@ class LogInActivity : AppCompatActivity() {
         phoneView.visibility = View.VISIBLE
         val cardView = findViewById<View>(R.id.log_in_card)
         val cardViewLayout = cardView.layoutParams as ConstraintLayout.LayoutParams
-        cardViewLayout.bottomMargin = appData.dp2px(-30f).toInt()
+        cardViewLayout.bottomMargin = appData.publicTools.dp2px(-30f).toInt()
         cardView.layoutParams = cardViewLayout
         findViewById<View>(R.id.log_in_button_log_in).visibility = View.GONE
         findViewById<View>(R.id.log_in_button_space).visibility = View.GONE

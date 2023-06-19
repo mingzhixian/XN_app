@@ -17,23 +17,25 @@ class SubjectActivity : AppCompatActivity() {
   @SuppressLint("NotifyDataSetChanged")
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    appData.publicTools.setFullScreen(this)
     setContentView(R.layout.activity_subject)
     try {
       appData.subjectList.size
       draw()
     } catch (_: Exception) {
       // 显示加载框
-      appData.showLoading("加载中", this, false, null)
+      val alert = appData.publicTools.showLoading("加载中", this, false, null)
       // 获取信息
       appData.getSubjectList {
         // 取消加载框
-        appData.loadingDialog.cancel()
+        alert.cancel()
         draw()
       }
     }
   }
 
   // 绘制ui
+  @SuppressLint("NotifyDataSetChanged")
   private fun draw() {
     var subSubjectList = appData.subjectList[0].subList
     lateinit var subjectLeftAdapter: RecyclerViewAdapter
@@ -49,11 +51,12 @@ class SubjectActivity : AppCompatActivity() {
         appData.subjectList[position].name
       val layout = holder.itemView.findViewById<LinearLayout>(R.id.subject_left_item_layout)
       if (position == selectItem) {
-        layout.backgroundTintList = ContextCompat.getColorStateList(this, R.color.md_theme_surface)
+        layout.findViewById<TextView>(R.id.subject_left_item_text)
+          .setTextColor(this.resources.getColor(R.color.onCardBackground))
         layout.findViewById<View>(R.id.subject_left_item_select).visibility = View.VISIBLE
       } else {
-        layout.backgroundTintList =
-          ContextCompat.getColorStateList(this, R.color.md_theme_surfaceVariant)
+        layout.findViewById<TextView>(R.id.subject_left_item_text)
+          .setTextColor(this.resources.getColor(R.color.onCardBackgroundSecond))
         layout.findViewById<View>(R.id.subject_left_item_select).visibility = View.GONE
       }
       layout.setOnClickListener {

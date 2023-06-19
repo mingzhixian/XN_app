@@ -1,34 +1,14 @@
-
 <resources>
-    <color name="seed">#709500</color>
-    <color name="md_theme_primary">#ABD54A</color>
-    <color name="md_theme_onPrimary">#263500</color>
-    <color name="md_theme_primaryContainer">#394D00</color>
-    <color name="md_theme_onPrimaryContainer">#C7F263</color>
-    <color name="md_theme_secondary">#C2CAAA</color>
-    <color name="md_theme_onSecondary">#2C331C</color>
-    <color name="md_theme_secondaryContainer">#424A31</color>
-    <color name="md_theme_onSecondaryContainer">#DEE6C5</color>
-    <color name="md_theme_tertiary">#A1D0C7</color>
-    <color name="md_theme_onTertiary">#023732</color>
-    <color name="md_theme_tertiaryContainer">#204E48</color>
-    <color name="md_theme_onTertiaryContainer">#BCECE3</color>
-    <color name="md_theme_error">#FFB4AB</color>
-    <color name="md_theme_errorContainer">#93000A</color>
-    <color name="md_theme_onError">#690005</color>
-    <color name="md_theme_onErrorContainer">#FFDAD6</color>
-    <color name="md_theme_background">#1B1C17</color>
-    <color name="md_theme_onBackground">#E4E3DB</color>
-    <color name="md_theme_surface">#1B1C17</color>
-    <color name="md_theme_onSurface">#E4E3DB</color>
-    <color name="md_theme_surfaceVariant">#45483C</color>
-    <color name="md_theme_onSurfaceVariant">#C6C8B8</color>
-    <color name="md_theme_outline">#909284</color>
-    <color name="md_theme_inverseOnSurface">#1B1C17</color>
-    <color name="md_theme_inverseSurface">#E4E3DB</color>
-    <color name="md_theme_inversePrimary">#4C6700</color>
-    <color name="md_theme_shadow">#000000</color>
-    <color name="md_theme_surfaceTint">#ABD54A</color>
-    <color name="md_theme_outlineVariant">#45483C</color>
-    <color name="md_theme_scrim">#000000</color>
+    <color name="background">#101010</color>
+    <color name="onBackground">#c8c8c8</color>
+    <color name="onBackgroundSecond">#a9a9a9</color>
+    <color name="cardBackground">#000000</color>
+    <color name="onCardBackground">#c7c7c7</color>
+    <color name="onCardBackgroundSecond">#606060</color>
+    <color name="cardContainerBackground">#0a0a0a</color>
+    <color name="onCardContainerBackground">#cbcbcb</color>
+    <color name="iconColor">#757575</color>
+    <color name="buttonColor">#2196f3</color>
+    <color name="onButtonColor">#d9dada</color>
+    <color name="error">#e64337</color>
 </resources>

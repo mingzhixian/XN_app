@@ -49,6 +49,7 @@ class PayActivity : AppCompatActivity() {
   private var amount: Float = 0f
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    appData.publicTools.setFullScreen(this)
     orderID = intent.extras?.getString("orderId")!!
     amount = intent.extras!!.getString("amount")!!.toFloat()
     setContent {
