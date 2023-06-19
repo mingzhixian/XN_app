@@ -12,17 +12,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="14dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingStart="12dp"
         android:paddingEnd="12dp">
 
         <ImageView
-            android:layout_width="26dp"
-            android:layout_height="26dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:onClick="onBackClick"
+            android:paddingStart="7dp"
             android:paddingTop="1dp"
+            android:paddingEnd="7dp"
             android:src="@drawable/back"
             app:tint="@color/onBackground" />
 
@@ -47,9 +49,11 @@
             android:layout_weight="1" />
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:onClick="onSearchClick"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:src="@drawable/search"
             app:tint="@color/onBackground" />
     </LinearLayout>
