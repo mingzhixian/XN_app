@@ -24,19 +24,19 @@ class NetHelper {
         if (appData.hashId != "") {
           request.addHeader("token", appData.hashId)
         }
-//        try {
-        okhttpClient.newCall(request.build()).execute().use { response ->
-          val body = response.body!!.string()
+        try {
+          okhttpClient.newCall(request.build()).execute().use { response ->
+            val body = response.body!!.string()
+            withContext(Dispatchers.Main) {
+              handle(JSONObject(body))
+            }
+          }
+        } catch (e: Exception) {
+          Log.e("NetHelper", e.toString())
           withContext(Dispatchers.Main) {
-            handle(JSONObject(body))
+            Toast.makeText(appData.main, "网络错误", Toast.LENGTH_SHORT).show()
           }
         }
-//        } catch (e: Exception) {
-//          Log.e("NetHelper", e.toString())
-//          withContext(Dispatchers.Main) {
-//            Toast.makeText(appData.main, "网络错误", Toast.LENGTH_SHORT).show()
-//          }
-//        }
       }
     }
   }
@@ -50,19 +50,19 @@ class NetHelper {
         if (appData.hashId != "") {
           request.addHeader("token", appData.hashId)
         }
-//        try {
-        okhttpClient.newCall(request.build()).execute().use { response ->
-          val body = response.body!!.string()
+        try {
+          okhttpClient.newCall(request.build()).execute().use { response ->
+            val body = response.body!!.string()
+            withContext(Dispatchers.Main) {
+              handle(JSONObject(body))
+            }
+          }
+        } catch (e: Exception) {
+          Log.e("NetHelper", e.toString())
           withContext(Dispatchers.Main) {
-            handle(JSONObject(body))
+            Toast.makeText(appData.main, "网络错误", Toast.LENGTH_SHORT).show()
           }
         }
-//        } catch (e: Exception) {
-//          Log.e("NetHelper", e.toString())
-//          withContext(Dispatchers.Main) {
-//            Toast.makeText(appData.main, "网络错误", Toast.LENGTH_SHORT).show()
-//          }
-//        }
       }
     }
   }

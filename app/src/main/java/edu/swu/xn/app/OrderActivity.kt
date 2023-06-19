@@ -113,7 +113,7 @@ class OrderActivity : AppCompatActivity() {
           }
         }
         holder.itemView.findViewById<LinearLayout>(R.id.order_list_item_layout).setOnClickListener {
-          val intent = Intent(this, OrderActivity::class.java)
+          val intent = Intent(this, OrderDetailActivity::class.java)
           intent.putExtra("orderId", orderItem.getString("orderId"))
           startActivity(intent)
         }

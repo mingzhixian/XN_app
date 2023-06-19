@@ -84,9 +84,10 @@ fun CommonSenseCard(
 @Composable
 fun CommonSenseCardPreview() {
     val cs = CommonSense(
-        url = "https://avatars.githubusercontent.com/u/78494317?s=40&v=4",
-        title = "这是标题 Launching 'CommonSenseCardPreview' on HUAWEI ANA-AN00.",
-        content = "这是内容 App restart successful without re-installing the following APK(s): edu.swu.xn.app.test"
+        imgUrl = "http://www.xnyy.cn/__local/7/80/AD/E112E1D2710394EDB1942A54571_900D5247_CBC5.png",
+        url = "http://www.xnyy.cn/info/1031/19337.htm",
+        title = "”凝心聚力，迎势启航”——2023年康复医学科责任组长竞聘活动及住培学员个人汇报总结大会",
+        content = "为提高人员素质，更好地发挥责任组长在临床及管理中的骨干作用，同时将竞争机制全面引入临床管理中，更好地选拔、锻炼、培养骨干力量，优化队伍结构，打造合理的人才梯队。科室党支部支委会研究决定在全科开展2023年康复医学科科室护理组、治疗组及科研组的各组责任组长竞聘活动。本次活动采取“公平、公正、公开，鼓励优秀骨干积极参与”的原则，在科内择优选拔一批优秀的责任骨干，将协助科室强化临床管理、提高教学质量、推进科研人才培养，以此全面促进康复医学科的高质量发展。"
     )
     CommonSenseCard(commonSense = cs)
 }
