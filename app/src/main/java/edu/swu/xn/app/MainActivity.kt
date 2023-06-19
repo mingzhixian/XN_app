@@ -241,7 +241,7 @@ class MainActivity : ComponentActivity() {
       ) {
         scale(scaleX = 15f, scaleY = 10f) {
           drawCircle(
-            color = colors.primaryContainer,
+            color = colors.background,
             radius = 40.dp.toPx(),
             center = this.center + Offset(0f, -160f)
           )
@@ -256,41 +256,12 @@ class MainActivity : ComponentActivity() {
         item {
           Row(
             modifier = Modifier
-              .background(Color.Transparent)
-              .padding(top = 20.dp),
+              .background(colors.background),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
           ) {
+            Spacer(modifier = Modifier.size(1.dp))
             // 右侧
-            Row(
-              modifier = Modifier
-                .background(Color.Transparent)
-                .weight(0.5f)
-                .padding(start = 20.dp)
-            ) {
-              Icon(
-                painter = icon,
-                contentDescription = null,
-                modifier = Modifier
-                  .size(iconSize)
-                  .clip(CircleShape),
-                tint = Color.Unspecified
-              )
-              Spacer(modifier = Modifier.size(8.dp))
-              Column {
-                Text(
-                  text = "Hi $name,",
-                  fontSize = fontSize.sp,
-                  color = Color.White
-                )
-                Text(
-                  text = "欢迎回来！",
-                  fontSize = (fontSize - 2).sp,
-                  color = Color.LightGray
-                )
-              }
-            }
-            // 左侧
             Row(
               modifier = Modifier
                 .background(Color.Transparent)
@@ -302,15 +273,17 @@ class MainActivity : ComponentActivity() {
                   imageVector = Icons.Filled.Search,
                   contentDescription = null,
                   modifier = Modifier.size(20.dp),
-                  tint = Color.White
+                  tint = colors.onPrimaryContainer
                 )
               }
-              IconButton(onClick = messageOnClick) {
+              IconButton(
+                onClick = messageOnClick
+              ) {
                 Icon(
                   imageVector = Icons.Default.Email,
                   contentDescription = null,
                   modifier = Modifier.size(20.dp),
-                  tint = Color.White
+                  tint = colors.onPrimaryContainer
                 )
                 if (badgeNumber > 0) {
                   Badge(
@@ -332,6 +305,44 @@ class MainActivity : ComponentActivity() {
 
             }
           }
+          Row(
+            modifier = Modifier
+              .background(Color.Transparent)
+              .padding(top = 10.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+          ) {
+            // 左侧
+            Row(
+              modifier = Modifier
+                .background(Color.Transparent)
+                .weight(0.5f)
+                .padding(start = 20.dp)
+            ) {
+              Icon(
+                painter = icon,
+                contentDescription = null,
+                modifier = Modifier
+                  .size(iconSize)
+                  .clip(CircleShape),
+                tint = Color.Unspecified
+              )
+              Spacer(modifier = Modifier.size(8.dp))
+              Column {
+                Text(
+                  text = "Hi $name,",
+                  fontSize = fontSize.sp,
+                  color = Color.Black
+                )
+                Text(
+                  text = "欢迎回来！",
+                  fontSize = (fontSize - 2).sp,
+                  color = Color.LightGray
+                )
+              }
+            }
+            Spacer(modifier = Modifier.size(1.dp))
+          }
           Spacer(modifier = Modifier.size(20.dp))
         }
         /* 病历 + 人 */
@@ -344,7 +355,7 @@ class MainActivity : ComponentActivity() {
                 .padding(20.dp)
                 .weight(0.5f),
               colors = CardDefaults.cardColors(
-                containerColor = colors.background
+                containerColor = colors.primaryContainer
               ),
               elevation = CardDefaults.cardElevation(
                 defaultElevation = 4.dp
@@ -361,7 +372,7 @@ class MainActivity : ComponentActivity() {
                 .padding(20.dp)
                 .weight(0.5f),
               colors = CardDefaults.cardColors(
-                containerColor = colors.background
+                containerColor = colors.primaryContainer
               ),
               elevation = CardDefaults.cardElevation(
                 defaultElevation = 4.dp
@@ -369,7 +380,7 @@ class MainActivity : ComponentActivity() {
             ) {
               VerticalIconButton(
                 text = "就诊人",
-                icon = painterResource(id = R.drawable.patient),
+                icon = painterResource(id = R.drawable.patient_manage),
                 iconSize = 40.dp,
                 onClick = {
                   startActivity(Intent(appData.main, VisitorActivity::class.java))
@@ -388,7 +399,7 @@ class MainActivity : ComponentActivity() {
               )
               .height(306.dp),
             colors = CardDefaults.cardColors(
-              containerColor = colors.background,
+              containerColor = colors.primaryContainer,
             ),
             elevation = CardDefaults.cardElevation(
               defaultElevation = 4.dp
@@ -417,7 +428,8 @@ class MainActivity : ComponentActivity() {
         items(commonSenses.size) { index ->
           CommonSenseCard(
             modifier = Modifier.background(colors.background),
-            commonSense = commonSenses[index]
+            commonSense = commonSenses[index],
+            containerColor = colors.primaryContainer
           )
         }
       }

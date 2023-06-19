@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -26,29 +27,33 @@ import edu.swu.xn.app.entity.CommonSense
 /**
  *  常识卡片
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CommonSenseCard(
     modifier: Modifier = Modifier,
     commonSense: CommonSense,
+    containerColor: Color = Color.White,
+    onClick: () -> Unit = {}
 ) {
     Card(
         modifier = modifier
-          .padding(10.dp)
-          .fillMaxWidth(),
+            .padding(10.dp)
+            .fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White,
+            containerColor = containerColor
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 4.dp
-        )
+        ),
+        onClick = onClick
     ) {
         Row(
             modifier = Modifier.padding(10.dp)
         ) {
             AsyncImage(
                 modifier = Modifier
-                  .size(100.dp)
-                  .clip(RoundedCornerShape(16.dp)),
+                    .size(100.dp)
+                    .clip(RoundedCornerShape(16.dp)),
                 model = commonSense.url,
                 contentDescription = null
             )
