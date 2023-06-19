@@ -48,6 +48,7 @@ import org.json.JSONObject
 class SearchActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    appData.publicTools.setFullScreen(this)
     setContent {
       AppTheme {
         SearchPage(colors = MaterialTheme.colorScheme)

@@ -23,6 +23,7 @@ class DoctorActivity : AppCompatActivity() {
   val subProductIdList = Array(9) { 0 }
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    appData.publicTools.setFullScreen(this)
     setContentView(R.layout.activity_doctor)
     clock = findViewById<GridLayout>(R.id.doctor_clock)
     // 设置填充值
@@ -44,13 +45,13 @@ class DoctorActivity : AppCompatActivity() {
     findViewById<TextView>(R.id.doctor_amount).text = "价格：${extra.getString("amount")}"
     // 获取每个时间段是否空余
     // 显示加载框
-    appData.showLoading("加载中", this, false, null)
+    val alert = appData.publicTools.showLoading("加载中", this, false, null)
     appData.netHelper.get(
       "${appData.main.getString(R.string.admin_url)}/api/service-ware/ware/getDoctorProductByTime?productId=${
         extra.getString("productId")
       }"
     ) {
-      appData.loadingDialog.cancel()
+      alert.cancel()
       if (it.getInt("code") != 200) {
         Toast.makeText(this, "未知错误", Toast.LENGTH_SHORT).show()
         return@get
@@ -61,9 +62,9 @@ class DoctorActivity : AppCompatActivity() {
         if (hours.getJSONObject(i).getInt("count") == 0) {
           val child = clock.getChildAt(i)
           child.tag = -1
-          (child as TextView).setTextColor(resources.getColor(R.color.md_theme_onSurfaceVariant))
+          (child as TextView).setTextColor(resources.getColor(R.color.onBackgroundSecond))
           child.backgroundTintList =
-            ContextCompat.getColorStateList(this, R.color.md_theme_onSecondary)
+            ContextCompat.getColorStateList(this, R.color.cardContainerBackground)
         }
       }
     }
@@ -77,14 +78,14 @@ class DoctorActivity : AppCompatActivity() {
     }
     // 获取就诊人列表
     // 显示加载框
-    appData.showLoading("加载中", this, false, null)
+    val alert=appData.publicTools.showLoading("加载中", this, false, null)
     val post1 = JSONObject()
     post1.put("userID", appData.userId)
     appData.netHelper.get(
       "${appData.main.getString(R.string.admin_url)}/api/service-user/patient/getPatientInfo",
       post1
     ) {
-      appData.loadingDialog.cancel()
+      alert.cancel()
       if (it.getInt("code") != 200) {
         Toast.makeText(this, "获取就诊人失败", Toast.LENGTH_SHORT).show()
         return@get
@@ -110,7 +111,7 @@ class DoctorActivity : AppCompatActivity() {
           .setOnClickListener {
             patientDialog.cancel()
             // 显示加载框
-            appData.showLoading("加载中", this, false, null)
+            val alert2=appData.publicTools.showLoading("加载中", this, false, null)
             val post2 = JSONObject()
             post2.put("userId", appData.userId)
             post2.put("productId", subProductIdList[view.tag.toString().toInt()])
@@ -120,7 +121,7 @@ class DoctorActivity : AppCompatActivity() {
               "${appData.main.getString(R.string.admin_url)}/api/service-order/order-info/createOrder",
               post2
             ) {
-              appData.loadingDialog.cancel()
+              alert2.cancel()
               if (it.getInt("code") != 200) {
                 Toast.makeText(this, "下单失败", Toast.LENGTH_SHORT).show()
                 return@get

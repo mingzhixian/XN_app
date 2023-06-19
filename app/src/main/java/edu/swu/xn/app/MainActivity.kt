@@ -70,6 +70,7 @@ class MainActivity : ComponentActivity() {
     super.onCreate(savedInstanceState)
     appData = ViewModelProvider(this).get(AppData()::class.java)
     if (!appData.isInit) appData.init(this)
+    appData.publicTools.setFullScreen(this)
     // 第一次使用
     if (appData.settings.getBoolean("FirstUse", true)) firstUse()
     // 检测登录

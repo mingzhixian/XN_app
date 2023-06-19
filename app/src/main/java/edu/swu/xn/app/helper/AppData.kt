@@ -49,15 +49,14 @@ class AppData : ViewModel() {
   // 网络管理
   val netHelper = NetHelper()
 
+  // 公共数据库
+  lateinit var publicTools:PublicTools
+
   // 通知管理
   lateinit var notificationHelper: NotificationHelper
 
   // 科目诊室列表
   lateinit var subjectList: LinkedList<Subject>
-
-  // 加载框（全局通用）
-  @SuppressLint("StaticFieldLeak")
-  lateinit var loadingDialog: AlertDialog
 
   fun init(m: MainActivity) {
     isInit = true
@@ -66,8 +65,10 @@ class AppData : ViewModel() {
     settings = main.getSharedPreferences("setting", Context.MODE_PRIVATE)
     // 数据库管理
     dbHelper = DbHelper(main, "hd_app.db", 1)
-    //通知管理
+    // 通知管理
     notificationHelper = NotificationHelper(main)
+    // 公共数据库
+    publicTools=PublicTools(main)
   }
 
   // 获取科目诊室列表
@@ -111,25 +112,4 @@ class AppData : ViewModel() {
       }
     }
   }
-
-  // 显示加载框
-  fun showLoading(text: String, context: Context, isCanCancel: Boolean, cancelFun: (() -> Unit)?) {
-    // 加载框
-    val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-    builder.setCancelable(false)
-    loadingDialog = builder.create()
-    loadingDialog.setCanceledOnTouchOutside(false)
-    loadingDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-    val loading = LayoutInflater.from(context).inflate(R.layout.loading, null, false)
-    loadingDialog.setView(loading)
-    loading.findViewById<TextView>(R.id.loading_text).text = text
-    if (isCanCancel) {
-      loading.findViewById<Button>(R.id.loading_cancel).visibility = View.VISIBLE
-      loading.findViewById<Button>(R.id.loading_cancel)
-        .setOnClickListener { cancelFun?.let { it1 -> it1() } }
-    } else loading.findViewById<Button>(R.id.loading_cancel).visibility = View.GONE
-    loadingDialog.show()
-  }
-
-  fun dp2px(dp: Float): Float = dp * main.resources.displayMetrics.density
 }
