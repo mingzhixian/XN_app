@@ -285,6 +285,7 @@ class PayActivity : AppCompatActivity() {
             Button(
               onClick = {
                 isOK = false
+                finish()
               },
               modifier = Modifier
                 .fillMaxWidth()
