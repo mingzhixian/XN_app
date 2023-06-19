@@ -83,7 +83,7 @@ class MainActivity : ComponentActivity() {
         Intent(
           this,
           LogInActivity::class.java
-        ), 1
+        ), 18
       )
     } else {
       setContent {

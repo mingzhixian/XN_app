@@ -35,7 +35,7 @@ class AppData : ViewModel() {
   var userId = 0
 
   // 用户名
-  var userName=""
+  var userName = ""
 
   // 总协程域
   val mainScope = MainScope()
@@ -50,13 +50,16 @@ class AppData : ViewModel() {
   val netHelper = NetHelper()
 
   // 公共数据库
-  lateinit var publicTools:PublicTools
+  lateinit var publicTools: PublicTools
 
   // 通知管理
   lateinit var notificationHelper: NotificationHelper
 
   // 科目诊室列表
   lateinit var subjectList: LinkedList<Subject>
+
+  // 状态栏高度
+  var statusBar = 0
 
   fun init(m: MainActivity) {
     isInit = true
@@ -68,7 +71,9 @@ class AppData : ViewModel() {
     // 通知管理
     notificationHelper = NotificationHelper(main)
     // 公共数据库
-    publicTools=PublicTools(main)
+    publicTools = PublicTools(main)
+    // 状态栏高度
+    statusBar = getStatusBar()
   }
 
   // 获取科目诊室列表
@@ -111,5 +116,14 @@ class AppData : ViewModel() {
         appData.main.runOnUiThread { handle() }
       }
     }
+  }
+
+  @SuppressLint("InternalInsetResource", "DiscouragedApi")
+  private fun getStatusBar(): Int {
+    // 获取状态栏高度
+    val resourceId = main.resources.getIdentifier("status_bar_height", "dimen", "android")
+    return if (resourceId > 0) {
+      main.resources.getDimensionPixelSize(resourceId)
+    } else 0
   }
 }
