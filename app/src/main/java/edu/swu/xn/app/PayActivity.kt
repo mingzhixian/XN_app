@@ -98,7 +98,7 @@ class PayActivity : AppCompatActivity() {
     /* 顶部背景椭圆 */
     TopRoundBackground(
       backgroundColor = colors.background,
-      containerColor = colors.primaryContainer,
+      containerColor = colors.primary,
       offset = -200f
     )
 
