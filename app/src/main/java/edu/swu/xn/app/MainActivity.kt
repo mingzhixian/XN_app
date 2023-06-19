@@ -207,13 +207,17 @@ class MainActivity : ComponentActivity() {
         startActivity(Intent(this, SubjectActivity::class.java))
       },
       Operation("缴费", painterResource(id = R.drawable.pay)) {
-
+        val intent = Intent(this, OrderActivity::class.java)
+        intent.putExtra("for", "needPaymentOrderList")
+        startActivity(intent)
       },
       Operation("报告单", painterResource(id = R.drawable.report)) {
 
       },
       Operation("订单", painterResource(id = R.drawable.order)) {
-
+        val intent = Intent(this, OrderActivity::class.java)
+        intent.putExtra("for", "fullOrderList")
+        startActivity(intent)
       },
       Operation("智能导诊", painterResource(id = R.drawable.intelligent_guidance)) {
 

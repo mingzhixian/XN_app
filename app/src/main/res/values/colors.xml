@@ -10,6 +10,8 @@
     <color name="onCardContainerBackground">#212121</color>
     <color name="iconColor">#757575</color>
     <color name="buttonColor">#2196f3</color>
+    <color name="buttonColorSecond">#6e9fc6</color>
     <color name="onButtonColor">#d9dada</color>
+    <color name="onButtonColorSecond">#d9dada</color>
     <color name="error">#df4230</color>
 </resources>
