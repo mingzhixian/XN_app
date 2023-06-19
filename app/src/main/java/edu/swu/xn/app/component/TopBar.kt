@@ -14,12 +14,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import edu.swu.xn.app.R
-import edu.swu.xn.app.ui.theme.md_theme_dark_background
-import edu.swu.xn.app.ui.theme.md_theme_dark_onBackground
 
 
 @Composable
@@ -27,7 +26,7 @@ fun TopBar(
     backOnClick: () -> Unit = {},
     searchOnClick: () -> Unit = {},
     text: String = "",
-    background: Color = md_theme_dark_background
+    background: Color = colorResource(id = R.color.background)
 ) {
     Row(
         modifier = Modifier
@@ -42,7 +41,7 @@ fun TopBar(
                 modifier = Modifier.size(26.dp),
                 painter = painterResource(id = R.drawable.back),
                 contentDescription = null,
-                tint = md_theme_dark_onBackground
+                tint = colorResource(id = R.color.iconColor)
             )
         }
         Text(
@@ -53,7 +52,7 @@ fun TopBar(
                 modifier = Modifier.size(26.dp),
                 painter = painterResource(id = R.drawable.search),
                 contentDescription = null,
-                tint = md_theme_dark_onBackground
+                tint = colorResource(id = R.color.iconColor)
             )
         }
     }
