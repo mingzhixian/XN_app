@@ -37,6 +37,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,9 +46,12 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -60,6 +64,7 @@ import edu.swu.xn.app.entity.CommonSense
 import edu.swu.xn.app.entity.Operation
 import edu.swu.xn.app.helper.AppData
 import edu.swu.xn.app.ui.theme.AppTheme
+import org.json.JSONObject
 
 @SuppressLint("StaticFieldLeak")
 lateinit var appData: AppData
@@ -221,7 +226,7 @@ class MainActivity : ComponentActivity() {
   fun HomePage(
     modifier: Modifier = Modifier,
     name: String = "",
-    fontSize: Int = 14,
+    fontSize: Int = 20,
     icon: Painter = painterResource(id = R.drawable.usericon),
     iconSize: Dp = 48.dp,
     searchOnClick: () -> Unit = {
@@ -259,6 +264,19 @@ class MainActivity : ComponentActivity() {
     val badgeNumber by rememberSaveable {
       mutableStateOf(8)
     }
+    val visitorCount = remember { mutableStateOf(0) }
+
+    val obj = JSONObject()
+    obj.put("userID", appData.userId)
+    appData.netHelper.get(
+      url = stringResource(R.string.admin_url) + "/api/service-user/patient/getPatientInfo",
+      value = obj
+    )
+    { data ->
+      val dataList = data.getJSONArray("data")
+      visitorCount.value = dataList.length()
+    }
+
     Box(
       modifier = modifier
         .background(colors.background)
@@ -298,7 +316,6 @@ class MainActivity : ComponentActivity() {
                 .background(Color.Transparent)
                 .weight(0.5f)
                 .padding(
-                  top = appData.publicTools.px2dp(appData.statusBarHeight.toFloat()).dp,
                   end = 20.dp
                 ),
               horizontalArrangement = Arrangement.End
@@ -308,7 +325,7 @@ class MainActivity : ComponentActivity() {
                   imageVector = Icons.Filled.Search,
                   contentDescription = null,
                   modifier = Modifier.size(20.dp),
-                  tint = colors.onPrimaryContainer
+                  tint = colorResource(id = R.color.iconColor)
                 )
               }
               IconButton(
@@ -318,7 +335,7 @@ class MainActivity : ComponentActivity() {
                   imageVector = Icons.Default.Email,
                   contentDescription = null,
                   modifier = Modifier.size(20.dp),
-                  tint = colors.onPrimaryContainer
+                  tint = colorResource(id = R.color.iconColor)
                 )
                 if (badgeNumber > 0) {
                   Badge(
@@ -367,7 +384,8 @@ class MainActivity : ComponentActivity() {
                 Text(
                   text = "Hi $name,",
                   fontSize = fontSize.sp,
-                  color = Color.Black
+                  color = Color.Black,
+                  fontWeight = FontWeight.Bold
                 )
                 Text(
                   text = "欢迎回来！",
@@ -382,44 +400,34 @@ class MainActivity : ComponentActivity() {
         }
         /* 病历 + 人 */
         item {
-          Row(
-            modifier = Modifier.fillMaxWidth()
+          Card(
+            modifier = Modifier
+              .fillMaxWidth()
+              .padding(20.dp),
+            colors = CardDefaults.cardColors(
+              containerColor = colors.primaryContainer
+            ),
+            elevation = CardDefaults.cardElevation(
+              defaultElevation = 4.dp
+            ),
+            onClick = {
+              startActivity(Intent(appData.main, VisitorActivity::class.java))
+            },
+            shape = MaterialTheme.shapes.extraLarge
           ) {
-            Card(
-              modifier = Modifier
-                .padding(20.dp)
-                .weight(0.5f),
-              colors = CardDefaults.cardColors(
-                containerColor = colors.primaryContainer
-              ),
-              elevation = CardDefaults.cardElevation(
-                defaultElevation = 4.dp
-              )
-            ) {
-              VerticalIconButton(
-                text = "病历",
-                icon = painterResource(id = R.drawable.medical_record),
-                iconSize = 40.dp
-              )
-            }
-            Card(
-              modifier = Modifier
-                .padding(20.dp)
-                .weight(0.5f),
-              colors = CardDefaults.cardColors(
-                containerColor = colors.primaryContainer
-              ),
-              elevation = CardDefaults.cardElevation(
-                defaultElevation = 4.dp
-              )
+            Row(
+              modifier = Modifier.fillMaxWidth(),
+              verticalAlignment = Alignment.CenterVertically,
+              horizontalArrangement = Arrangement.SpaceBetween
             ) {
               VerticalIconButton(
                 text = "就诊人",
                 icon = painterResource(id = R.drawable.patient_manage),
                 iconSize = 40.dp,
-                onClick = {
-                  startActivity(Intent(appData.main, VisitorActivity::class.java))
-                }
+              )
+              Text(
+                "${visitorCount.value}人",
+                modifier = Modifier.padding(20.dp)
               )
             }
           }

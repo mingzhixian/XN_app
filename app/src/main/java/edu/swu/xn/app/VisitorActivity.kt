@@ -1,5 +1,6 @@
 package edu.swu.xn.app
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
@@ -52,6 +53,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import edu.swu.xn.app.component.LoadingProgress
+import edu.swu.xn.app.component.TopBar
 import edu.swu.xn.app.component.TopRoundBackground
 import edu.swu.xn.app.entity.Visitor
 import edu.swu.xn.app.ui.theme.AppTheme
@@ -168,6 +170,18 @@ class VisitorActivity : AppCompatActivity() {
       {
         /* 标题 */
         item {
+          TopBar(
+            background = colors.background,
+            backOnClick = { finish() },
+            searchOnClick = {
+              startActivity(
+                Intent(
+                  this@VisitorActivity,
+                  SearchActivity::class.java
+                )
+              )
+            }
+          )
           Text(
             modifier = Modifier.padding(
               top = 40.dp,
@@ -321,6 +335,7 @@ class VisitorActivity : AppCompatActivity() {
             defaultElevation = 8.dp
           ),
           colors = CardDefaults.cardColors(
+            containerColor = colors.background,
             contentColor = Color.Unspecified
           )
         ) {
