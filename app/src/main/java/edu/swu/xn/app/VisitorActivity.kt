@@ -35,8 +35,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -45,6 +47,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -172,6 +175,7 @@ class VisitorActivity : AppCompatActivity() {
         item {
           TopBar(
             background = colors.background,
+            text = "就诊人",
             backOnClick = { finish() },
             searchOnClick = {
               startActivity(
@@ -181,15 +185,6 @@ class VisitorActivity : AppCompatActivity() {
                 )
               )
             }
-          )
-          Text(
-            modifier = Modifier.padding(
-              top = 40.dp,
-              bottom = 40.dp
-            ),
-            text = "就诊人",
-            fontSize = 28.sp,
-            color = Color.DarkGray
           )
         }
         /* 就诊人卡片 */
@@ -360,17 +355,27 @@ class VisitorActivity : AppCompatActivity() {
               verticalAlignment = Alignment.CenterVertically
             ) {
               Text("性别:")
-              RadioButton(selected = sex.value, onClick = {
-                if (!isRead.value) {
-                  sex.value = true
-                }
-              })
+              RadioButton(
+                selected = sex.value, onClick = {
+                  if (!isRead.value) {
+                    sex.value = true
+                  }
+                },
+                colors = RadioButtonDefaults.colors(
+                  selectedColor = colorResource(id = R.color.onBackground),
+                )
+              )
               Text(text = "男")
-              RadioButton(selected = !sex.value, onClick = {
-                if (!isRead.value) {
-                  sex.value = false
-                }
-              })
+              RadioButton(
+                selected = !sex.value, onClick = {
+                  if (!isRead.value) {
+                    sex.value = false
+                  }
+                },
+                colors = RadioButtonDefaults.colors(
+                  selectedColor = colorResource(id = R.color.onBackground),
+                )
+              )
               Text(text = "女")
             }
             /* 姓名 */
@@ -385,7 +390,10 @@ class VisitorActivity : AppCompatActivity() {
                 },
                 singleLine = true,
                 shape = MaterialTheme.shapes.large,
-                readOnly = isRead.value
+                readOnly = isRead.value,
+                colors = TextFieldDefaults.textFieldColors(
+                  containerColor = colorResource(id = R.color.background)
+                )
               )
             }
             /* 年龄 */
@@ -414,7 +422,10 @@ class VisitorActivity : AppCompatActivity() {
                   validateAge(age.value)
                 },
                 singleLine = true,
-                readOnly = isRead.value
+                readOnly = isRead.value,
+                colors = TextFieldDefaults.textFieldColors(
+                  containerColor = colorResource(id = R.color.background)
+                )
               )
             }
             /* 手机号码 */
@@ -428,7 +439,10 @@ class VisitorActivity : AppCompatActivity() {
                   phoneNumber.value = it
                 },
                 singleLine = true,
-                readOnly = isRead.value
+                readOnly = isRead.value,
+                colors = TextFieldDefaults.textFieldColors(
+                  containerColor = colorResource(id = R.color.background)
+                )
               )
             }
             /* 身份证号码 */
@@ -442,7 +456,10 @@ class VisitorActivity : AppCompatActivity() {
                   cardID.value = it
                 },
                 singleLine = true,
-                readOnly = isRead.value
+                readOnly = isRead.value,
+                colors = TextFieldDefaults.textFieldColors(
+                  containerColor = colorResource(id = R.color.background)
+                )
               )
             }
             /* 过往病史 */
@@ -455,7 +472,10 @@ class VisitorActivity : AppCompatActivity() {
                 onValueChange = {
                   medicalHistory.value = it
                 },
-                readOnly = isRead.value
+                readOnly = isRead.value,
+                colors = TextFieldDefaults.textFieldColors(
+                  containerColor = colorResource(id = R.color.background),
+                )
               )
             }
 
