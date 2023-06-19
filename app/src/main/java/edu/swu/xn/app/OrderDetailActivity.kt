@@ -1,5 +1,6 @@
 package edu.swu.xn.app
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
@@ -33,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import edu.swu.xn.app.component.LoadingProgress
+import edu.swu.xn.app.component.TopBar
 import edu.swu.xn.app.ui.theme.AppTheme
 import java.text.DecimalFormat
 
@@ -154,6 +156,18 @@ class OrderDetailActivity : AppCompatActivity() {
           .fillMaxSize()
           .padding(10.dp),
       ) {
+        TopBar(
+          background = colors.background,
+          backOnClick = { finish() },
+          searchOnClick = {
+            startActivity(
+              Intent(
+                this@OrderDetailActivity,
+                SearchActivity::class.java
+              )
+            )
+          }
+        )
         Card(
           modifier = Modifier.padding(10.dp),
           colors = CardDefaults.cardColors(
