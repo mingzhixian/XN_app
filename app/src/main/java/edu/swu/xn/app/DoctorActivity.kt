@@ -78,7 +78,7 @@ class DoctorActivity : AppCompatActivity() {
     }
     // 获取就诊人列表
     // 显示加载框
-    val alert=appData.publicTools.showLoading("加载中", this, false, null)
+    val alert = appData.publicTools.showLoading("加载中", this, false, null)
     val post1 = JSONObject()
     post1.put("userID", appData.userId)
     appData.netHelper.get(
@@ -111,10 +111,10 @@ class DoctorActivity : AppCompatActivity() {
           .setOnClickListener {
             patientDialog.cancel()
             // 显示加载框
-            val alert2=appData.publicTools.showLoading("加载中", this, false, null)
+            val alert2 = appData.publicTools.showLoading("加载中", this, false, null)
             val post2 = JSONObject()
             post2.put("userId", appData.userId)
-            post2.put("productId", subProductIdList[view.tag.toString().toInt()])
+            post2.put("productId", subProductIdList[view.tag.toString().toInt() - 1])
             post2.put("patientID", patientListData.getJSONObject(position).getString("id").toInt())
             post2.put("type", 0)
             appData.netHelper.get(

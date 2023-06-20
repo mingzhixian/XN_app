@@ -20,3 +20,8 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 -keep public class edu.swu.xn.app.*
+-dontwarn org.bouncycastle.jsse.*
+-dontwarn org.conscrypt.*
+-dontwarn org.openjsse.javax.net.ssl.*
+-dontwarn org.openjsse.net.ssl.*
+-dontwarn org.bouncycastle.jsse.provider.*
