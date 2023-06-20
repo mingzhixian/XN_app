@@ -41,6 +41,7 @@ class DoctorActivity : AppCompatActivity() {
       "性别：${if (extra.getString("sex")!!.toInt() == 0) "男" else "女"}"
     findViewById<TextView>(R.id.doctor_title).text = extra.getString("title")
     findViewById<TextView>(R.id.doctor_introduce).text = extra.getString("introduce")
+    if (extra.getString("forWhat") == "forDoctorDetail") return
     findViewById<TextView>(R.id.doctor_count).text = "余量：${extra.getString("count")}"
     findViewById<TextView>(R.id.doctor_amount).text = "价格：${extra.getString("amount")}"
     // 获取每个时间段是否空余
@@ -52,7 +53,7 @@ class DoctorActivity : AppCompatActivity() {
       }"
     ) {
       alert.cancel()
-      if (it==null)return@get
+      if (it == null) return@get
       val hours = it.getJSONArray("data")
       for (i in 0 until hours.length()) {
         subProductIdList[i] = hours.getJSONObject(i).getString("productId").toInt()
@@ -83,7 +84,7 @@ class DoctorActivity : AppCompatActivity() {
       post1
     ) {
       alert.cancel()
-      if (it==null)return@get
+      if (it == null) return@get
       val patientListData = it.getJSONArray("data")
       // 显示就诊人列表
       val builder: AlertDialog.Builder = AlertDialog.Builder(this)
@@ -116,7 +117,7 @@ class DoctorActivity : AppCompatActivity() {
               post2
             ) {
               alert2.cancel()
-              if (it==null)return@get
+              if (it == null) return@get
               val intent = Intent(this, PayActivity::class.java)
               intent.putExtra("orderId", it.getJSONObject("data").getString("orderId"))
               val amountText = findViewById<TextView>(R.id.doctor_amount).text

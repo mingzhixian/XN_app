@@ -111,6 +111,7 @@ class AppointmentActivity : AppCompatActivity() {
                 "introduce",
                 if (introduce.length > 100) introduce.substring(0, 100) else introduce
               )
+              intent.putExtra("forWhat", "forCreatrOrder")
               startActivity(intent)
             }
         }
