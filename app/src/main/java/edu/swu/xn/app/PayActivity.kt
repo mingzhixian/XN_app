@@ -291,7 +291,10 @@ class PayActivity : AppCompatActivity() {
                 )
                 .height(60.dp)
             ) {
-              Text(text = "好的")
+              Text(
+                text = "好的",
+                color = colors.onBackground
+              )
             }
           }
         }
