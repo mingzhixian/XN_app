@@ -17,7 +17,7 @@ class NetHelper {
   private val okhttpClient = OkHttpClient()
 
   // 网络获取JSON
-  fun get(url: String, handle: (json: JSONObject) -> Unit) {
+  fun get(url: String, handle: (json: JSONObject?) -> Unit) {
     appData.mainScope.launch {
       withContext(Dispatchers.IO) {
         val request = Request.Builder().url(url)
@@ -26,22 +26,27 @@ class NetHelper {
         }
         try {
           okhttpClient.newCall(request.build()).execute().use { response ->
-            val body = response.body!!.string()
+            val body = JSONObject(response.body!!.string())
             withContext(Dispatchers.Main) {
-              handle(JSONObject(body))
+              if (body.getInt("code") != 200) {
+                Toast.makeText(appData.main, body.getString("msg"), Toast.LENGTH_SHORT).show()
+                handle(null)
+              } else
+                handle((body))
             }
           }
         } catch (e: Exception) {
           Log.e("NetHelper", e.toString())
           withContext(Dispatchers.Main) {
             Toast.makeText(appData.main, "网络错误", Toast.LENGTH_SHORT).show()
+            handle(null)
           }
         }
       }
     }
   }
 
-  fun get(url: String, value: JSONObject, handle: (json: JSONObject) -> Unit) {
+  fun get(url: String, value: JSONObject, handle: (json: JSONObject?) -> Unit) {
     appData.mainScope.launch {
       withContext(Dispatchers.IO) {
         val requestBody =
@@ -52,15 +57,20 @@ class NetHelper {
         }
         try {
           okhttpClient.newCall(request.build()).execute().use { response ->
-            val body = response.body!!.string()
+            val body = JSONObject(response.body!!.string())
             withContext(Dispatchers.Main) {
-              handle(JSONObject(body))
+              if (body.getInt("code") != 200) {
+                Toast.makeText(appData.main, body.getString("msg"), Toast.LENGTH_SHORT).show()
+                handle(null)
+              } else
+                handle((body))
             }
           }
         } catch (e: Exception) {
           Log.e("NetHelper", e.toString())
           withContext(Dispatchers.Main) {
             Toast.makeText(appData.main, "网络错误", Toast.LENGTH_SHORT).show()
+            handle(null)
           }
         }
       }
