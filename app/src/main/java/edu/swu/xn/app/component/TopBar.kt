@@ -18,6 +18,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import edu.swu.xn.app.R
 
 
@@ -41,18 +42,20 @@ fun TopBar(
                 modifier = Modifier.size(26.dp),
                 painter = painterResource(id = R.drawable.back),
                 contentDescription = null,
-                tint = colorResource(id = R.color.iconColor)
+                tint = colorResource(id = R.color.onBackground)
             )
         }
         Text(
-            text = text
+            text = text,
+            color = colorResource(id = R.color.onBackground),
+            fontSize = 20.sp
         )
         IconButton(onClick = searchOnClick) {
             Icon(
                 modifier = Modifier.size(26.dp),
                 painter = painterResource(id = R.drawable.search),
                 contentDescription = null,
-                tint = colorResource(id = R.color.iconColor)
+                tint = colorResource(id = R.color.onBackground)
             )
         }
     }
