@@ -3,7 +3,6 @@ package edu.swu.xn.app
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Canvas
@@ -265,7 +264,7 @@ class MainActivity : ComponentActivity() {
     val badgeNumber by rememberSaveable {
       mutableStateOf(8)
     }
-    val visitorCount = remember { mutableStateOf(0) }
+    val visitorCount = remember { mutableStateOf(appData.vistorCount) }
 
     val obj = JSONObject()
     obj.put("userID", appData.userId)
