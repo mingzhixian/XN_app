@@ -3,6 +3,7 @@ package edu.swu.xn.app
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Canvas
@@ -88,7 +89,7 @@ class MainActivity : ComponentActivity() {
         Intent(
           this,
           LogInActivity::class.java
-        ), 18
+        ), 1
       )
     } else {
       setContent {
@@ -251,7 +252,7 @@ class MainActivity : ComponentActivity() {
         startActivity(intent)
       },
       Operation("智能导诊", painterResource(id = R.drawable.intelligent_guidance)) {
-
+        startActivity(Intent(this, SubjectActivity::class.java))
       },
       Operation("待办", painterResource(id = R.drawable.pending)) {
 
