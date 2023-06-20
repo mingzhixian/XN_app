@@ -1,5 +1,6 @@
 package edu.swu.xn.app
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
@@ -190,7 +191,7 @@ class SearchActivity : AppCompatActivity() {
                   start = 10.dp,
                   bottom = 4.dp
                 ),
-                text = "科室",
+                text = "门诊",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
               )
@@ -198,7 +199,7 @@ class SearchActivity : AppCompatActivity() {
                 modifier = Modifier.padding(
                   start = 10.dp
                 ),
-                text = "找到您可能想要的科室",
+                text = "找到您可能想要的诊室",
                 fontSize = 14.sp,
                 color = Color.Gray
               )
@@ -211,7 +212,12 @@ class SearchActivity : AppCompatActivity() {
                 .fillMaxWidth()
                 .height(100.dp)
                 .background(colors.background),
-              containerColor = colors.background
+              containerColor = colors.background,
+              onClick = {
+                val intent = Intent(this@SearchActivity, AppointmentActivity::class.java)
+                intent.putExtra("deptName", depts[index])
+                startActivity(intent)
+              }
             )
           }
         }
@@ -248,7 +254,16 @@ class SearchActivity : AppCompatActivity() {
                 .fillMaxWidth()
                 .background(colors.background),
               doctor = doctors[index],
-              containerColor = colors.background
+              containerColor = colors.background,
+              onClick = {
+                val intent = Intent(this@SearchActivity, DoctorActivity::class.java)
+                intent.putExtra("realName", doctors[index].realName)
+                intent.putExtra("sex", if (doctors[index].sex == "男") "0" else "1")
+                intent.putExtra("introduce", doctors[index].introduce)
+                intent.putExtra("title", doctors[index].title)
+                intent.putExtra("forWhat", "forDoctorDetail")
+                startActivity(intent)
+              }
             )
           }
         }

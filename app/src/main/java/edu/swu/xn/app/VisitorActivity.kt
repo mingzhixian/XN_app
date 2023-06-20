@@ -388,7 +388,9 @@ class VisitorActivity : AppCompatActivity() {
                 shape = MaterialTheme.shapes.large,
                 readOnly = isRead.value,
                 colors = TextFieldDefaults.textFieldColors(
-                  containerColor = colorResource(id = R.color.background)
+                  containerColor = colorResource(id = R.color.background),
+                  focusedIndicatorColor = colorResource(id = R.color.onBackground),
+                  focusedLabelColor = colorResource(id = R.color.onBackground)
                 )
               )
             }
@@ -420,7 +422,9 @@ class VisitorActivity : AppCompatActivity() {
                 singleLine = true,
                 readOnly = isRead.value,
                 colors = TextFieldDefaults.textFieldColors(
-                  containerColor = colorResource(id = R.color.background)
+                  containerColor = colorResource(id = R.color.background),
+                  focusedIndicatorColor = colorResource(id = R.color.onBackground),
+                  focusedLabelColor = colorResource(id = R.color.onBackground)
                 )
               )
             }
@@ -437,7 +441,9 @@ class VisitorActivity : AppCompatActivity() {
                 singleLine = true,
                 readOnly = isRead.value,
                 colors = TextFieldDefaults.textFieldColors(
-                  containerColor = colorResource(id = R.color.background)
+                  containerColor = colorResource(id = R.color.background),
+                  focusedIndicatorColor = colorResource(id = R.color.onBackground),
+                  focusedLabelColor = colorResource(id = R.color.onBackground)
                 )
               )
             }
@@ -454,7 +460,9 @@ class VisitorActivity : AppCompatActivity() {
                 singleLine = true,
                 readOnly = isRead.value,
                 colors = TextFieldDefaults.textFieldColors(
-                  containerColor = colorResource(id = R.color.background)
+                  containerColor = colorResource(id = R.color.background),
+                  focusedIndicatorColor = colorResource(id = R.color.onBackground),
+                  focusedLabelColor = colorResource(id = R.color.onBackground)
                 )
               )
             }
@@ -471,6 +479,8 @@ class VisitorActivity : AppCompatActivity() {
                 readOnly = isRead.value,
                 colors = TextFieldDefaults.textFieldColors(
                   containerColor = colorResource(id = R.color.background),
+                  focusedIndicatorColor = colorResource(id = R.color.onBackground),
+                  focusedLabelColor = colorResource(id = R.color.onBackground)
                 )
               )
             }
@@ -537,6 +547,7 @@ class VisitorActivity : AppCompatActivity() {
                             age = age.value
                           )
                         )
+                        appData.vistorCount += 1
                         isAdd.value = false
                       }
                       if (isUpdate.value) {
