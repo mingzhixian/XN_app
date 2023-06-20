@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -38,7 +39,7 @@ class OrderActivity : AppCompatActivity() {
     val alert = appData.publicTools.showLoading("加载中", this, false, null)
     appData.netHelper.get(url) {
       alert.cancel()
-      if (it==null)return@get
+      if (it == null) return@get
       val orderList = it.getJSONArray("data")
       val orderListView = findViewById<RecyclerView>(R.id.order_list)
       orderListView.layoutManager = LinearLayoutManager(this)
@@ -56,13 +57,17 @@ class OrderActivity : AppCompatActivity() {
         holder.itemView.findViewById<ImageView>(R.id.order_list_item_status).setImageResource(
           when (status) {
             0 -> {
+              holder.itemView.findViewById<LinearLayout>(R.id.order_list_item_status_list).visibility =
+                View.VISIBLE
               holder.itemView.findViewById<TextView>(R.id.order_list_item_status_2)
                 .setTextColor(resources.getColor(R.color.buttonColor))
               R.drawable.order_need_payment
             }
 
             1 -> {
-              if (Date().time > orderItem.getLong("date") * 1000) {
+              holder.itemView.findViewById<LinearLayout>(R.id.order_list_item_status_list).visibility =
+                View.VISIBLE
+              if (Date().time < orderItem.getLong("date") * 1000) {
                 holder.itemView.findViewById<TextView>(R.id.order_list_item_status_3)
                   .setTextColor(resources.getColor(R.color.buttonColor))
               } else {
@@ -103,7 +108,7 @@ class OrderActivity : AppCompatActivity() {
             }"
           ) {
             alert2.cancel()
-            if (it==null)return@get
+            if (it == null) return@get
             orderItem.put("orderStatus", 3)
             orderListViewAdapter.notifyDataSetChanged()
           }
