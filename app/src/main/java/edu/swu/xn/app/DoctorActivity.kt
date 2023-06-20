@@ -19,13 +19,13 @@ import org.json.JSONObject
 
 class DoctorActivity : AppCompatActivity() {
 
-  lateinit var clock: GridLayout
-  val subProductIdList = Array(9) { 0 }
+  private lateinit var clock: GridLayout
+  private val subProductIdList = Array(9) { 0 }
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     appData.publicTools.setStatusAndNavBar(this)
     setContentView(R.layout.activity_doctor)
-    clock = findViewById<GridLayout>(R.id.doctor_clock)
+    clock = findViewById(R.id.doctor_clock)
     // 设置填充值
     setValue()
   }
@@ -52,10 +52,7 @@ class DoctorActivity : AppCompatActivity() {
       }"
     ) {
       alert.cancel()
-      if (it.getInt("code") != 200) {
-        Toast.makeText(this, "未知错误", Toast.LENGTH_SHORT).show()
-        return@get
-      }
+      if (it==null)return@get
       val hours = it.getJSONArray("data")
       for (i in 0 until hours.length()) {
         subProductIdList[i] = hours.getJSONObject(i).getString("productId").toInt()
@@ -86,10 +83,7 @@ class DoctorActivity : AppCompatActivity() {
       post1
     ) {
       alert.cancel()
-      if (it.getInt("code") != 200) {
-        Toast.makeText(this, "获取就诊人失败", Toast.LENGTH_SHORT).show()
-        return@get
-      }
+      if (it==null)return@get
       val patientListData = it.getJSONArray("data")
       // 显示就诊人列表
       val builder: AlertDialog.Builder = AlertDialog.Builder(this)
@@ -122,10 +116,7 @@ class DoctorActivity : AppCompatActivity() {
               post2
             ) {
               alert2.cancel()
-              if (it.getInt("code") != 200) {
-                Toast.makeText(this, "下单失败", Toast.LENGTH_SHORT).show()
-                return@get
-              }
+              if (it==null)return@get
               val intent = Intent(this, PayActivity::class.java)
               intent.putExtra("orderId", it.getJSONObject("data").getString("orderId"))
               val amountText = findViewById<TextView>(R.id.doctor_amount).text

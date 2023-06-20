@@ -68,48 +68,6 @@ class AppData : ViewModel() {
     statusBarHeight = getStatusBar()
   }
 
-  // 获取科目诊室列表
-  fun getSubjectList(handle: (() -> Unit)) {
-    netHelper.get("${main.getString(R.string.admin_url)}/api/service-user/dept-category/getCategory") {
-      subjectList = LinkedList<Subject>()
-      // 请求错误
-      if (it.getInt("code") != 200) {
-        Toast.makeText(main, "未知错误", Toast.LENGTH_SHORT).show()
-      } else {
-        // 解析请求
-        val data = it.getJSONArray("data")
-        for (i in 0 until data.length()) {
-          // 第一大类
-          val sub1Json = data.getJSONObject(i)
-          val sub1Obj =
-            Subject(sub1Json.getString("deptName"), sub1Json.getInt("id"), LinkedList<Subject>())
-          // 第二大类
-          val sub2Json = sub1Json.getJSONArray("childCategory")
-          for (i2 in 0 until sub2Json.length()) {
-            val sub3Json = sub2Json.getJSONObject(i2)
-            val sub3Obj =
-              Subject(sub3Json.getString("deptName"), sub3Json.getInt("id"), LinkedList<Subject>())
-            // 第三大类
-            val sub4Json = sub3Json.getJSONArray("childCategory")
-            for (i3 in 0 until sub4Json.length()) {
-              val sub5Json = sub4Json.getJSONObject(i3)
-              val sub5Obj =
-                Subject(
-                  sub5Json.getString("deptName"),
-                  sub5Json.getInt("id"),
-                  LinkedList<Subject>()
-                )
-              sub3Obj.subList.add(sub5Obj)
-            }
-            sub1Obj.subList.add(sub3Obj)
-          }
-          subjectList.add(sub1Obj)
-        }
-        appData.main.runOnUiThread { handle() }
-      }
-    }
-  }
-
   @SuppressLint("InternalInsetResource", "DiscouragedApi")
   private fun getStatusBar(): Int {
     // 获取状态栏高度

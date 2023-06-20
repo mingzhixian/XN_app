@@ -38,10 +38,7 @@ class OrderActivity : AppCompatActivity() {
     val alert = appData.publicTools.showLoading("加载中", this, false, null)
     appData.netHelper.get(url) {
       alert.cancel()
-      if (it.getInt("code") != 200) {
-        Toast.makeText(this, "未知错误", Toast.LENGTH_SHORT).show()
-        return@get
-      }
+      if (it==null)return@get
       val orderList = it.getJSONArray("data")
       val orderListView = findViewById<RecyclerView>(R.id.order_list)
       orderListView.layoutManager = LinearLayoutManager(this)
@@ -106,10 +103,7 @@ class OrderActivity : AppCompatActivity() {
             }"
           ) {
             alert2.cancel()
-            if (it.getInt("code") != 200) {
-              Toast.makeText(this, "未知错误", Toast.LENGTH_SHORT).show()
-              return@get
-            }
+            if (it==null)return@get
             orderItem.put("orderStatus", 3)
             orderListViewAdapter.notifyDataSetChanged()
           }
