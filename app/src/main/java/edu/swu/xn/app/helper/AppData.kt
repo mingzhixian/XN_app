@@ -3,11 +3,8 @@ package edu.swu.xn.app.helper
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import edu.swu.xn.app.MainActivity
-import edu.swu.xn.app.R
-import edu.swu.xn.app.appData
 import edu.swu.xn.app.entity.Subject
 import kotlinx.coroutines.MainScope
 import java.util.LinkedList
@@ -52,6 +49,9 @@ class AppData : ViewModel() {
 
   // 状态栏高度
   var statusBarHeight = 0
+
+  //就诊人数量
+  var vistorCount = 0
 
   fun init(m: MainActivity) {
     isInit = true
