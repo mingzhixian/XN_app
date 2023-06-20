@@ -128,6 +128,8 @@ class SearchActivity : AppCompatActivity() {
                   ) { data ->
                     depts.clear()
                     doctors.clear()
+                    progress.value = false
+                    if (data == null) return@get
                     if (data.length() == 0) {
                       Toast.makeText(this@SearchActivity, "搜索结果为空", Toast.LENGTH_LONG).show()
                       progress.value = false
@@ -169,7 +171,6 @@ class SearchActivity : AppCompatActivity() {
                         )
                       )
                     }
-                    progress.value = false
                   }
                 },
               )

@@ -46,29 +46,7 @@ class OrderDetailActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     appData.publicTools.setStatusAndNavBar(this)
     val orderId = intent.getStringExtra("orderId")!!
-
-    item = OrderDetailItem(
-      amount = 30,
-      createTime = "2023-06-17 20:00:12",
-      date = "27",
-      deptId = "35",
-      deptName = "肿瘤科普通门诊",
-      doctorAvatar = "www.nichelle-cartwright.org",
-      doctorEmail = "teodora.waters@gmail.com",
-      doctorPhonenumber = "15926833215",
-      doctorRealName = "邹立轩",
-      doctorSex = "0",
-      offsetTime = 2,
-      orderId = "7ed45518-3421-45b4-b4db-ba2566198e50",
-      orderStatus = 1,
-      patientAge = 25,
-      patientCardId = "122542",
-      patientPhonenumber = "040240",
-      patientSex = "0",
-      patientUserName = "test3的病人1",
-      title = "普通医生"
-    )
-
+    init = true
     setContent {
       AppTheme {
         OrderDetailPage(
@@ -117,6 +95,8 @@ class OrderDetailActivity : AppCompatActivity() {
             + "/api/service-order/order-info/getOrderByID?orderId="
             + orderId
       ) { data ->
+        progress.value = false
+        if (data == null) return@get
         val d = data.getJSONObject("data")
         item = OrderDetailItem(
           amount = d.getInt("amount"),
@@ -139,7 +119,6 @@ class OrderDetailActivity : AppCompatActivity() {
           patientUserName = d.getString("patientUserName"),
           title = d.getString("title")
         )
-        progress.value = false
       }
       init = false
     }

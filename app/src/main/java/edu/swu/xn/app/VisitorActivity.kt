@@ -2,7 +2,6 @@ package edu.swu.xn.app
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -95,6 +94,8 @@ class VisitorActivity : AppCompatActivity() {
         value = obj
       )
       { data ->
+        progress.value = false
+        if (data == null) return@get
         val dataList = data.getJSONArray("data")
         for (i in 0 until dataList.length()) {
           visitors.add(
@@ -113,7 +114,6 @@ class VisitorActivity : AppCompatActivity() {
             )
           )
         }
-        progress.value = false
       }
       init = false
     }
@@ -270,13 +270,9 @@ class VisitorActivity : AppCompatActivity() {
                     appData.main.getString(R.string.admin_url) + "/api/service-user/patient/deletePatient",
                     obj
                   ) { data ->
-                    if (data.getString("code") != "200") {
-                      Toast.makeText(this@VisitorActivity, "删除失败！", Toast.LENGTH_LONG).show()
-                    } else {
-                      Toast.makeText(this@VisitorActivity, "删除成功！", Toast.LENGTH_LONG).show()
-                      visitors.removeAt(index)
-                    }
                     progress.value = false
+                    if (data == null) return@get
+                    visitors.removeAt(index)
                   }
                 }
               ) {
@@ -514,19 +510,21 @@ class VisitorActivity : AppCompatActivity() {
                           else "/api/service-user/patient/modifyPatientInfo",
                       value = obj
                     ) { data ->
-                      if (data.getString("code") != "200") {
-                        Toast.makeText(
-                          this@VisitorActivity,
-                          if (isAdd.value) "添加失败!" else "更新失败!",
-                          Toast.LENGTH_LONG
-                        ).show()
-                      } else {
-                        Toast.makeText(
-                          this@VisitorActivity,
-                          if (isAdd.value) "添加成功!" else "更新成功!",
-                          Toast.LENGTH_LONG
-                        ).show()
-                      }
+                      progress.value = false
+                      if (data == null) return@get
+//                      if (data.getString("code") != "200") {
+//                        Toast.makeText(
+//                          this@VisitorActivity,
+//                          if (isAdd.value) "添加失败!" else "更新失败!",
+//                          Toast.LENGTH_LONG
+//                        ).show()
+//                      } else {
+//                        Toast.makeText(
+//                          this@VisitorActivity,
+//                          if (isAdd.value) "添加成功!" else "更新成功!",
+//                          Toast.LENGTH_LONG
+//                        ).show()
+//                      }
                       if (isAdd.value) {
                         visitors.add(
                           Visitor(
@@ -554,7 +552,6 @@ class VisitorActivity : AppCompatActivity() {
                         isUpdate.value = false
                       }
                       cleanStates()
-                      progress.value = false
                     }
 
                   }) {
