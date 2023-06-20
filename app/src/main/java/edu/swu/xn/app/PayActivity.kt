@@ -2,7 +2,6 @@ package edu.swu.xn.app
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Arrangement
@@ -191,12 +190,8 @@ class PayActivity : AppCompatActivity() {
                 url = appData.main.getString(R.string.admin_url) + "/api/service-order/order-info/payOrder",
                 value = obj
               ) { data ->
-                if (data.getString("code") == "200") {
-                  Toast.makeText(this@PayActivity, "支付成功", Toast.LENGTH_LONG).show()
-                } else {
-                  Toast.makeText(this@PayActivity, "支付失败", Toast.LENGTH_LONG).show()
-                }
                 progress.value = false
+                if (data == null) return@get
               }
 
               isOK = true

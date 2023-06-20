@@ -273,6 +273,7 @@ class MainActivity : ComponentActivity() {
       value = obj
     )
     { data ->
+      if (data == null) return@get
       val dataList = data.getJSONArray("data")
       visitorCount.value = dataList.length()
     }
