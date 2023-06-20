@@ -131,10 +131,7 @@ class AppointmentActivity : AppCompatActivity() {
       }&dateSecond=${tmpDate / 1000}"
     ) {
       alert.cancel()
-      if (it.getInt("code") != 200) {
-        Toast.makeText(this, "未知错误", Toast.LENGTH_SHORT).show()
-        return@get
-      }
+      if (it == null) return@get
       doctors = it.getJSONArray("data")
       handle()
     }

@@ -43,12 +43,7 @@ class LogInActivity : AppCompatActivity() {
       }
       appData.netHelper.get("${getString(R.string.admin_url)}/api/security-auth/login", postValue) {
         // 密码账户错误
-        if (it.getInt("code") != 200) {
-          val checkError = findViewById<TextView>(R.id.log_in_password_check_error)
-          checkError.visibility = View.VISIBLE
-          checkError.text = "*密码或账户错误"
-          return@get
-        }
+        if (it == null) return@get
         // 登录成功向数据库保存哈希值
         val data = it.getJSONObject("data")
         val userVO = data.getJSONObject("userVO")
@@ -96,6 +91,7 @@ class LogInActivity : AppCompatActivity() {
         "${getString(R.string.admin_url)}/api/service-user/user/addUser",
         postValue
       ) {
+        if (it == null) return@get
         val data = it.getJSONObject("data")
         saveID(data.getString("token"), data.getInt("id"), data.getString("userName"))
         setResult(1)
@@ -140,9 +136,9 @@ class LogInActivity : AppCompatActivity() {
   // MD5加密
   private object MD5Util {
     private const val SALT = "xinandaxue"
-    fun encode(password: String): String {
-      var password = password
-      password = password + SALT
+    fun encode(p: String): String {
+      var password = p
+      password += SALT
       var md5: MessageDigest? = null
       md5 = try {
         MessageDigest.getInstance("MD5")
