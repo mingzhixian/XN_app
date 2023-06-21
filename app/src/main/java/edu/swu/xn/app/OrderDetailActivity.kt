@@ -40,7 +40,7 @@ import java.text.DecimalFormat
 
 class OrderDetailActivity : AppCompatActivity() {
 
-  lateinit var item: OrderDetailItem
+   var item: OrderDetailItem=OrderDetailItem()
   private var init = true
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -59,25 +59,25 @@ class OrderDetailActivity : AppCompatActivity() {
   }
 
   data class OrderDetailItem(
-    val amount: Int,
-    val createTime: String,
-    val date: String,
-    val deptId: String,
-    val deptName: String,
-    val doctorAvatar: String,
-    val doctorEmail: String,
-    val doctorPhonenumber: String,
-    val doctorRealName: String,
-    val doctorSex: String,
-    val offsetTime: Int,
-    val orderId: String,
-    val orderStatus: Int,
-    val patientAge: Int,
-    val patientCardId: String,
-    val patientPhonenumber: String,
-    val patientSex: String,
-    val patientUserName: String,
-    val title: String
+    val amount: Int=0,
+    val createTime: String="",
+    val date: String="",
+    val deptId: String="",
+    val deptName: String="",
+    val doctorAvatar: String="",
+    val doctorEmail: String="",
+    val doctorPhonenumber: String="",
+    val doctorRealName: String="",
+    val doctorSex: String="",
+    val offsetTime: Int=0,
+    val orderId: String="",
+    val orderStatus: Int=0,
+    val patientAge: Int=0,
+    val patientCardId: String="",
+    val patientPhonenumber: String="",
+    val patientSex: String="",
+    val patientUserName: String="",
+    val title: String=""
   )
 
   @Composable
