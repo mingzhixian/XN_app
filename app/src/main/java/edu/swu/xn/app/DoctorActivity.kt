@@ -41,7 +41,11 @@ class DoctorActivity : AppCompatActivity() {
       "性别：${if (extra.getString("sex")!!.toInt() == 0) "男" else "女"}"
     findViewById<TextView>(R.id.doctor_title).text = extra.getString("title")
     findViewById<TextView>(R.id.doctor_introduce).text = extra.getString("introduce")
-    if (extra.getString("forWhat") == "forDoctorDetail") return
+    if (extra.getString("forWhat") == "forDoctorDetail") {
+      findViewById<LinearLayout>(R.id.doctor_lite_bar).visibility = View.GONE
+      findViewById<GridLayout>(R.id.doctor_clock).visibility = View.GONE
+      return
+    }
     findViewById<TextView>(R.id.doctor_count).text = "余量：${extra.getString("count")}"
     findViewById<TextView>(R.id.doctor_amount).text = "价格：${extra.getString("amount")}"
     // 获取每个时间段是否空余

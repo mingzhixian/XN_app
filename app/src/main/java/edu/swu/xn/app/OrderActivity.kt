@@ -22,8 +22,23 @@ class OrderActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     appData.publicTools.setStatusAndNavBar(this)
     setContentView(R.layout.activity_order)
-    if (intent.extras!!.getString("for") != "fullOrderList")
-      findViewById<TextView>(R.id.activity_title).text = "未缴费订单"
+    findViewById<TextView>(R.id.activity_title).text = when (intent.extras!!.getString("forWhat")) {
+      "fullOrderList" -> {
+        "所有订单"
+      }
+
+      "needPaymentOrderList" -> {
+        "未缴费订单"
+      }
+
+      "cloasedOrderList" -> {
+        "已完成订单"
+      }
+
+      else -> {
+        "订单"
+      }
+    }
     drawUI()
   }
 
@@ -33,9 +48,23 @@ class OrderActivity : AppCompatActivity() {
   @SuppressLint("SimpleDateFormat", "SetTextI18n", "NotifyDataSetChanged")
   private fun drawUI() {
     // 显示加载框
-    val url = if (intent.extras!!.getString("for") == "fullOrderList")
-      "${appData.main.getString(R.string.admin_url)}/api/service-order/order-info/getOrderListByUserId?userId=${appData.userId}"
-    else "${appData.main.getString(R.string.admin_url)}/api/service-order/order-info/getOrderListByUserIdAndStatus?userId=${appData.userId}&status=0"
+    val url = when (intent.extras!!.getString("forWhat")) {
+      "fullOrderList" -> {
+        "${appData.main.getString(R.string.admin_url)}/api/service-order/order-info/getOrderListByUserId?userId=${appData.userId}"
+      }
+
+      "needPaymentOrderList" -> {
+        "${appData.main.getString(R.string.admin_url)}/api/service-order/order-info/getOrderListByUserIdAndStatus?userId=${appData.userId}&status=0"
+      }
+
+      "cloasedOrderList" -> {
+        "${appData.main.getString(R.string.admin_url)}/api/service-order/order-info/getOrderListByUserIdAndStatus?userId=${appData.userId}&status=2"
+      }
+
+      else -> {
+        "${appData.main.getString(R.string.admin_url)}/api/service-order/order-info/getOrderListByUserId?userId=${appData.userId}"
+      }
+    }
     val alert = appData.publicTools.showLoading("加载中", this, false, null)
     appData.netHelper.get(url) {
       alert.cancel()
@@ -114,9 +143,31 @@ class OrderActivity : AppCompatActivity() {
           }
         }
         holder.itemView.findViewById<LinearLayout>(R.id.order_list_item_layout).setOnClickListener {
-          val intent = Intent(this, OrderDetailActivity::class.java)
-          intent.putExtra("orderId", orderItem.getString("orderId"))
-          startActivity(intent)
+          when (intent.extras!!.getString("forWhat")) {
+            "fullOrderList" -> {
+              val intent = Intent(this, OrderDetailActivity::class.java)
+              intent.putExtra("orderId", orderItem.getString("orderId"))
+              startActivity(intent)
+            }
+
+            "needPaymentOrderList" -> {
+              val intent = Intent(this, PayActivity::class.java)
+              intent.putExtra("orderId", orderItem.getString("orderId"))
+              intent.putExtra("amount", orderItem.getString("amount"))
+              startActivity(intent)
+            }
+
+            "cloasedOrderList" -> {
+              val intent = Intent(this, ReportActivity::class.java)
+              intent.putExtra("orderId", orderItem.getString("orderId"))
+              startActivity(intent)
+            }
+            else->{
+              val intent = Intent(this, OrderDetailActivity::class.java)
+              intent.putExtra("orderId", orderItem.getString("orderId"))
+              startActivity(intent)
+            }
+          }
         }
       }
       orderListView.adapter = orderListViewAdapter
