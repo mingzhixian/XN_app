@@ -2,6 +2,7 @@ package edu.swu.xn.app
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
@@ -172,6 +173,7 @@ class SearchActivity : AppCompatActivity() {
                         )
                       )
                     }
+                    Log.i("zzzzzzzzzzzzzzzzzzzzzzzzzzz", doctors[0].avatar)
                   }
                 },
               )

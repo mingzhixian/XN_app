@@ -17,11 +17,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import edu.swu.xn.app.R
+import edu.swu.xn.app.appData
 import edu.swu.xn.app.entity.Doctor
 
 /**
@@ -55,19 +59,22 @@ fun DoctorCard(
   ) {
     Row(
       modifier = Modifier
-          .padding(10.dp)
-          .fillMaxWidth(),
+        .padding(10.dp)
+        .fillMaxWidth(),
       verticalAlignment = Alignment.CenterVertically,
     ) {
       AsyncImage(
-        modifier = Modifier.size(150.dp)
-            .clip(MaterialTheme.shapes.medium)
-            .border(
-                width = 1.dp,
-                color = Color.LightGray,
-                shape = MaterialTheme.shapes.medium
-            ),
-        model = doctor.avatar,
+        modifier = Modifier
+          .size(150.dp)
+          .clip(MaterialTheme.shapes.medium)
+          .border(
+            width = 1.dp,
+            color = Color.LightGray,
+            shape = MaterialTheme.shapes.medium
+          ),
+        model = ImageRequest.Builder(LocalContext.current)
+          .data(appData.main.getString(R.string.admin_url) + "/api/service-user/doctor/getImage?filePath=" + doctor.avatar)
+          .crossfade(false).build(),
         contentDescription = null
       )
       Column {

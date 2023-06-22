@@ -522,19 +522,6 @@ class VisitorActivity : AppCompatActivity() {
                     ) { data ->
                       progress.value = false
                       if (data == null) return@get
-//                      if (data.getString("code") != "200") {
-//                        Toast.makeText(
-//                          this@VisitorActivity,
-//                          if (isAdd.value) "添加失败!" else "更新失败!",
-//                          Toast.LENGTH_LONG
-//                        ).show()
-//                      } else {
-//                        Toast.makeText(
-//                          this@VisitorActivity,
-//                          if (isAdd.value) "添加成功!" else "更新成功!",
-//                          Toast.LENGTH_LONG
-//                        ).show()
-//                      }
                       if (isAdd.value) {
                         visitors.add(
                           Visitor(
