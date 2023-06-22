@@ -50,17 +50,13 @@
         android:layout_marginEnd="20dp"
         android:orientation="horizontal">
 
-        <TextView
+        <ImageView
             android:id="@+id/doctor_image"
             android:layout_width="120dp"
             android:layout_height="140dp"
             android:background="@drawable/corn_s"
             android:backgroundTint="@color/cardBackground"
-            android:gravity="center"
-            android:maxLength="1"
-            android:text="李四"
-            android:textColor="@color/onCardBackground"
-            android:textSize="36sp" />
+            android:src="@drawable/hospital"/>
 
         <LinearLayout
             android:layout_width="0dp"
