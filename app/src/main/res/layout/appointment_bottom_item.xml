@@ -18,17 +18,13 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <TextView
+        <ImageView
             android:id="@+id/appointment_bottom_item_image"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:background="@drawable/corn_l"
             android:backgroundTint="@color/cardContainerBackground"
-            android:gravity="center"
-            android:maxLength="1"
-            android:text="李四"
-            android:textColor="@color/onCardContainerBackground"
-            android:textSize="26sp" />
+            android:src="@drawable/hospital" />
 
         <LinearLayout
             android:layout_width="0dp"

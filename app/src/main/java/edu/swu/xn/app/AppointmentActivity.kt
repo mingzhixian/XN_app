@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import edu.swu.xn.app.helper.RecyclerViewAdapter
 import okhttp3.internal.notify
 import org.json.JSONArray
@@ -79,8 +81,11 @@ class AppointmentActivity : AppCompatActivity() {
           { doctors.length() }) { holder, position ->
           val tmpDoctor = doctors.getJSONObject(position)
           // 头像
-          holder.itemView.findViewById<TextView>(R.id.appointment_bottom_item_image).text =
-            tmpDoctor.getString("realName")
+          appData.netHelper.getImg(
+            this,
+            tmpDoctor.getString("avatar"),
+            holder.itemView.findViewById(R.id.appointment_bottom_item_image)
+          )
           // 姓名
           holder.itemView.findViewById<TextView>(R.id.appointment_bottom_item_name).text =
             tmpDoctor.getString("realName")
@@ -102,6 +107,8 @@ class AppointmentActivity : AppCompatActivity() {
               val intent = Intent(this, DoctorActivity::class.java)
               intent.putExtra("productId", tmpDoctor.getString("productId"))
               intent.putExtra("realName", tmpDoctor.getString("realName"))
+              intent.putExtra("avatar", tmpDoctor.getString("avatar"))
+              intent.putExtra("amount", tmpDoctor.getString("amount"))
               intent.putExtra("title", tmpDoctor.getString("title"))
               intent.putExtra("sex", tmpDoctor.getString("sex"))
               intent.putExtra("count", tmpDoctor.getString("count"))

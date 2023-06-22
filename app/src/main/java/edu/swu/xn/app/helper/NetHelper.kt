@@ -1,7 +1,13 @@
 package edu.swu.xn.app.helper
 
+import android.content.Context
 import android.util.Log
+import android.widget.ImageView
 import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
+import edu.swu.xn.app.R
 import edu.swu.xn.app.appData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -75,5 +81,15 @@ class NetHelper {
         }
       }
     }
+  }
+
+  fun getImg(context: Context, url: String, imageView: ImageView) {
+//    val glideUrl = GlideUrl(
+//      url, LazyHeaders.Builder()
+//        .addHeader("token", appData.hashId)
+//        .build()
+//    )
+    Glide.with(context).load("http://localhost:8004/api/service-user/doctor/getImage?filePath=$url")
+      .into(imageView)
   }
 }
