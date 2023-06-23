@@ -35,4 +35,4 @@ google-services.json
 g2m.cmd
 m2g.cmd
 
-app\src\main\res\values\string.xml
+app/src/main/res/values/strings.xml
