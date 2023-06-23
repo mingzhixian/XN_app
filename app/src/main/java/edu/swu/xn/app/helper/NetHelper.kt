@@ -84,12 +84,9 @@ class NetHelper {
   }
 
   fun getImg(context: Context, url: String, imageView: ImageView) {
-//    val glideUrl = GlideUrl(
-//      url, LazyHeaders.Builder()
-//        .addHeader("token", appData.hashId)
-//        .build()
-//    )
-    Glide.with(context).load("http://localhost:8004/api/service-user/doctor/getImage?filePath=$url")
-      .into(imageView)
+    try {
+      Glide.with(context).load(url).into(imageView)
+    } catch (_: Exception) {
+    }
   }
 }

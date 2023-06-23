@@ -139,41 +139,45 @@ class SearchActivity : AppCompatActivity() {
                     }
 
                     val deptList = data.getJSONObject("data").getJSONArray("deptNames")
-                    for (i in 0 until deptList.length()) {
-                      depts.add(deptList.getString(i))
+                    if (deptList.length() > 0) {
+                      for (i in 0 until deptList.length()) {
+                        depts.add(deptList.getString(i))
+                      }
                     }
+
                     val doctorList =
                       data.getJSONObject("data").getJSONArray("doctorList")
-                    for (i in 0 until doctorList.length()) {
-                      doctors.add(
-                        Doctor(
-                          amount = doctorList.getJSONObject(i).getInt("amount"),
-                          avatar = doctorList.getJSONObject(i)
-                            .getString("avatar"),
-                          deptID = doctorList.getJSONObject(i)
-                            .getString("deptId"),
-                          email = doctorList.getJSONObject(i).getString("email"),
-                          id = doctorList.getJSONObject(i).getString("id"),
-                          introduce = doctorList.getJSONObject(i)
-                            .getString("introduce"),
-                          phoneNumber = doctorList.getJSONObject(i)
-                            .getString("phonenumber"),
-                          realName = doctorList.getJSONObject(i)
-                            .getString("realName"),
-                          sex = if (doctorList.getJSONObject(i)
-                              .getString("sex") == "0"
-                          ) {
-                            "男"
-                          } else {
-                            "女"
-                          },
-                          title = doctorList.getJSONObject(i).getString("title"),
-                          userName = doctorList.getJSONObject(i)
-                            .getString("userName"),
+                    if (doctorList.length() > 0) {
+                      for (i in 0 until doctorList.length()) {
+                        doctors.add(
+                          Doctor(
+                            amount = doctorList.getJSONObject(i).getInt("amount"),
+                            avatar = doctorList.getJSONObject(i)
+                              .getString("avatar"),
+                            deptID = doctorList.getJSONObject(i)
+                              .getString("deptId"),
+                            email = doctorList.getJSONObject(i).getString("email"),
+                            id = doctorList.getJSONObject(i).getString("id"),
+                            introduce = doctorList.getJSONObject(i)
+                              .getString("introduce"),
+                            phoneNumber = doctorList.getJSONObject(i)
+                              .getString("phonenumber"),
+                            realName = doctorList.getJSONObject(i)
+                              .getString("realName"),
+                            sex = if (doctorList.getJSONObject(i)
+                                .getString("sex") == "0"
+                            ) {
+                              "男"
+                            } else {
+                              "女"
+                            },
+                            title = doctorList.getJSONObject(i).getString("title"),
+                            userName = doctorList.getJSONObject(i)
+                              .getString("userName"),
+                          )
                         )
-                      )
+                      }
                     }
-                    Log.i("zzzzzzzzzzzzzzzzzzzzzzzzzzz", doctors[0].avatar)
                   }
                 },
               )
@@ -214,7 +218,7 @@ class SearchActivity : AppCompatActivity() {
                 .fillMaxWidth()
                 .height(100.dp)
                 .background(colors.background),
-              containerColor = colors.background,
+              containerColor = Color(appData.main.getColor(R.color.cardBackground)),
               onClick = {
                 val intent = Intent(this@SearchActivity, AppointmentActivity::class.java)
                 intent.putExtra("deptName", depts[index])
@@ -256,7 +260,7 @@ class SearchActivity : AppCompatActivity() {
                 .fillMaxWidth()
                 .background(colors.background),
               doctor = doctors[index],
-              containerColor = colors.background,
+              containerColor = Color(appData.main.getColor(R.color.cardBackground)),
               onClick = {
                 val intent = Intent(this@SearchActivity, DoctorActivity::class.java)
                 intent.putExtra("realName", doctors[index].realName)

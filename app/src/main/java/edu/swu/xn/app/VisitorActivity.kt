@@ -205,7 +205,7 @@ class VisitorActivity : AppCompatActivity() {
                 }
               ),
             colors = CardDefaults.cardColors(
-              containerColor = colors.background,
+              containerColor = Color(appData.main.getColor(R.color.cardBackground)),
               contentColor = Color.Unspecified
             ),
             elevation = CardDefaults.cardElevation(
