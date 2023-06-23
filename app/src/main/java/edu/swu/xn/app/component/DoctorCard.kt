@@ -43,17 +43,12 @@ fun DoctorCard(
   Card(
     modifier = modifier
       .padding(10.dp)
-      .fillMaxWidth()
-      .border(
-        width = 1.dp,
-        color = Color.Gray,
-        shape = MaterialTheme.shapes.medium
-      ),
+      .fillMaxWidth(),
     colors = CardDefaults.cardColors(
       containerColor = containerColor,
     ),
     elevation = CardDefaults.cardElevation(
-      defaultElevation = 0.dp
+      defaultElevation = 4.dp
     ),
     onClick = onClick
   ) {

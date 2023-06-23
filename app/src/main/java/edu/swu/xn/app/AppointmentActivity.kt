@@ -83,7 +83,11 @@ class AppointmentActivity : AppCompatActivity() {
           // 头像
           appData.netHelper.getImg(
             this,
-            tmpDoctor.getString("avatar"),
+            "${appData.main.getString(R.string.admin_url)}/api/service-user/doctor/getImage?filePath=${
+              tmpDoctor.getString(
+                "avatar"
+              )
+            }",
             holder.itemView.findViewById(R.id.appointment_bottom_item_image)
           )
           // 姓名

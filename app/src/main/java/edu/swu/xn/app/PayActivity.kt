@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ColorScheme
@@ -178,7 +179,8 @@ class PayActivity : AppCompatActivity() {
                 top = 5.dp,
               ),
             colors = CardDefaults.cardColors(
-              contentColor = Color.Unspecified
+              contentColor = Color.Unspecified,
+              containerColor = Color(appData.main.getColor(R.color.cardBackground))
             ),
             onClick = {
               okIcon = payItems[index].iconID
@@ -241,7 +243,7 @@ class PayActivity : AppCompatActivity() {
             defaultElevation = 8.dp
           ),
           colors = CardDefaults.cardColors(
-            containerColor = colors.background,
+            containerColor = Color(appData.main.getColor(R.color.cardBackground)),
             contentColor = Color.Unspecified
           )
         ) {
@@ -289,11 +291,14 @@ class PayActivity : AppCompatActivity() {
                   end = 50.dp,
                   bottom = 80.dp
                 )
-                .height(60.dp)
+                .height(60.dp),
+              colors = ButtonDefaults.buttonColors(
+                containerColor = Color(appData.main.getColor(R.color.cardContainerBackground))
+              )
             ) {
               Text(
                 text = "好的",
-                color = colors.onBackground
+                color = Color(appData.main.getColor(R.color.onCardContainerBackground))
               )
             }
           }

@@ -36,7 +36,13 @@ class DoctorActivity : AppCompatActivity() {
   @SuppressLint("SetTextI18n")
   private fun setValue() {
     val extra = intent.extras!!
-    appData.netHelper.getImg(this, extra.getString("avatar")!!, findViewById(R.id.doctor_image))
+    appData.netHelper.getImg(
+      this,
+      "${appData.main.getString(R.string.admin_url)}/api/service-user/doctor/getImage?filePath=${
+        extra.getString("avatar")!!
+      }",
+      findViewById(R.id.doctor_image)
+    )
     findViewById<TextView>(R.id.doctor_name).text = extra.getString("realName")
     findViewById<TextView>(R.id.doctor_sex).text =
       "性别：${if (extra.getString("sex")!!.toInt() == 0) "男" else "女"}"
