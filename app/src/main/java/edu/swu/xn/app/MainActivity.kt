@@ -169,6 +169,7 @@ class MainActivity : ComponentActivity() {
     }
   }
 
+  @SuppressLint("CommitPrefEdits")
   @OptIn(ExperimentalMaterial3Api::class)
   @Composable
   fun HomePage(
@@ -346,6 +347,17 @@ class MainActivity : ComponentActivity() {
               }
             }
             Spacer(modifier = Modifier.size(1.dp))
+            IconButton(onClick = {
+              appData.settings.edit().putString("hashId", "")
+              startActivity(Intent(this@MainActivity, MainActivity::class.java))
+            }) {
+              Icon(
+                painter = painterResource(id = R.drawable.logout),
+                contentDescription = null,
+                modifier = Modifier.size(20.dp),
+                tint = Color(getColor(R.color.iconColor))
+              )
+            }
           }
           Spacer(modifier = Modifier.size(20.dp))
         }
