@@ -403,7 +403,7 @@ class MainActivity : ComponentActivity() {
                 start = 20.dp,
                 end = 20.dp
               )
-              .height(306.dp),
+              .height(210.dp),
             colors = CardDefaults.cardColors(
               containerColor = colors.primaryContainer,
             ),
@@ -412,7 +412,7 @@ class MainActivity : ComponentActivity() {
             )
           ) {
             LazyVerticalGrid(
-              columns = GridCells.Fixed(2),
+              columns = GridCells.Fixed(3),
               contentPadding = PaddingValues(20.dp),
               horizontalArrangement = Arrangement.SpaceBetween,
               userScrollEnabled = false

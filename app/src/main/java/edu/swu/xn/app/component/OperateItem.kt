@@ -18,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import edu.swu.xn.app.R
 
 /**
@@ -51,8 +52,8 @@ fun OperateItem(
                 contentDescription = null,
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
-                  .size(iconSize)
-                  .background(Color.Transparent)
+                    .size(iconSize)
+                    .background(Color.Transparent)
             )
             Spacer(
                 modifier = Modifier.size(4.dp)
@@ -60,6 +61,7 @@ fun OperateItem(
             Text(
                 text = text,
                 color = textColor,
+                fontSize = 10.sp
             )
         }
     }
