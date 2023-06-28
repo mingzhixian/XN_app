@@ -2,15 +2,14 @@ package edu.swu.xn.app
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.swu.xn.app.helper.RecyclerViewAdapter
@@ -138,6 +137,10 @@ class OrderActivity : AppCompatActivity() {
           ) {
             alert2.cancel()
             if (it == null) return@get
+            if (orderItem.getInt("orderStatus") > 0) {
+              Toast.makeText(this, "退款将按照支付方式返回", Toast.LENGTH_SHORT).show()
+            }
+
             orderItem.put("orderStatus", 3)
             orderListViewAdapter.notifyDataSetChanged()
           }

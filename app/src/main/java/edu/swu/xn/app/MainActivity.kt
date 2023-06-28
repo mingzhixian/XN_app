@@ -23,9 +23,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Badge
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ColorScheme
@@ -35,10 +33,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -49,8 +45,6 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -122,10 +116,16 @@ class MainActivity : ComponentActivity() {
               content = "为提高人员素质，更好地发挥责任组长在临床及管理中的骨干作用，同时将竞争机制全面引入临床管理中，更好地选拔、锻炼、培养骨干力量，优化队伍结构，打造合理的人才梯队。科室党支部支委会研究决定在全科开展2023年康复医学科科室护理组、治疗组及科研组的各组责任组长竞聘活动。本次活动采取“公平、公正、公开，鼓励优秀骨干积极参与”的原则，在科内择优选拔一批优秀的责任骨干，将协助科室强化临床管理、提高教学质量、推进科研人才培养，以此全面促进康复医学科的高质量发展。"
             ),
             CommonSense(
-              imgUrl = "http://www.xnyy.cn/__local/7/80/AD/E112E1D2710394EDB1942A54571_900D5247_CBC5.png",
-              url = "http://www.xnyy.cn/info/1031/19337.htm",
-              title = "”凝心聚力，迎势启航”——2023年康复医学科责任组长竞聘活动及住培学员个人汇报总结大会",
-              content = "为提高人员素质，更好地发挥责任组长在临床及管理中的骨干作用，同时将竞争机制全面引入临床管理中，更好地选拔、锻炼、培养骨干力量，优化队伍结构，打造合理的人才梯队。科室党支部支委会研究决定在全科开展2023年康复医学科科室护理组、治疗组及科研组的各组责任组长竞聘活动。本次活动采取“公平、公正、公开，鼓励优秀骨干积极参与”的原则，在科内择优选拔一批优秀的责任骨干，将协助科室强化临床管理、提高教学质量、推进科研人才培养，以此全面促进康复医学科的高质量发展。"
+              imgUrl = "http://www.xnyy.cn/__local/2/5A/DB/EAA9AEE44A08764C0E11EE1EFAC_03A8D243_148CD.png",
+              url = "http://www.xnyy.cn/info/1031/19332.htm",
+              title = "锐意进取，聚力前行——妇产科举办护理责任组长竞聘会",
+              content = "为响应医院公平、公正、公开选拔护理责任组长号召，鼓励有能力、有理想的护理骨干承担护理管理责任，发挥护理责任组长在临床护理中的带头作用，将竞争机制全面引入护理各层级管理中，选拔、锻炼、培养护理骨干，打造合理的护理人才梯队，妇产科于2023年2月22日组织开展了护理责任组长竞聘会。"
+            ),
+            CommonSense(
+              imgUrl = "http://www.xnyy.cn/__local/9/3B/9E/8A6338160B6D34763DABB0B331A_F96A22F8_195EA.jpg",
+              url = "http://www.xnyy.cn/info/1031/19278.htm",
+              title = "整合资源采好采快，廉洁高效聚力攻坚——物资采购中心成功举办采购代理机构培训交流大会",
+              content = "为了深入贯彻落实军队采购管理政策法规与制度要求，进一步规范第三方代理机构采购行为，聚合多方力量提高服务备战打仗保障效能，2月15日下午，西南医院物资采购中心联合大学采购室在烧伤楼10楼会议室举办了本年度第一次采购代理机构培训交流大会。大学采购室、医院物资采购中心和物财监管中心及重庆市政府采购中心、国信国际工程咨询集团股份有限公司、中化商务有限公司相关领导和业务骨干参加培训。新桥医院、陆军特色医学中心、陆军第九五八医院各采购室（中心）领导带队参会交流。会议由物资采购中心主任罗跃全支持。"
             ),
             CommonSense(
               imgUrl = "http://www.xnyy.cn/__local/7/80/AD/E112E1D2710394EDB1942A54571_900D5247_CBC5.png",
@@ -134,35 +134,17 @@ class MainActivity : ComponentActivity() {
               content = "为提高人员素质，更好地发挥责任组长在临床及管理中的骨干作用，同时将竞争机制全面引入临床管理中，更好地选拔、锻炼、培养骨干力量，优化队伍结构，打造合理的人才梯队。科室党支部支委会研究决定在全科开展2023年康复医学科科室护理组、治疗组及科研组的各组责任组长竞聘活动。本次活动采取“公平、公正、公开，鼓励优秀骨干积极参与”的原则，在科内择优选拔一批优秀的责任骨干，将协助科室强化临床管理、提高教学质量、推进科研人才培养，以此全面促进康复医学科的高质量发展。"
             ),
             CommonSense(
-              imgUrl = "http://www.xnyy.cn/__local/7/80/AD/E112E1D2710394EDB1942A54571_900D5247_CBC5.png",
-              url = "http://www.xnyy.cn/info/1031/19337.htm",
-              title = "”凝心聚力，迎势启航”——2023年康复医学科责任组长竞聘活动及住培学员个人汇报总结大会",
-              content = "为提高人员素质，更好地发挥责任组长在临床及管理中的骨干作用，同时将竞争机制全面引入临床管理中，更好地选拔、锻炼、培养骨干力量，优化队伍结构，打造合理的人才梯队。科室党支部支委会研究决定在全科开展2023年康复医学科科室护理组、治疗组及科研组的各组责任组长竞聘活动。本次活动采取“公平、公正、公开，鼓励优秀骨干积极参与”的原则，在科内择优选拔一批优秀的责任骨干，将协助科室强化临床管理、提高教学质量、推进科研人才培养，以此全面促进康复医学科的高质量发展。"
+              imgUrl = "http://www.xnyy.cn/__local/D/EA/E2/6F5C47575A988C938D11DEF3343_2858AB89_984C5.png",
+              url = "http://www.xnyy.cn/info/1031/17937.htm",
+              title = "2022年产科护理组年中总结会顺利举行",
+              content = "7月20日，产科护理组年中总结会在外科三楼学习室举行，此次会议旨在闭合我科去年相关护理问题，总结分析上半年护理工作的成效与不足，为下半年护理工作的开展做好规划。"
             ),
             CommonSense(
-              imgUrl = "http://www.xnyy.cn/__local/7/80/AD/E112E1D2710394EDB1942A54571_900D5247_CBC5.png",
-              url = "http://www.xnyy.cn/info/1031/19337.htm",
-              title = "”凝心聚力，迎势启航”——2023年康复医学科责任组长竞聘活动及住培学员个人汇报总结大会",
-              content = "为提高人员素质，更好地发挥责任组长在临床及管理中的骨干作用，同时将竞争机制全面引入临床管理中，更好地选拔、锻炼、培养骨干力量，优化队伍结构，打造合理的人才梯队。科室党支部支委会研究决定在全科开展2023年康复医学科科室护理组、治疗组及科研组的各组责任组长竞聘活动。本次活动采取“公平、公正、公开，鼓励优秀骨干积极参与”的原则，在科内择优选拔一批优秀的责任骨干，将协助科室强化临床管理、提高教学质量、推进科研人才培养，以此全面促进康复医学科的高质量发展。"
+              imgUrl = "http://www.xnyy.cn/__local/2/A6/66/D6ED9AE57D719BE6CEE71BFFA83_F2167871_16769.jpg",
+              url = "http://www.xnyy.cn/info/1031/17757.htm",
+              title = "虽望千日不战，不可一日无备——医院开展生物安全防护及核酸采样、防护服穿脱专项培训及考核",
+              content = "为精准地落实落细新冠肺炎疫情防控工作，全面提升我院护理人员应急处置能力，达到“以考促练，以练备战”的目的。我院于6月21日-7月6日先后组织了生物安全防护理论及核酸采样操作、防护服穿脱培训及考核工作，全院来自于各临床科室共300余名护理教员参加，考核通过率为100%。"
             ),
-            CommonSense(
-              imgUrl = "http://www.xnyy.cn/__local/7/80/AD/E112E1D2710394EDB1942A54571_900D5247_CBC5.png",
-              url = "http://www.xnyy.cn/info/1031/19337.htm",
-              title = "”凝心聚力，迎势启航”——2023年康复医学科责任组长竞聘活动及住培学员个人汇报总结大会",
-              content = "为提高人员素质，更好地发挥责任组长在临床及管理中的骨干作用，同时将竞争机制全面引入临床管理中，更好地选拔、锻炼、培养骨干力量，优化队伍结构，打造合理的人才梯队。科室党支部支委会研究决定在全科开展2023年康复医学科科室护理组、治疗组及科研组的各组责任组长竞聘活动。本次活动采取“公平、公正、公开，鼓励优秀骨干积极参与”的原则，在科内择优选拔一批优秀的责任骨干，将协助科室强化临床管理、提高教学质量、推进科研人才培养，以此全面促进康复医学科的高质量发展。"
-            ),
-            CommonSense(
-              imgUrl = "http://www.xnyy.cn/__local/7/80/AD/E112E1D2710394EDB1942A54571_900D5247_CBC5.png",
-              url = "http://www.xnyy.cn/info/1031/19337.htm",
-              title = "”凝心聚力，迎势启航”——2023年康复医学科责任组长竞聘活动及住培学员个人汇报总结大会",
-              content = "为提高人员素质，更好地发挥责任组长在临床及管理中的骨干作用，同时将竞争机制全面引入临床管理中，更好地选拔、锻炼、培养骨干力量，优化队伍结构，打造合理的人才梯队。科室党支部支委会研究决定在全科开展2023年康复医学科科室护理组、治疗组及科研组的各组责任组长竞聘活动。本次活动采取“公平、公正、公开，鼓励优秀骨干积极参与”的原则，在科内择优选拔一批优秀的责任骨干，将协助科室强化临床管理、提高教学质量、推进科研人才培养，以此全面促进康复医学科的高质量发展。"
-            ),
-            CommonSense(
-              imgUrl = "http://www.xnyy.cn/__local/7/80/AD/E112E1D2710394EDB1942A54571_900D5247_CBC5.png",
-              url = "http://www.xnyy.cn/info/1031/19337.htm",
-              title = "”凝心聚力，迎势启航”——2023年康复医学科责任组长竞聘活动及住培学员个人汇报总结大会",
-              content = "为提高人员素质，更好地发挥责任组长在临床及管理中的骨干作用，同时将竞争机制全面引入临床管理中，更好地选拔、锻炼、培养骨干力量，优化队伍结构，打造合理的人才梯队。科室党支部支委会研究决定在全科开展2023年康复医学科科室护理组、治疗组及科研组的各组责任组长竞聘活动。本次活动采取“公平、公正、公开，鼓励优秀骨干积极参与”的原则，在科内择优选拔一批优秀的责任骨干，将协助科室强化临床管理、提高教学质量、推进科研人才培养，以此全面促进康复医学科的高质量发展。"
-            )
           )
         )
       }
@@ -204,17 +186,13 @@ class MainActivity : ComponentActivity() {
       Operation("智能导诊", painterResource(id = R.drawable.intelligent_guidance)) {
         startActivity(Intent(this, SubjectActivity::class.java))
       },
-      Operation("待办", painterResource(id = R.drawable.pending)) {
-
+      Operation("医学常识", painterResource(id = R.drawable.pending)) {
+        startActivity(Intent(this, StandardActivity::class.java))
       }
     ),
     commonSenses: List<CommonSense> = listOf(),
     colors: ColorScheme = MaterialTheme.colorScheme
   ) {
-    /* 消息数状态 */
-    val badgeNumber by rememberSaveable {
-      mutableStateOf(8)
-    }
     val visitorCount = remember { mutableStateOf(appData.vistorCount) }
 
     val obj = JSONObject()
@@ -280,33 +258,6 @@ class MainActivity : ComponentActivity() {
                   tint = colorResource(id = R.color.iconColor)
                 )
               }
-              IconButton(
-                onClick = messageOnClick
-              ) {
-                Icon(
-                  imageVector = Icons.Default.Email,
-                  contentDescription = null,
-                  modifier = Modifier.size(20.dp),
-                  tint = colorResource(id = R.color.iconColor)
-                )
-                if (badgeNumber > 0) {
-                  Badge(
-                    modifier = Modifier.padding(
-                      bottom = 15.dp,
-                      start = 15.dp
-                    )
-                  ) {
-                    Text(
-                      badgeNumber.toString(),
-                      modifier = Modifier.semantics {
-                        contentDescription =
-                          "$badgeNumber new notifications"
-                      }
-                    )
-                  }
-                }
-              }
-
             }
           }
           Row(
@@ -347,10 +298,14 @@ class MainActivity : ComponentActivity() {
               }
             }
             Spacer(modifier = Modifier.size(1.dp))
-            IconButton(onClick = {
-              appData.settings.edit().putString("hashId", "")
-              startActivity(Intent(this@MainActivity, MainActivity::class.java))
-            }) {
+            IconButton(
+              modifier = Modifier.padding(
+                end = 20.dp
+              ),
+              onClick = {
+                appData.settings.edit().putString("hashId", "")
+                startActivity(Intent(this@MainActivity, MainActivity::class.java))
+              }) {
               Icon(
                 painter = painterResource(id = R.drawable.logout),
                 contentDescription = null,
