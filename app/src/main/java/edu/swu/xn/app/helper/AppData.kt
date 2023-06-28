@@ -3,6 +3,7 @@ package edu.swu.xn.app.helper
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import edu.swu.xn.app.MainActivity
 import edu.swu.xn.app.entity.Subject
@@ -51,7 +52,7 @@ class AppData : ViewModel() {
   var statusBarHeight = 0
 
   //就诊人数量
-  var vistorCount = 0
+  lateinit var visitorCount: MutableState<Int>
 
   fun init(m: MainActivity) {
     isInit = true

@@ -273,7 +273,7 @@ class VisitorActivity : AppCompatActivity() {
                     progress.value = false
                     if (data == null) return@get
                     visitors.removeAt(index)
-                    appData.vistorCount -= 1
+                    appData.visitorCount.value -= 1
                   }
                 }
               ) {
@@ -535,7 +535,7 @@ class VisitorActivity : AppCompatActivity() {
                             age = age.value
                           )
                         )
-                        appData.vistorCount += 1
+                        appData.visitorCount.value += 1
                         isAdd.value = false
                       }
                       if (isUpdate.value) {

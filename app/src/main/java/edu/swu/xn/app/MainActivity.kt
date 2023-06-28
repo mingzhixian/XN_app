@@ -33,6 +33,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -192,20 +194,21 @@ class MainActivity : ComponentActivity() {
     colors: ColorScheme = MaterialTheme.colorScheme
   ) {
 
-    if (Init) {
-      val obj = JSONObject()
-      obj.put("userID", appData.userId)
-      appData.netHelper.get(
-        url = stringResource(R.string.admin_url) + "/api/service-user/patient/getPatientInfo",
-        value = obj
-      )
-      { data ->
-        if (data == null) return@get
-        val dataList = data.getJSONArray("data")
-        appData.vistorCount = dataList.length()
-        Init = false
-      }
+
+    appData.visitorCount = remember { mutableStateOf(1) }
+    val obj = JSONObject()
+    obj.put("userID", appData.userId)
+    appData.netHelper.get(
+      url = stringResource(R.string.admin_url) + "/api/service-user/patient/getPatientInfo",
+      value = obj
+    )
+    { data ->
+      if (data == null) return@get
+      val dataList = data.getJSONArray("data")
+      appData.visitorCount.value = dataList.length()
+      Init = false
     }
+
 
     Box(
       modifier = modifier
@@ -344,7 +347,7 @@ class MainActivity : ComponentActivity() {
                 iconSize = 40.dp,
               )
               Text(
-                "${appData.vistorCount}人",
+                "${appData.visitorCount.value}人",
                 modifier = Modifier.padding(20.dp)
               )
             }
