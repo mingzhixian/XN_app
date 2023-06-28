@@ -78,7 +78,7 @@ class VisitorActivity : AppCompatActivity() {
     modifier: Modifier = Modifier,
     colors: ColorScheme = MaterialTheme.colorScheme
   ) {
-
+    val pattern = remember { Regex("^\\d+\$") }
     val visitors = remember {
       mutableStateListOf<Visitor>()
     }
@@ -408,10 +408,8 @@ class VisitorActivity : AppCompatActivity() {
                 },
                 value = age.value.toString(),
                 onValueChange = {
-                  if (it == "") {
-                    age.value = ""
-                  }
-                  age.value = it
+                  if (it.matches(pattern))
+                    age.value = it
                 },
                 keyboardOptions = KeyboardOptions(
                   keyboardType = KeyboardType.Number,
@@ -433,7 +431,8 @@ class VisitorActivity : AppCompatActivity() {
                 },
                 value = phoneNumber.value,
                 onValueChange = {
-                  phoneNumber.value = it
+                  if (it.matches(pattern))
+                    phoneNumber.value = it
                 },
                 singleLine = true,
                 readOnly = isRead.value,
@@ -455,7 +454,8 @@ class VisitorActivity : AppCompatActivity() {
                 },
                 value = cardID.value,
                 onValueChange = {
-                  cardID.value = it
+                  if (it.matches(pattern))
+                    cardID.value = it
                 },
                 singleLine = true,
                 readOnly = isRead.value,
