@@ -183,11 +183,11 @@ class MainActivity : ComponentActivity() {
         intent.putExtra("forWhat", "fullOrderList")
         startActivity(intent)
       },
-      Operation("智能导诊", painterResource(id = R.drawable.intelligent_guidance)) {
-        startActivity(Intent(this, SubjectActivity::class.java))
-      },
       Operation("医学常识", painterResource(id = R.drawable.pending)) {
         startActivity(Intent(this, StandardActivity::class.java))
+      },
+      Operation("人工客服", painterResource(id = R.drawable.intelligent_guidance)) {
+        startActivity(Intent(this, ServiceActivity::class.java))
       }
     ),
     commonSenses: List<CommonSense> = listOf(),
@@ -254,7 +254,7 @@ class MainActivity : ComponentActivity() {
                 Icon(
                   imageVector = Icons.Filled.Search,
                   contentDescription = null,
-                  modifier = Modifier.size(20.dp),
+                  modifier = Modifier.size(30.dp),
                   tint = colorResource(id = R.color.iconColor)
                 )
               }

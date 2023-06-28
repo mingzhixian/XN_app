@@ -21,6 +21,9 @@
             android:name=".StandardActivity"
             android:exported="false" />
         <activity
+            android:name=".ServiceActivity"
+            android:exported="false" />
+        <activity
             android:name=".ReportActivity"
             android:exported="false" />
         <activity

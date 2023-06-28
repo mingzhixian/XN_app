@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    tools:context=".ServiceActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="14dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:onClick="onBackClick"
+            android:paddingStart="7dp"
+            android:paddingTop="1dp"
+            android:paddingEnd="7dp"
+            android:src="@drawable/back"
+            app:tint="@color/onBackground" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/activity_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="人工客服"
+            android:textColor="@color/onBackground"
+            android:textSize="20sp"
+            android:textStyle="normal" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:onClick="onSearchClick"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:src="@drawable/search"
+            app:tint="@color/onBackground" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:text="电话客服："
+                android:textColor="@color/onBackground"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/corn_s"
+                android:backgroundTint="@color/cardBackground"
+                android:orientation="vertical"
+                android:paddingStart="26dp"
+                android:paddingTop="20dp"
+                android:paddingEnd="26dp"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="onTeleItemClick"
+                    android:tag="023-65318301"
+                    android:text="医院总机：023-65318301"
+                    android:textColor="@color/onCardBackground"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:onClick="onTeleItemClick"
+                    android:tag="023-68765161"
+                    android:text="医疗急救：023-68765161"
+                    android:textColor="@color/onCardBackground"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:onClick="onTeleItemClick"
+                    android:tag="023-68766931"
+                    android:text="院医保办：023-68766931"
+                    android:textColor="@color/onCardBackground"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:onClick="onTeleItemClick"
+                    android:tag="023-68754044"
+                    android:text="投诉电话：023-68754044"
+                    android:textColor="@color/onCardBackground"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:onClick="onTeleItemClick"
+                    android:tag="023-68765111"
+                    android:text="挂号咨询1：023-68765111"
+                    android:textColor="@color/onCardBackground"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:onClick="onTeleItemClick"
+                    android:tag="023-68765116"
+                    android:text="挂号咨询2：023-68765116"
+                    android:textColor="@color/onCardBackground"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:text="在线客服："
+                android:textColor="@color/onBackground"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/corn_s"
+                android:backgroundTint="@color/cardBackground"
+                android:orientation="vertical"
+                android:paddingStart="26dp"
+                android:paddingTop="20dp"
+                android:paddingEnd="26dp"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="onOnLineItemClick"
+                    android:tag="1"
+                    android:text="在线客服1"
+                    android:textColor="@color/onCardBackground"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:onClick="onOnLineItemClick"
+                    android:tag="2"
+                    android:text="在线客服2"
+                    android:textColor="@color/onCardBackground"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

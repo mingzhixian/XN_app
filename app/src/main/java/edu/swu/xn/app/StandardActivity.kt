@@ -29,6 +29,7 @@ import edu.swu.xn.app.component.TopBar
 class StandardActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    appData.publicTools.setStatusAndNavBar(this)
     setContent {
       StandardPage()
     }
