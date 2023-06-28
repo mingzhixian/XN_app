@@ -33,8 +33,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -64,7 +62,7 @@ import org.json.JSONObject
 lateinit var appData: AppData
 
 class MainActivity : ComponentActivity() {
-
+  private var Init: Boolean = true;
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     appData = ViewModelProvider(this).get(AppData()::class.java)
@@ -193,18 +191,20 @@ class MainActivity : ComponentActivity() {
     commonSenses: List<CommonSense> = listOf(),
     colors: ColorScheme = MaterialTheme.colorScheme
   ) {
-    val visitorCount = remember { mutableStateOf(appData.vistorCount) }
 
-    val obj = JSONObject()
-    obj.put("userID", appData.userId)
-    appData.netHelper.get(
-      url = stringResource(R.string.admin_url) + "/api/service-user/patient/getPatientInfo",
-      value = obj
-    )
-    { data ->
-      if (data == null) return@get
-      val dataList = data.getJSONArray("data")
-      visitorCount.value = dataList.length()
+    if (Init) {
+      val obj = JSONObject()
+      obj.put("userID", appData.userId)
+      appData.netHelper.get(
+        url = stringResource(R.string.admin_url) + "/api/service-user/patient/getPatientInfo",
+        value = obj
+      )
+      { data ->
+        if (data == null) return@get
+        val dataList = data.getJSONArray("data")
+        appData.vistorCount = dataList.length()
+        Init = false
+      }
     }
 
     Box(
@@ -303,7 +303,7 @@ class MainActivity : ComponentActivity() {
                 end = 20.dp
               ),
               onClick = {
-                appData.settings.edit().putString("hashId", "")
+                appData.settings.edit().putString("hashId", "").apply()
                 startActivity(Intent(this@MainActivity, MainActivity::class.java))
               }) {
               Icon(
@@ -344,7 +344,7 @@ class MainActivity : ComponentActivity() {
                 iconSize = 40.dp,
               )
               Text(
-                "${visitorCount.value}人",
+                "${appData.vistorCount}人",
                 modifier = Modifier.padding(20.dp)
               )
             }

@@ -273,6 +273,7 @@ class VisitorActivity : AppCompatActivity() {
                     progress.value = false
                     if (data == null) return@get
                     visitors.removeAt(index)
+                    appData.vistorCount -= 1
                   }
                 }
               ) {
