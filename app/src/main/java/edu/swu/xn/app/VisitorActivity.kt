@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -123,7 +122,7 @@ class VisitorActivity : AppCompatActivity() {
     val isUpdate = remember { mutableStateOf(false) }
     val updateIndex = remember { mutableStateOf(0) }
     val isRead = remember { mutableStateOf(false) }
-    val age = remember { mutableStateOf(0) }
+    val age = remember { mutableStateOf("") }
     val isAgeError = remember { mutableStateOf(false) }
     fun validateAge(age: Int) {
       isAgeError.value = age in 0..200
@@ -137,7 +136,7 @@ class VisitorActivity : AppCompatActivity() {
     val name = remember { mutableStateOf("") }
 
     fun cleanStates() {
-      age.value = 0
+      age.value = ""
       isAgeError.value = false
       cardID.value = ""
       medicalHistory.value = ""
@@ -147,7 +146,7 @@ class VisitorActivity : AppCompatActivity() {
     }
 
     fun setStates(index: Int) {
-      age.value = visitors[index].age
+      age.value = visitors[index].age.toString()
       isAgeError.value = false
       cardID.value = visitors[index].cardID
       medicalHistory.value = visitors[index].medicalHistory
@@ -410,16 +409,13 @@ class VisitorActivity : AppCompatActivity() {
                 value = age.value.toString(),
                 onValueChange = {
                   if (it == "") {
-                    age.value = 0
+                    age.value = ""
                   }
-                  age.value = it.toInt()
+                  age.value = it
                 },
                 keyboardOptions = KeyboardOptions(
                   keyboardType = KeyboardType.Number,
                 ),
-                keyboardActions = KeyboardActions {
-                  validateAge(age.value)
-                },
                 singleLine = true,
                 readOnly = isRead.value,
                 colors = TextFieldDefaults.textFieldColors(
@@ -441,6 +437,9 @@ class VisitorActivity : AppCompatActivity() {
                 },
                 singleLine = true,
                 readOnly = isRead.value,
+                keyboardOptions = KeyboardOptions(
+                  keyboardType = KeyboardType.Number,
+                ),
                 colors = TextFieldDefaults.textFieldColors(
                   containerColor = colorResource(id = R.color.background),
                   focusedIndicatorColor = colorResource(id = R.color.onBackground),
@@ -460,6 +459,9 @@ class VisitorActivity : AppCompatActivity() {
                 },
                 singleLine = true,
                 readOnly = isRead.value,
+                keyboardOptions = KeyboardOptions(
+                  keyboardType = KeyboardType.Number,
+                ),
                 colors = TextFieldDefaults.textFieldColors(
                   containerColor = colorResource(id = R.color.background),
                   focusedIndicatorColor = colorResource(id = R.color.onBackground),
@@ -532,7 +534,7 @@ class VisitorActivity : AppCompatActivity() {
                             phoneNumber = phoneNumber.value,
                             medicalHistory = medicalHistory.value,
                             cardID = cardID.value,
-                            age = age.value
+                            age = age.value.toInt()
                           )
                         )
                         appData.visitorCount.value += 1
@@ -546,7 +548,7 @@ class VisitorActivity : AppCompatActivity() {
                           phoneNumber = phoneNumber.value,
                           medicalHistory = medicalHistory.value,
                           cardID = cardID.value,
-                          age = age.value
+                          age = age.value.toInt()
                         )
                         isUpdate.value = false
                       }
