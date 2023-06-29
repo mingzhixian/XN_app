@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.GridLayout
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -15,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import edu.swu.xn.app.helper.RecyclerViewAdapter
 import org.json.JSONObject
 
@@ -36,13 +34,21 @@ class DoctorActivity : AppCompatActivity() {
   @SuppressLint("SetTextI18n")
   private fun setValue() {
     val extra = intent.extras!!
-    appData.netHelper.getImg(
-      this,
-      "${appData.main.getString(R.string.admin_url)}/api/service-user/doctor/getImage?filePath=${
-        extra.getString("avatar")!!
-      }",
-      findViewById(R.id.doctor_image)
-    )
+    try {
+      appData.netHelper.getImg(
+        this,
+        "${appData.main.getString(R.string.admin_url)}/api/service-user/doctor/getImage?filePath=${
+          extra.getString("avatar")!!
+        }",
+        findViewById(R.id.doctor_image)
+      )
+    } catch (_: Exception) {
+      appData.netHelper.getImg(
+        this,
+        "https://diy.jiuwa.net/up/6300b68ff3ae1.png",
+        findViewById(R.id.doctor_image)
+      )
+    }
     findViewById<TextView>(R.id.doctor_name).text = extra.getString("realName")
     findViewById<TextView>(R.id.doctor_sex).text =
       "性别：${if (extra.getString("sex")!!.toInt() == 0) "男" else "女"}"
