@@ -508,9 +508,9 @@ class VisitorActivity : AppCompatActivity() {
                     obj.put("phonenumber", phoneNumber.value)
                     obj.put(
                       "sex", if (sex.value) {
-                        "1"
-                      } else {
                         "0"
+                      } else {
+                        "1"
                       }
                     )
                     obj.put("userId", appData.userId)
