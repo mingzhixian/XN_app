@@ -40,7 +40,7 @@ import java.text.DecimalFormat
 
 class OrderDetailActivity : AppCompatActivity() {
 
-   var item: OrderDetailItem=OrderDetailItem()
+  var item: OrderDetailItem = OrderDetailItem()
   private var init = true
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -59,25 +59,25 @@ class OrderDetailActivity : AppCompatActivity() {
   }
 
   data class OrderDetailItem(
-    val amount: Int=0,
-    val createTime: String="",
-    val date: String="",
-    val deptId: String="",
-    val deptName: String="",
-    val doctorAvatar: String="",
-    val doctorEmail: String="",
-    val doctorPhonenumber: String="",
-    val doctorRealName: String="",
-    val doctorSex: String="",
-    val offsetTime: Int=0,
-    val orderId: String="",
-    val orderStatus: Int=0,
-    val patientAge: Int=0,
-    val patientCardId: String="",
-    val patientPhonenumber: String="",
-    val patientSex: String="",
-    val patientUserName: String="",
-    val title: String=""
+    val amount: Int = 0,
+    val createTime: String = "",
+    val date: String = "",
+    val deptId: String = "",
+    val deptName: String = "",
+    val doctorAvatar: String = "",
+    val doctorEmail: String = "",
+    val doctorPhonenumber: String = "",
+    val doctorRealName: String = "",
+    val doctorSex: String = "",
+    val offsetTime: Int = 0,
+    val orderId: String = "",
+    val orderStatus: Int = 0,
+    val patientAge: Int = 0,
+    val patientCardId: String = "",
+    val patientPhonenumber: String = "",
+    val patientSex: String = "",
+    val patientUserName: String = "",
+    val title: String = ""
   )
 
   @Composable
@@ -104,9 +104,23 @@ class OrderDetailActivity : AppCompatActivity() {
           date = d.getString("date"),
           deptId = d.getString("deptId"),
           deptName = d.getString("deptName"),
-          doctorAvatar = d.getString("doctorAvatar"),
-          doctorEmail = d.getString("doctorEmail"),
-          doctorPhonenumber = d.getString("doctorPhonenumber"),
+          doctorAvatar = try {
+            d.getString("doctorAvatar")
+          } catch (_: Exception) {
+            "https://diy.jiuwa.net/up/6300b68ff3ae1.png"
+          },
+          doctorEmail =
+          try {
+            d.getString("doctorEmail")
+          } catch (_: Exception) {
+            ""
+          },
+          doctorPhonenumber =
+          try {
+            d.getString("doctorPhonenumber")
+          } catch (_: Exception) {
+            ""
+          },
           doctorRealName = d.getString("doctorRealName"),
           doctorSex = d.getString("doctorSex"),
           offsetTime = d.getInt("offsetTime"),

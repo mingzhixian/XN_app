@@ -30,7 +30,7 @@ class NetHelper {
         if (appData.hashId != "") {
           request.addHeader("token", appData.hashId)
         }
-        try {
+//        try {
           okhttpClient.newCall(request.build()).execute().use { response ->
             val body = JSONObject(response.body!!.string())
             withContext(Dispatchers.Main) {
@@ -41,13 +41,13 @@ class NetHelper {
                 handle((body))
             }
           }
-        } catch (e: Exception) {
-          Log.e("NetHelper", e.toString())
-          withContext(Dispatchers.Main) {
-            Toast.makeText(appData.main, "网络错误", Toast.LENGTH_SHORT).show()
-            handle(null)
-          }
-        }
+//        } catch (e: Exception) {
+//          Log.e("NetHelper", e.toString())
+//          withContext(Dispatchers.Main) {
+//            Toast.makeText(appData.main, "网络错误", Toast.LENGTH_SHORT).show()
+//            handle(null)
+//          }
+//        }
       }
     }
   }
