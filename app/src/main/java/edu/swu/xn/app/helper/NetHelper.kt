@@ -5,9 +5,6 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.model.GlideUrl
-import com.bumptech.glide.load.model.LazyHeaders
-import edu.swu.xn.app.R
 import edu.swu.xn.app.appData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,7 +27,7 @@ class NetHelper {
         if (appData.hashId != "") {
           request.addHeader("token", appData.hashId)
         }
-//        try {
+        try {
           okhttpClient.newCall(request.build()).execute().use { response ->
             val body = JSONObject(response.body!!.string())
             withContext(Dispatchers.Main) {
@@ -41,13 +38,13 @@ class NetHelper {
                 handle((body))
             }
           }
-//        } catch (e: Exception) {
-//          Log.e("NetHelper", e.toString())
-//          withContext(Dispatchers.Main) {
-//            Toast.makeText(appData.main, "网络错误", Toast.LENGTH_SHORT).show()
-//            handle(null)
-//          }
-//        }
+        } catch (e: Exception) {
+          Log.e("NetHelper", e.toString())
+          withContext(Dispatchers.Main) {
+            Toast.makeText(appData.main, "网络错误", Toast.LENGTH_SHORT).show()
+            handle(null)
+          }
+        }
       }
     }
   }
