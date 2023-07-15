@@ -11,8 +11,8 @@ android {
         applicationId "edu.swu.xn.app"
         minSdk 28
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode 31
+        versionName "3.1"
         resConfigs "zh"
         resConfigs "xhdpi"
         vectorDrawables {

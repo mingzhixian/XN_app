@@ -77,7 +77,8 @@ class DoctorActivity : AppCompatActivity() {
         if (hours.getJSONObject(i).getInt("count") == 0) {
           val child = clock.getChildAt(i)
           child.tag = -1
-          (child as TextView).setTextColor(resources.getColor(R.color.onBackgroundSecond))
+          (child as TextView).setOnClickListener(null)
+          child.setTextColor(resources.getColor(R.color.onBackgroundSecond))
           child.backgroundTintList =
             ContextCompat.getColorStateList(this, R.color.cardContainerBackground)
         }

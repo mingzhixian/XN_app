@@ -2,7 +2,6 @@ package edu.swu.xn.app
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
@@ -152,16 +151,36 @@ class SearchActivity : AppCompatActivity() {
                         doctors.add(
                           Doctor(
                             amount = doctorList.getJSONObject(i).getInt("amount"),
-                            avatar = doctorList.getJSONObject(i)
-                              .getString("avatar"),
+                            avatar =
+                            try {
+                              doctorList.getJSONObject(i)
+                                .getString("avatar")
+                            } catch (_: Exception) {
+                              "https://diy.jiuwa.net/up/6300b68ff3ae1.png"
+                            },
                             deptID = doctorList.getJSONObject(i)
                               .getString("deptId"),
-                            email = doctorList.getJSONObject(i).getString("email"),
+                            email =
+                            try {
+                              doctorList.getJSONObject(i).getString("email")
+                            } catch (_: Exception) {
+                              ""
+                            },
                             id = doctorList.getJSONObject(i).getString("id"),
-                            introduce = doctorList.getJSONObject(i)
-                              .getString("introduce"),
-                            phoneNumber = doctorList.getJSONObject(i)
-                              .getString("phonenumber"),
+                            introduce =
+                            try {
+                              doctorList.getJSONObject(i)
+                                .getString("introduce")
+                            } catch (_: Exception) {
+                              ""
+                            },
+                            phoneNumber =
+                            try {
+                              doctorList.getJSONObject(i)
+                                .getString("phonenumber")
+                            } catch (_: Exception) {
+                              ""
+                            },
                             realName = doctorList.getJSONObject(i)
                               .getString("realName"),
                             sex = if (doctorList.getJSONObject(i)
@@ -268,6 +287,7 @@ class SearchActivity : AppCompatActivity() {
                 intent.putExtra("introduce", doctors[index].introduce)
                 intent.putExtra("title", doctors[index].title)
                 intent.putExtra("forWhat", "forDoctorDetail")
+                intent.putExtra("avatar", doctors[index].avatar)
                 startActivity(intent)
               }
             )
